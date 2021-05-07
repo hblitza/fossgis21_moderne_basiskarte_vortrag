@@ -1,3 +1,4 @@
+baseURL = "https://hblitza.github.io/fossgis21_moderne_basiskarte_vortrag/"
 languageCode = "en-us"
 title = "My New Hugo Site"
 theme = "reveal-hugo"
