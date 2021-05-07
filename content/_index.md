@@ -24,7 +24,7 @@ title = "Basiskarte"
 <img src="img/technische_umsetzung.png" width="60%" class="img" />
 
 ---
-<section data-background-iframe="ol/index.html" data-background-interactive>
+<section data-background-iframe="https://openlayersbook.github.io/openlayers_book_samples/chapter01/2360OS_01_01_simple_osm.html" data-background-interactive>
 </section>
 
 ---
