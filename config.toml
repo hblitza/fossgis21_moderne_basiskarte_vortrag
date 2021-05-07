@@ -1,4 +1,3 @@
-baseURL = "https://hblitza.github.io/fossgis21_moderne_basiskarte_vortrag/"
 languageCode = "en-us"
 title = "My New Hugo Site"
 theme = "reveal-hugo"
@@ -16,3 +15,4 @@ isHTML = true
 theme = "white"
 slide_number = true
 transition = "slide"
+custom_css = "css/custom.css"
