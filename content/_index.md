@@ -24,7 +24,7 @@ title = "Basiskarte"
 <img src="img/technische_umsetzung.png" width="60%" class="img" />
 
 ---
-<section data-background-iframe="https://openlayersbook.github.io/openlayers_book_samples/chapter01/2360OS_01_01_simple_osm.html" data-background-interactive>
+<section data-background-iframe="https://stadtplan.bielefeld.de/#?sidebarStatus=closed&map=10,469734.19174,5764294.24016,EPSG:25832&layers=stadtplan_bi" data-background-interactive>
 </section>
 
 ---
