@@ -114,7 +114,7 @@ FOSSGIS 2021 - Der Weg zur Modernen Basiskarte. Herausforderungen und Potentiale
 </footer>
 
 ---
-<section data-background-iframe="ol/index.html" data-background-interactive>
+<section data-background-iframe="index.html" data-background-interactive>
 </section>
 
 ---
