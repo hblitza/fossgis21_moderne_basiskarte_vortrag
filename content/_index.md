@@ -114,12 +114,7 @@ FOSSGIS 2021 - Der Weg zur Modernen Basiskarte. Herausforderungen und Potentiale
 </footer>
 
 ---
-<section data-background-iframe="ol.html" data-background-interactive>
-</section>
-
----
-#### Vergleich
-<section data-background-iframe="https://openlayersbook.github.io/openlayers_book_samples/chapter03/2360OS_03_05_multiple.html" data-background-interactive>
+<section data-background-iframe="ol1.html" data-background-interactive>
 </section>
 
 <footer>
