@@ -1,8 +1,29 @@
-.footer {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
+.img {
+    border: 0 !important;
 }
- .img {
-     border: 0 !important;
- }
+
+.slides {
+    transform: unset !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.present {
+    padding: 0 !important;
+    height: 100% !important;
+}
+
+h4 {
+    padding: 20px 0 20px 0;
+}
+
+.footer {
+    font-size: small;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+
+.title-slide h3 {
+    padding-top: 25vh;
+}
