@@ -446,51 +446,31 @@ require('ol/ol.css');
 var _olMap = require('ol/Map');
 var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
 var _olMapDefault = _parcelHelpers.interopDefault(_olMap);
-require('ol/source/OSM');
 var _olSourceImageWMS = require('ol/source/ImageWMS');
 var _olSourceImageWMSDefault = _parcelHelpers.interopDefault(_olSourceImageWMS);
 var _olLayer = require('ol/layer');
 var _olView = require('ol/View');
 var _olViewDefault = _parcelHelpers.interopDefault(_olView);
-var orka = new _olLayer.Image({
-  // extent: [-13884991, 2870341, -7455066, 6338219],
+var stuttgart = new _olLayer.Image({
   source: new _olSourceImageWMSDefault.default({
-    url: 'https://www.orka-mv.de/geodienste/orkamv/wms',
+    url: 'https://geoserver.stuttgart.de/geoserver/Base_Test_Kontraste/wms',
     params: {
-      'LAYERS': 'orkamv'
-    },
-    ratio: 1
-  })
-});
-var bielefeld = new _olLayer.Image({
-  source: new _olSourceImageWMSDefault.default({
-    url: 'http://www.bielefeld01.de/md/WMS/bielefeld_karte_farbe/02',
-    params: {
-      'LAYERS': 'map'
+      'LAYERS': 'Base_Test_Kontraste:Basemap_LIGHT_EPSG25832'
     },
     ratio: 1
   })
 });
 var map1 = new _olMapDefault.default({
-  layers: [orka],
+  layers: [stuttgart],
   target: 'map1',
   view: new _olViewDefault.default({
     projection: 'EPSG:3857',
-    center: [1350489.415742, 7186456.525316],
-    zoom: 16
-  })
-});
-var map2 = new _olMapDefault.default({
-  layers: [bielefeld],
-  target: 'map2',
-  view: new _olViewDefault.default({
-    projection: 'EPSG:3857',
-    center: [949710.967186, 6803855.757549],
+    center: [1022034.727887, 6238240.857495],
     zoom: 16
   })
 });
 
-},{"ol/ol.css":"6KKsq","ol/Map":"3a3gj","ol/source/OSM":"3hR8N","ol/View":"14fkO","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y","ol/layer":"4ym9Z","ol/source/ImageWMS":"73Cns"}],"6KKsq":[function() {},{}],"3a3gj":[function(require,module,exports) {
+},{"ol/ol.css":"6KKsq","ol/Map":"3a3gj","ol/source/ImageWMS":"73Cns","ol/layer":"4ym9Z","ol/View":"14fkO","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"6KKsq":[function() {},{}],"3a3gj":[function(require,module,exports) {
 var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
 _parcelHelpers.defineInteropFlag(exports);
 var _rendererCompositeJs = require('./renderer/Composite.js');
@@ -36654,255 +36634,28 @@ var Translate = /** @class*/
 })(_PointerJsDefault.default);
 exports.default = Translate;
 
-},{"../Collection.js":"3oTbF","../events/Event.js":"eICPf","./Property.js":"6XpG8","./Pointer.js":"4u1M1","../functions.js":"6ZyQ7","../Object.js":"4tei3","../array.js":"Og3xJ","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"3hR8N":[function(require,module,exports) {
+},{"../Collection.js":"3oTbF","../events/Event.js":"eICPf","./Property.js":"6XpG8","./Pointer.js":"4u1M1","../functions.js":"6ZyQ7","../Object.js":"4tei3","../array.js":"Og3xJ","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"73Cns":[function(require,module,exports) {
 var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
 _parcelHelpers.defineInteropFlag(exports);
-_parcelHelpers.export(exports, "ATTRIBUTION", function () {
-  return ATTRIBUTION;
-});
-var _XYZJs = require('./XYZ.js');
-var _XYZJsDefault = _parcelHelpers.interopDefault(_XYZJs);
-/**
-* @module ol/source/OSM
-*/
-var __extends = undefined && undefined.__extends || (function () {
-  var extendStatics = function (d, b) {
-    extendStatics = Object.setPrototypeOf || ({
-      __proto__: []
-    }) instanceof Array && (function (d, b) {
-      d.__proto__ = b;
-    }) || (function (d, b) {
-      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-    });
-    return extendStatics(d, b);
-  };
-  return function (d, b) {
-    extendStatics(d, b);
-    function __() {
-      this.constructor = d;
-    }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-})();
-var ATTRIBUTION = '&#169; ' + '<a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> ' + 'contributors.';
-/**
-* @typedef {Object} Options
-* @property {import("./Source.js").AttributionLike} [attributions] Attributions.
-* @property {number} [cacheSize] Initial tile cache size. Will auto-grow to hold at least the number of tiles in the viewport.
-* @property {null|string} [crossOrigin='anonymous'] The `crossOrigin` attribute for loaded images.  Note that
-* you must provide a `crossOrigin` value if you want to access pixel data with the Canvas renderer.
-* See https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image for more detail.
-* @property {boolean} [imageSmoothing=true] Enable image smoothing.
-* @property {number} [maxZoom=19] Max zoom.
-* @property {boolean} [opaque=true] Whether the layer is opaque.
-* @property {number} [reprojectionErrorThreshold=0.5] Maximum allowed reprojection error (in pixels).
-* Higher values can increase reprojection performance, but decrease precision.
-* @property {import("../Tile.js").LoadFunction} [tileLoadFunction] Optional function to load a tile given a URL. The default is
-* ```js
-* function(imageTile, src) {
-*   imageTile.getImage().src = src;
-* };
-* ```
-* @property {number} [transition=250] Duration of the opacity transition for rendering.
-* To disable the opacity transition, pass `transition: 0`.
-* @property {string} [url='https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png'] URL template.
-* Must include `{x}`, `{y}` or `{-y}`, and `{z}` placeholders.
-* @property {boolean} [wrapX=true] Whether to wrap the world horizontally.
-*/
-/**
-* @classdesc
-* Layer source for the OpenStreetMap tile server.
-* @api
-*/
-var OSM = /** @class*/
-(function (_super) {
-  __extends(OSM, _super);
-  /**
-  * @param {Options=} [opt_options] Open Street Map options.
-  */
-  function OSM(opt_options) {
-    var _this = this;
-    var options = opt_options || ({});
-    var attributions;
-    if (options.attributions !== undefined) {
-      attributions = options.attributions;
-    } else {
-      attributions = [ATTRIBUTION];
-    }
-    var crossOrigin = options.crossOrigin !== undefined ? options.crossOrigin : 'anonymous';
-    var url = options.url !== undefined ? options.url : 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-    _this = _super.call(this, {
-      attributions: attributions,
-      attributionsCollapsible: false,
-      cacheSize: options.cacheSize,
-      crossOrigin: crossOrigin,
-      imageSmoothing: options.imageSmoothing,
-      maxZoom: options.maxZoom !== undefined ? options.maxZoom : 19,
-      opaque: options.opaque !== undefined ? options.opaque : true,
-      reprojectionErrorThreshold: options.reprojectionErrorThreshold,
-      tileLoadFunction: options.tileLoadFunction,
-      transition: options.transition,
-      url: url,
-      wrapX: options.wrapX
-    }) || this;
-    return _this;
-  }
-  return OSM;
-})(_XYZJsDefault.default);
-exports.default = OSM;
-
-},{"./XYZ.js":"6NW9w","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"6NW9w":[function(require,module,exports) {
-var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
-_parcelHelpers.defineInteropFlag(exports);
-var _TileImageJs = require('./TileImage.js');
-var _TileImageJsDefault = _parcelHelpers.interopDefault(_TileImageJs);
-var _tilegridJs = require('../tilegrid.js');
-/**
-* @module ol/source/XYZ
-*/
-var __extends = undefined && undefined.__extends || (function () {
-  var extendStatics = function (d, b) {
-    extendStatics = Object.setPrototypeOf || ({
-      __proto__: []
-    }) instanceof Array && (function (d, b) {
-      d.__proto__ = b;
-    }) || (function (d, b) {
-      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-    });
-    return extendStatics(d, b);
-  };
-  return function (d, b) {
-    extendStatics(d, b);
-    function __() {
-      this.constructor = d;
-    }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-})();
-/**
-* @typedef {Object} Options
-* @property {import("./Source.js").AttributionLike} [attributions] Attributions.
-* @property {boolean} [attributionsCollapsible=true] Attributions are collapsible.
-* @property {number} [cacheSize] Initial tile cache size. Will auto-grow to hold at least the number of tiles in the viewport.
-* @property {null|string} [crossOrigin] The `crossOrigin` attribute for loaded images.  Note that
-* you must provide a `crossOrigin` value if you want to access pixel data with the Canvas renderer.
-* See https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image for more detail.
-* @property {boolean} [imageSmoothing=true] Enable image smoothing.
-* @property {boolean} [opaque=false] Whether the layer is opaque.
-* @property {import("../proj.js").ProjectionLike} [projection='EPSG:3857'] Projection.
-* @property {number} [reprojectionErrorThreshold=0.5] Maximum allowed reprojection error (in pixels).
-* Higher values can increase reprojection performance, but decrease precision.
-* @property {number} [maxZoom=42] Optional max zoom level. Not used if `tileGrid` is provided.
-* @property {number} [minZoom=0] Optional min zoom level. Not used if `tileGrid` is provided.
-* @property {number} [maxResolution] Optional tile grid resolution at level zero. Not used if `tileGrid` is provided.
-* @property {import("../tilegrid/TileGrid.js").default} [tileGrid] Tile grid.
-* @property {import("../Tile.js").LoadFunction} [tileLoadFunction] Optional function to load a tile given a URL. The default is
-* ```js
-* function(imageTile, src) {
-*   imageTile.getImage().src = src;
-* };
-* ```
-* @property {number} [tilePixelRatio=1] The pixel ratio used by the tile service.
-* For example, if the tile service advertizes 256px by 256px tiles but actually sends 512px
-* by 512px images (for retina/hidpi devices) then `tilePixelRatio`
-* should be set to `2`.
-* @property {number|import("../size.js").Size} [tileSize=[256, 256]] The tile size used by the tile service.
-* Not used if `tileGrid` is provided.
-* @property {import("../Tile.js").UrlFunction} [tileUrlFunction] Optional function to get
-* tile URL given a tile coordinate and the projection.
-* Required if `url` or `urls` are not provided.
-* @property {string} [url] URL template. Must include `{x}`, `{y}` or `{-y}`,
-* and `{z}` placeholders. A `{?-?}` template pattern, for example `subdomain{a-f}.domain.com`,
-* may be used instead of defining each one separately in the `urls` option.
-* @property {Array<string>} [urls] An array of URL templates.
-* @property {boolean} [wrapX=true] Whether to wrap the world horizontally.
-* @property {number} [transition=250] Duration of the opacity transition for rendering.
-* To disable the opacity transition, pass `transition: 0`.
-* @property {number} [zDirection=0] Indicate which resolution should be used
-* by a renderer if the view resolution does not match any resolution of the tile source.
-* If 0, the nearest resolution will be used. If 1, the nearest lower resolution
-* will be used. If -1, the nearest higher resolution will be used.
-*/
-/**
-* @classdesc
-* Layer source for tile data with URLs in a set XYZ format that are
-* defined in a URL template. By default, this follows the widely-used
-* Google grid where `x` 0 and `y` 0 are in the top left. Grids like
-* TMS where `x` 0 and `y` 0 are in the bottom left can be used by
-* using the `{-y}` placeholder in the URL template, so long as the
-* source does not have a custom tile grid. In this case
-* a `tileUrlFunction` can be used, such as:
-* ```js
-*  tileUrlFunction: function(coordinate) {
-*    return 'http://mapserver.com/' + coordinate[0] + '/' +
-*      coordinate[1] + '/' + (-coordinate[2] - 1) + '.png';
-*  }
-* ```
-* @api
-*/
-var XYZ = /** @class*/
-(function (_super) {
-  __extends(XYZ, _super);
-  /**
-  * @param {Options=} opt_options XYZ options.
-  */
-  function XYZ(opt_options) {
-    var _this = this;
-    var options = opt_options || ({});
-    var projection = options.projection !== undefined ? options.projection : 'EPSG:3857';
-    var tileGrid = options.tileGrid !== undefined ? options.tileGrid : _tilegridJs.createXYZ({
-      extent: _tilegridJs.extentFromProjection(projection),
-      maxResolution: options.maxResolution,
-      maxZoom: options.maxZoom,
-      minZoom: options.minZoom,
-      tileSize: options.tileSize
-    });
-    _this = _super.call(this, {
-      attributions: options.attributions,
-      cacheSize: options.cacheSize,
-      crossOrigin: options.crossOrigin,
-      imageSmoothing: options.imageSmoothing,
-      opaque: options.opaque,
-      projection: projection,
-      reprojectionErrorThreshold: options.reprojectionErrorThreshold,
-      tileGrid: tileGrid,
-      tileLoadFunction: options.tileLoadFunction,
-      tilePixelRatio: options.tilePixelRatio,
-      tileUrlFunction: options.tileUrlFunction,
-      url: options.url,
-      urls: options.urls,
-      wrapX: options.wrapX !== undefined ? options.wrapX : true,
-      transition: options.transition,
-      attributionsCollapsible: options.attributionsCollapsible,
-      zDirection: options.zDirection
-    }) || this;
-    return _this;
-  }
-  return XYZ;
-})(_TileImageJsDefault.default);
-exports.default = XYZ;
-
-},{"./TileImage.js":"sKtx9","../tilegrid.js":"1JyRQ","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"sKtx9":[function(require,module,exports) {
-var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
-_parcelHelpers.defineInteropFlag(exports);
+var _commonJs = require('./common.js');
 var _eventsEventTypeJs = require('../events/EventType.js');
 var _eventsEventTypeJsDefault = _parcelHelpers.interopDefault(_eventsEventTypeJs);
-var _ImageTileJs = require('../ImageTile.js');
-var _ImageTileJsDefault = _parcelHelpers.interopDefault(_ImageTileJs);
-var _reprojTileJs = require('../reproj/Tile.js');
-var _reprojTileJsDefault = _parcelHelpers.interopDefault(_reprojTileJs);
-var _TileCacheJs = require('../TileCache.js');
-var _TileCacheJsDefault = _parcelHelpers.interopDefault(_TileCacheJs);
-var _TileStateJs = require('../TileState.js');
-var _TileStateJsDefault = _parcelHelpers.interopDefault(_TileStateJs);
-var _UrlTileJs = require('./UrlTile.js');
-var _UrlTileJsDefault = _parcelHelpers.interopDefault(_UrlTileJs);
-var _reprojCommonJs = require('../reproj/common.js');
-var _commonJs = require('./common.js');
+var _ImageJs = require('./Image.js');
+var _ImageJsDefault = _parcelHelpers.interopDefault(_ImageJs);
+var _ImageJs2 = require('../Image.js');
+var _ImageJs2Default = _parcelHelpers.interopDefault(_ImageJs2);
+var _WMSServerTypeJs = require('./WMSServerType.js');
+var _WMSServerTypeJsDefault = _parcelHelpers.interopDefault(_WMSServerTypeJs);
+var _uriJs = require('../uri.js');
+var _assertsJs = require('../asserts.js');
+var _objJs = require('../obj.js');
+var _reprojJs = require('../reproj.js');
+var _stringJs = require('../string.js');
+var _extentJs = require('../extent.js');
 var _projJs = require('../proj.js');
-var _tilecoordJs = require('../tilecoord.js');
-var _tilegridJs = require('../tilegrid.js');
-var _utilJs = require('../util.js');
+/**
+* @module ol/source/ImageWMS
+*/
 var __extends = undefined && undefined.__extends || (function () {
   var extendStatics = function (d, b) {
     extendStatics = Object.setPrototypeOf || ({
@@ -36923,858 +36676,625 @@ var __extends = undefined && undefined.__extends || (function () {
   };
 })();
 /**
+* @const
+* @type {import("../size.js").Size}
+*/
+var GETFEATUREINFO_IMAGE_SIZE = [101, 101];
+/**
 * @typedef {Object} Options
 * @property {import("./Source.js").AttributionLike} [attributions] Attributions.
-* @property {boolean} [attributionsCollapsible=true] Attributions are collapsible.
-* @property {number} [cacheSize] Initial tile cache size. Will auto-grow to hold at least the number of tiles in the viewport.
 * @property {null|string} [crossOrigin] The `crossOrigin` attribute for loaded images.  Note that
 * you must provide a `crossOrigin` value if you want to access pixel data with the Canvas renderer.
 * See https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image for more detail.
+* @property {boolean} [hidpi=true] Use the `ol/Map#pixelRatio` value when requesting
+* the image from the remote server.
+* @property {import("./WMSServerType.js").default|string} [serverType] The type of
+* the remote WMS server: `mapserver`, `geoserver` or `qgis`. Only needed if `hidpi` is `true`.
+* @property {import("../Image.js").LoadFunction} [imageLoadFunction] Optional function to load an image given a URL.
 * @property {boolean} [imageSmoothing=true] Enable image smoothing.
-* @property {boolean} [opaque=false] Whether the layer is opaque.
+* @property {Object<string,*>} params WMS request parameters.
+* At least a `LAYERS` param is required. `STYLES` is
+* `''` by default. `VERSION` is `1.3.0` by default. `WIDTH`, `HEIGHT`, `BBOX`
+* and `CRS` (`SRS` for WMS version < 1.3.0) will be set dynamically.
 * @property {import("../proj.js").ProjectionLike} [projection] Projection. Default is the view projection.
-* @property {number} [reprojectionErrorThreshold=0.5] Maximum allowed reprojection error (in pixels).
-* Higher values can increase reprojection performance, but decrease precision.
-* @property {import("./State.js").default} [state] Source state.
-* @property {typeof import("../ImageTile.js").default} [tileClass] Class used to instantiate image tiles.
-* Default is {@link module:ol/ImageTile~ImageTile}.
-* @property {import("../tilegrid/TileGrid.js").default} [tileGrid] Tile grid.
-* @property {import("../Tile.js").LoadFunction} [tileLoadFunction] Optional function to load a tile given a URL. The default is
-* ```js
-* function(imageTile, src) {
-*   imageTile.getImage().src = src;
-* };
-* ```
-* @property {number} [tilePixelRatio=1] The pixel ratio used by the tile service. For example, if the tile
-* service advertizes 256px by 256px tiles but actually sends 512px
-* by 512px images (for retina/hidpi devices) then `tilePixelRatio`
-* should be set to `2`.
-* @property {import("../Tile.js").UrlFunction} [tileUrlFunction] Optional function to get tile URL given a tile coordinate and the projection.
-* @property {string} [url] URL template. Must include `{x}`, `{y}` or `{-y}`, and `{z}` placeholders.
-* A `{?-?}` template pattern, for example `subdomain{a-f}.domain.com`, may be
-* used instead of defining each one separately in the `urls` option.
-* @property {Array<string>} [urls] An array of URL templates.
-* @property {boolean} [wrapX] Whether to wrap the world horizontally. The default, is to
-* request out-of-bounds tiles from the server. When set to `false`, only one
-* world will be rendered. When set to `true`, tiles will be requested for one
-* world only, but they will be wrapped horizontally to render multiple worlds.
-* @property {number} [transition] Duration of the opacity transition for rendering.
-* To disable the opacity transition, pass `transition: 0`.
-* @property {string} [key] Optional tile key for proper cache fetching
-* @property {number} [zDirection=0] Indicate which resolution should be used
-* by a renderer if the view resolution does not match any resolution of the tile source.
-* If 0, the nearest resolution will be used. If 1, the nearest lower resolution
-* will be used. If -1, the nearest higher resolution will be used.
+* @property {number} [ratio=1.5] Ratio. `1` means image requests are the size of the map viewport, `2` means
+* twice the width and height of the map viewport, and so on. Must be `1` or
+* higher.
+* @property {Array<number>} [resolutions] Resolutions.
+* If specified, requests will be made for these resolutions only.
+* @property {string} url WMS service URL.
 */
 /**
 * @classdesc
-* Base class for sources providing images divided into a tile grid.
+* Source for WMS servers providing single, untiled images.
 *
-* @fires import("./Tile.js").TileSourceEvent
+* @fires module:ol/source/Image.ImageSourceEvent
 * @api
 */
-var TileImage = /** @class*/
+var ImageWMS = /** @class*/
 (function (_super) {
-  __extends(TileImage, _super);
+  __extends(ImageWMS, _super);
   /**
-  * @param {!Options} options Image tile options.
+  * @param {Options=} [opt_options] ImageWMS options.
   */
-  function TileImage(options) {
-    var _this = _super.call(this, {
+  function ImageWMS(opt_options) {
+    var _this = this;
+    var options = opt_options ? opt_options : {};
+    _this = _super.call(this, {
       attributions: options.attributions,
-      cacheSize: options.cacheSize,
-      opaque: options.opaque,
+      imageSmoothing: options.imageSmoothing,
       projection: options.projection,
-      state: options.state,
-      tileGrid: options.tileGrid,
-      tileLoadFunction: options.tileLoadFunction ? options.tileLoadFunction : defaultTileLoadFunction,
-      tilePixelRatio: options.tilePixelRatio,
-      tileUrlFunction: options.tileUrlFunction,
-      url: options.url,
-      urls: options.urls,
-      wrapX: options.wrapX,
-      transition: options.transition,
-      key: options.key,
-      attributionsCollapsible: options.attributionsCollapsible,
-      zDirection: options.zDirection
+      resolutions: options.resolutions
     }) || this;
     /**
-    * @protected
+    * @private
     * @type {?string}
     */
-    _this.crossOrigin = options.crossOrigin !== undefined ? options.crossOrigin : null;
-    /**
-    * @protected
-    * @type {typeof ImageTile}
-    */
-    _this.tileClass = options.tileClass !== undefined ? options.tileClass : _ImageTileJsDefault.default;
-    /**
-    * @protected
-    * @type {!Object<string, TileCache>}
-    */
-    _this.tileCacheForProjection = {};
-    /**
-    * @protected
-    * @type {!Object<string, import("../tilegrid/TileGrid.js").default>}
-    */
-    _this.tileGridForProjection = {};
+    _this.crossOrigin_ = options.crossOrigin !== undefined ? options.crossOrigin : null;
     /**
     * @private
-    * @type {number|undefined}
+    * @type {string|undefined}
     */
-    _this.reprojectionErrorThreshold_ = options.reprojectionErrorThreshold;
+    _this.url_ = options.url;
+    /**
+    * @private
+    * @type {import("../Image.js").LoadFunction}
+    */
+    _this.imageLoadFunction_ = options.imageLoadFunction !== undefined ? options.imageLoadFunction : _ImageJs.defaultImageLoadFunction;
+    /**
+    * @private
+    * @type {!Object}
+    */
+    _this.params_ = options.params || ({});
+    /**
+    * @private
+    * @type {boolean}
+    */
+    _this.v13_ = true;
+    _this.updateV13_();
+    /**
+    * @private
+    * @type {import("./WMSServerType.js").default|undefined}
+    */
+    _this.serverType_ = /** @type {import("./WMSServerType.js").default|undefined}*/
+    options.serverType;
+    /**
+    * @private
+    * @type {boolean}
+    */
+    _this.hidpi_ = options.hidpi !== undefined ? options.hidpi : true;
+    /**
+    * @private
+    * @type {import("../Image.js").default}
+    */
+    _this.image_ = null;
+    /**
+    * @private
+    * @type {import("../size.js").Size}
+    */
+    _this.imageSize_ = [0, 0];
+    /**
+    * @private
+    * @type {number}
+    */
+    _this.renderedRevision_ = 0;
+    /**
+    * @private
+    * @type {number}
+    */
+    _this.ratio_ = options.ratio !== undefined ? options.ratio : 1.5;
+    return _this;
+  }
+  /**
+  * Return the GetFeatureInfo URL for the passed coordinate, resolution, and
+  * projection. Return `undefined` if the GetFeatureInfo URL cannot be
+  * constructed.
+  * @param {import("../coordinate.js").Coordinate} coordinate Coordinate.
+  * @param {number} resolution Resolution.
+  * @param {import("../proj.js").ProjectionLike} projection Projection.
+  * @param {!Object} params GetFeatureInfo params. `INFO_FORMAT` at least should
+  *     be provided. If `QUERY_LAYERS` is not provided then the layers specified
+  *     in the `LAYERS` parameter will be used. `VERSION` should not be
+  *     specified here.
+  * @return {string|undefined} GetFeatureInfo URL.
+  * @api
+  */
+  ImageWMS.prototype.getFeatureInfoUrl = function (coordinate, resolution, projection, params) {
+    if (this.url_ === undefined) {
+      return undefined;
+    }
+    var projectionObj = _projJs.get(projection);
+    var sourceProjectionObj = this.getProjection();
+    if (sourceProjectionObj && sourceProjectionObj !== projectionObj) {
+      resolution = _reprojJs.calculateSourceResolution(sourceProjectionObj, projectionObj, coordinate, resolution);
+      coordinate = _projJs.transform(coordinate, projectionObj, sourceProjectionObj);
+    }
+    var extent = _extentJs.getForViewAndSize(coordinate, resolution, 0, GETFEATUREINFO_IMAGE_SIZE);
+    var baseParams = {
+      'SERVICE': 'WMS',
+      'VERSION': _commonJs.DEFAULT_WMS_VERSION,
+      'REQUEST': 'GetFeatureInfo',
+      'FORMAT': 'image/png',
+      'TRANSPARENT': true,
+      'QUERY_LAYERS': this.params_['LAYERS']
+    };
+    _objJs.assign(baseParams, this.params_, params);
+    var x = Math.floor((coordinate[0] - extent[0]) / resolution);
+    var y = Math.floor((extent[3] - coordinate[1]) / resolution);
+    baseParams[this.v13_ ? 'I' : 'X'] = x;
+    baseParams[this.v13_ ? 'J' : 'Y'] = y;
+    return this.getRequestUrl_(extent, GETFEATUREINFO_IMAGE_SIZE, 1, sourceProjectionObj || projectionObj, baseParams);
+  };
+  /**
+  * Return the GetLegendGraphic URL, optionally optimized for the passed
+  * resolution and possibly including any passed specific parameters. Returns
+  * `undefined` if the GetLegendGraphic URL cannot be constructed.
+  *
+  * @param {number} [resolution] Resolution. If set to undefined, `SCALE`
+  *     will not be calculated and included in URL.
+  * @param {Object} [params] GetLegendGraphic params. If `LAYER` is set, the
+  *     request is generated for this wms layer, else it will try to use the
+  *     configured wms layer. Default `FORMAT` is `image/png`.
+  *     `VERSION` should not be specified here.
+  * @return {string|undefined} GetLegendGraphic URL.
+  * @api
+  */
+  ImageWMS.prototype.getLegendUrl = function (resolution, params) {
+    if (this.url_ === undefined) {
+      return undefined;
+    }
+    var baseParams = {
+      'SERVICE': 'WMS',
+      'VERSION': _commonJs.DEFAULT_WMS_VERSION,
+      'REQUEST': 'GetLegendGraphic',
+      'FORMAT': 'image/png'
+    };
+    if (params === undefined || params['LAYER'] === undefined) {
+      var layers = this.params_.LAYERS;
+      var isSingleLayer = !Array.isArray(layers) || layers.length === 1;
+      if (!isSingleLayer) {
+        return undefined;
+      }
+      baseParams['LAYER'] = layers;
+    }
+    if (resolution !== undefined) {
+      var mpu = this.getProjection() ? this.getProjection().getMetersPerUnit() : 1;
+      var pixelSize = 0.00028;
+      baseParams['SCALE'] = resolution * mpu / pixelSize;
+    }
+    _objJs.assign(baseParams, params);
+    return _uriJs.appendParams(/** @type {string}*/
+    this.url_, baseParams);
+  };
+  /**
+  * Get the user-provided params, i.e. those passed to the constructor through
+  * the "params" option, and possibly updated using the updateParams method.
+  * @return {Object} Params.
+  * @api
+  */
+  ImageWMS.prototype.getParams = function () {
+    return this.params_;
+  };
+  /**
+  * @param {import("../extent.js").Extent} extent Extent.
+  * @param {number} resolution Resolution.
+  * @param {number} pixelRatio Pixel ratio.
+  * @param {import("../proj/Projection.js").default} projection Projection.
+  * @return {import("../Image.js").default} Single image.
+  */
+  ImageWMS.prototype.getImageInternal = function (extent, resolution, pixelRatio, projection) {
+    if (this.url_ === undefined) {
+      return null;
+    }
+    resolution = this.findNearestResolution(resolution);
+    if (pixelRatio != 1 && (!this.hidpi_ || this.serverType_ === undefined)) {
+      pixelRatio = 1;
+    }
+    var imageResolution = resolution / pixelRatio;
+    var center = _extentJs.getCenter(extent);
+    var viewWidth = Math.ceil(_extentJs.getWidth(extent) / imageResolution);
+    var viewHeight = Math.ceil(_extentJs.getHeight(extent) / imageResolution);
+    var viewExtent = _extentJs.getForViewAndSize(center, imageResolution, 0, [viewWidth, viewHeight]);
+    var requestWidth = Math.ceil(this.ratio_ * _extentJs.getWidth(extent) / imageResolution);
+    var requestHeight = Math.ceil(this.ratio_ * _extentJs.getHeight(extent) / imageResolution);
+    var requestExtent = _extentJs.getForViewAndSize(center, imageResolution, 0, [requestWidth, requestHeight]);
+    var image = this.image_;
+    if (image && this.renderedRevision_ == this.getRevision() && image.getResolution() == resolution && image.getPixelRatio() == pixelRatio && _extentJs.containsExtent(image.getExtent(), viewExtent)) {
+      return image;
+    }
+    var params = {
+      'SERVICE': 'WMS',
+      'VERSION': _commonJs.DEFAULT_WMS_VERSION,
+      'REQUEST': 'GetMap',
+      'FORMAT': 'image/png',
+      'TRANSPARENT': true
+    };
+    _objJs.assign(params, this.params_);
+    this.imageSize_[0] = Math.round(_extentJs.getWidth(requestExtent) / imageResolution);
+    this.imageSize_[1] = Math.round(_extentJs.getHeight(requestExtent) / imageResolution);
+    var url = this.getRequestUrl_(requestExtent, this.imageSize_, pixelRatio, projection, params);
+    this.image_ = new _ImageJs2Default.default(requestExtent, resolution, pixelRatio, url, this.crossOrigin_, this.imageLoadFunction_);
+    this.renderedRevision_ = this.getRevision();
+    this.image_.addEventListener(_eventsEventTypeJsDefault.default.CHANGE, this.handleImageChange.bind(this));
+    return this.image_;
+  };
+  /**
+  * Return the image load function of the source.
+  * @return {import("../Image.js").LoadFunction} The image load function.
+  * @api
+  */
+  ImageWMS.prototype.getImageLoadFunction = function () {
+    return this.imageLoadFunction_;
+  };
+  /**
+  * @param {import("../extent.js").Extent} extent Extent.
+  * @param {import("../size.js").Size} size Size.
+  * @param {number} pixelRatio Pixel ratio.
+  * @param {import("../proj/Projection.js").default} projection Projection.
+  * @param {Object} params Params.
+  * @return {string} Request URL.
+  * @private
+  */
+  ImageWMS.prototype.getRequestUrl_ = function (extent, size, pixelRatio, projection, params) {
+    _assertsJs.assert(this.url_ !== undefined, 9);
+    // `url` must be configured or set using `#setUrl()`
+    params[this.v13_ ? 'CRS' : 'SRS'] = projection.getCode();
+    if (!(('STYLES' in this.params_))) {
+      params['STYLES'] = '';
+    }
+    if (pixelRatio != 1) {
+      switch (this.serverType_) {
+        case _WMSServerTypeJsDefault.default.GEOSERVER:
+          var dpi = 90 * pixelRatio + 0.5 | 0;
+          if (('FORMAT_OPTIONS' in params)) {
+            params['FORMAT_OPTIONS'] += ';dpi:' + dpi;
+          } else {
+            params['FORMAT_OPTIONS'] = 'dpi:' + dpi;
+          }
+          break;
+        case _WMSServerTypeJsDefault.default.MAPSERVER:
+          params['MAP_RESOLUTION'] = 90 * pixelRatio;
+          break;
+        case _WMSServerTypeJsDefault.default.CARMENTA_SERVER:
+        case _WMSServerTypeJsDefault.default.QGIS:
+          params['DPI'] = 90 * pixelRatio;
+          break;
+        default:
+          _assertsJs.assert(false, 8);
+          // Unknown `serverType` configured
+          break;
+      }
+    }
+    params['WIDTH'] = size[0];
+    params['HEIGHT'] = size[1];
+    var axisOrientation = projection.getAxisOrientation();
+    var bbox;
+    if (this.v13_ && axisOrientation.substr(0, 2) == 'ne') {
+      bbox = [extent[1], extent[0], extent[3], extent[2]];
+    } else {
+      bbox = extent;
+    }
+    params['BBOX'] = bbox.join(',');
+    return _uriJs.appendParams(/** @type {string}*/
+    this.url_, params);
+  };
+  /**
+  * Return the URL used for this WMS source.
+  * @return {string|undefined} URL.
+  * @api
+  */
+  ImageWMS.prototype.getUrl = function () {
+    return this.url_;
+  };
+  /**
+  * Set the image load function of the source.
+  * @param {import("../Image.js").LoadFunction} imageLoadFunction Image load function.
+  * @api
+  */
+  ImageWMS.prototype.setImageLoadFunction = function (imageLoadFunction) {
+    this.image_ = null;
+    this.imageLoadFunction_ = imageLoadFunction;
+    this.changed();
+  };
+  /**
+  * Set the URL to use for requests.
+  * @param {string|undefined} url URL.
+  * @api
+  */
+  ImageWMS.prototype.setUrl = function (url) {
+    if (url != this.url_) {
+      this.url_ = url;
+      this.image_ = null;
+      this.changed();
+    }
+  };
+  /**
+  * Update the user-provided params.
+  * @param {Object} params Params.
+  * @api
+  */
+  ImageWMS.prototype.updateParams = function (params) {
+    _objJs.assign(this.params_, params);
+    this.updateV13_();
+    this.image_ = null;
+    this.changed();
+  };
+  /**
+  * @private
+  */
+  ImageWMS.prototype.updateV13_ = function () {
+    var version = this.params_['VERSION'] || _commonJs.DEFAULT_WMS_VERSION;
+    this.v13_ = _stringJs.compareVersions(version, '1.3') >= 0;
+  };
+  return ImageWMS;
+})(_ImageJsDefault.default);
+exports.default = ImageWMS;
+
+},{"./common.js":"1xpRq","../events/EventType.js":"1VnyO","./Image.js":"7q0f9","../Image.js":"6Osx2","./WMSServerType.js":"4P7Eo","../uri.js":"2CPqV","../asserts.js":"1kfem","../obj.js":"fh3Rh","../reproj.js":"6Jbh4","../string.js":"18r6b","../extent.js":"5PMSh","../proj.js":"4Wdsb","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"1xpRq":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "DEFAULT_WMS_VERSION", function () {
+  return DEFAULT_WMS_VERSION;
+});
+_parcelHelpers.export(exports, "IMAGE_SMOOTHING_DISABLED", function () {
+  return IMAGE_SMOOTHING_DISABLED;
+});
+var DEFAULT_WMS_VERSION = '1.3.0';
+var IMAGE_SMOOTHING_DISABLED = {
+  imageSmoothingEnabled: false,
+  msImageSmoothingEnabled: false
+};
+
+},{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"7q0f9":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "ImageSourceEventType", function () {
+  return ImageSourceEventType;
+});
+_parcelHelpers.export(exports, "defaultImageLoadFunction", function () {
+  return defaultImageLoadFunction;
+});
+_parcelHelpers.export(exports, "ImageSourceEvent", function () {
+  return ImageSourceEvent;
+});
+var _eventsEventJs = require('../events/Event.js');
+var _eventsEventJsDefault = _parcelHelpers.interopDefault(_eventsEventJs);
+var _ImageStateJs = require('../ImageState.js');
+var _ImageStateJsDefault = _parcelHelpers.interopDefault(_ImageStateJs);
+var _reprojImageJs = require('../reproj/Image.js');
+var _reprojImageJsDefault = _parcelHelpers.interopDefault(_reprojImageJs);
+var _SourceJs = require('./Source.js');
+var _SourceJsDefault = _parcelHelpers.interopDefault(_SourceJs);
+var _reprojCommonJs = require('../reproj/common.js');
+var _commonJs = require('./common.js');
+var _utilJs = require('../util.js');
+var _extentJs = require('../extent.js');
+var _projJs = require('../proj.js');
+var _arrayJs = require('../array.js');
+var __extends = undefined && undefined.__extends || (function () {
+  var extendStatics = function (d, b) {
+    extendStatics = Object.setPrototypeOf || ({
+      __proto__: []
+    }) instanceof Array && (function (d, b) {
+      d.__proto__ = b;
+    }) || (function (d, b) {
+      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+    });
+    return extendStatics(d, b);
+  };
+  return function (d, b) {
+    extendStatics(d, b);
+    function __() {
+      this.constructor = d;
+    }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+})();
+var ImageSourceEventType = {
+  /**
+  * Triggered when an image starts loading.
+  * @event module:ol/source/Image.ImageSourceEvent#imageloadstart
+  * @api
+  */
+  IMAGELOADSTART: 'imageloadstart',
+  /**
+  * Triggered when an image finishes loading.
+  * @event module:ol/source/Image.ImageSourceEvent#imageloadend
+  * @api
+  */
+  IMAGELOADEND: 'imageloadend',
+  /**
+  * Triggered if image loading results in an error.
+  * @event module:ol/source/Image.ImageSourceEvent#imageloaderror
+  * @api
+  */
+  IMAGELOADERROR: 'imageloaderror'
+};
+/**
+* @classdesc
+* Events emitted by {@link module:ol/source/Image~ImageSource} instances are instances of this
+* type.
+*/
+var ImageSourceEvent = /** @class*/
+(function (_super) {
+  __extends(ImageSourceEvent, _super);
+  /**
+  * @param {string} type Type.
+  * @param {import("../Image.js").default} image The image.
+  */
+  function ImageSourceEvent(type, image) {
+    var _this = _super.call(this, type) || this;
+    /**
+    * The image related to the event.
+    * @type {import("../Image.js").default}
+    * @api
+    */
+    _this.image = image;
+    return _this;
+  }
+  return ImageSourceEvent;
+})(_eventsEventJsDefault.default);
+/**
+* @typedef {Object} Options
+* @property {import("./Source.js").AttributionLike} [attributions]
+* @property {boolean} [imageSmoothing=true] Enable image smoothing.
+* @property {import("../proj.js").ProjectionLike} [projection]
+* @property {Array<number>} [resolutions]
+* @property {import("./State.js").default} [state]
+*/
+/**
+* @classdesc
+* Abstract base class; normally only used for creating subclasses and not
+* instantiated in apps.
+* Base class for sources providing a single image.
+* @abstract
+* @fires module:ol/source/Image.ImageSourceEvent
+* @api
+*/
+var ImageSource = /** @class*/
+(function (_super) {
+  __extends(ImageSource, _super);
+  /**
+  * @param {Options} options Single image source options.
+  */
+  function ImageSource(options) {
+    var _this = _super.call(this, {
+      attributions: options.attributions,
+      projection: options.projection,
+      state: options.state
+    }) || this;
+    /**
+    * @private
+    * @type {Array<number>}
+    */
+    _this.resolutions_ = options.resolutions !== undefined ? options.resolutions : null;
+    /**
+    * @private
+    * @type {import("../reproj/Image.js").default}
+    */
+    _this.reprojectedImage_ = null;
+    /**
+    * @private
+    * @type {number}
+    */
+    _this.reprojectedRevision_ = 0;
     /**
     * @private
     * @type {object|undefined}
     */
     _this.contextOptions_ = options.imageSmoothing === false ? _commonJs.IMAGE_SMOOTHING_DISABLED : undefined;
-    /**
-    * @private
-    * @type {boolean}
-    */
-    _this.renderReprojectionEdges_ = false;
     return _this;
   }
   /**
-  * @return {boolean} Can expire cache.
+  * @return {Array<number>} Resolutions.
   */
-  TileImage.prototype.canExpireCache = function () {
-    if (!_reprojCommonJs.ENABLE_RASTER_REPROJECTION) {
-      return _super.prototype.canExpireCache.call(this);
-    }
-    if (this.tileCache.canExpireCache()) {
-      return true;
-    } else {
-      for (var key in this.tileCacheForProjection) {
-        if (this.tileCacheForProjection[key].canExpireCache()) {
-          return true;
-        }
-      }
-    }
-    return false;
-  };
-  /**
-  * @param {import("../proj/Projection.js").default} projection Projection.
-  * @param {!Object<string, boolean>} usedTiles Used tiles.
-  */
-  TileImage.prototype.expireCache = function (projection, usedTiles) {
-    if (!_reprojCommonJs.ENABLE_RASTER_REPROJECTION) {
-      _super.prototype.expireCache.call(this, projection, usedTiles);
-      return;
-    }
-    var usedTileCache = this.getTileCacheForProjection(projection);
-    this.tileCache.expireCache(this.tileCache == usedTileCache ? usedTiles : {});
-    for (var id in this.tileCacheForProjection) {
-      var tileCache = this.tileCacheForProjection[id];
-      tileCache.expireCache(tileCache == usedTileCache ? usedTiles : {});
-    }
+  ImageSource.prototype.getResolutions = function () {
+    return this.resolutions_;
   };
   /**
   * @return {Object|undefined} Context options.
   */
-  TileImage.prototype.getContextOptions = function () {
+  ImageSource.prototype.getContextOptions = function () {
     return this.contextOptions_;
   };
   /**
-  * @param {import("../proj/Projection.js").default} projection Projection.
-  * @return {number} Gutter.
-  */
-  TileImage.prototype.getGutterForProjection = function (projection) {
-    if (_reprojCommonJs.ENABLE_RASTER_REPROJECTION && this.getProjection() && projection && !_projJs.equivalent(this.getProjection(), projection)) {
-      return 0;
-    } else {
-      return this.getGutter();
-    }
-  };
-  /**
-  * @return {number} Gutter.
-  */
-  TileImage.prototype.getGutter = function () {
-    return 0;
-  };
-  /**
-  * Return the key to be used for all tiles in the source.
-  * @return {string} The key for all tiles.
   * @protected
+  * @param {number} resolution Resolution.
+  * @return {number} Resolution.
   */
-  TileImage.prototype.getKey = function () {
-    return _super.prototype.getKey.call(this) + (this.contextOptions_ ? '\n' + JSON.stringify(this.contextOptions_) : '');
+  ImageSource.prototype.findNearestResolution = function (resolution) {
+    if (this.resolutions_) {
+      var idx = _arrayJs.linearFindNearest(this.resolutions_, resolution, 0);
+      resolution = this.resolutions_[idx];
+    }
+    return resolution;
   };
   /**
-  * @param {import("../proj/Projection.js").default} projection Projection.
-  * @return {boolean} Opaque.
-  */
-  TileImage.prototype.getOpaque = function (projection) {
-    if (_reprojCommonJs.ENABLE_RASTER_REPROJECTION && this.getProjection() && projection && !_projJs.equivalent(this.getProjection(), projection)) {
-      return false;
-    } else {
-      return _super.prototype.getOpaque.call(this, projection);
-    }
-  };
-  /**
-  * @param {import("../proj/Projection.js").default} projection Projection.
-  * @return {!import("../tilegrid/TileGrid.js").default} Tile grid.
-  */
-  TileImage.prototype.getTileGridForProjection = function (projection) {
-    if (!_reprojCommonJs.ENABLE_RASTER_REPROJECTION) {
-      return _super.prototype.getTileGridForProjection.call(this, projection);
-    }
-    var thisProj = this.getProjection();
-    if (this.tileGrid && (!thisProj || _projJs.equivalent(thisProj, projection))) {
-      return this.tileGrid;
-    } else {
-      var projKey = _utilJs.getUid(projection);
-      if (!((projKey in this.tileGridForProjection))) {
-        this.tileGridForProjection[projKey] = _tilegridJs.getForProjection(projection);
-      }
-      return this.tileGridForProjection[projKey];
-    }
-  };
-  /**
-  * @param {import("../proj/Projection.js").default} projection Projection.
-  * @return {import("../TileCache.js").default} Tile cache.
-  */
-  TileImage.prototype.getTileCacheForProjection = function (projection) {
-    if (!_reprojCommonJs.ENABLE_RASTER_REPROJECTION) {
-      return _super.prototype.getTileCacheForProjection.call(this, projection);
-    }
-    var thisProj = this.getProjection();
-    if (!thisProj || _projJs.equivalent(thisProj, projection)) {
-      return this.tileCache;
-    } else {
-      var projKey = _utilJs.getUid(projection);
-      if (!((projKey in this.tileCacheForProjection))) {
-        this.tileCacheForProjection[projKey] = new _TileCacheJsDefault.default(this.tileCache.highWaterMark);
-      }
-      return this.tileCacheForProjection[projKey];
-    }
-  };
-  /**
-  * @param {number} z Tile coordinate z.
-  * @param {number} x Tile coordinate x.
-  * @param {number} y Tile coordinate y.
+  * @param {import("../extent.js").Extent} extent Extent.
+  * @param {number} resolution Resolution.
   * @param {number} pixelRatio Pixel ratio.
   * @param {import("../proj/Projection.js").default} projection Projection.
-  * @param {string} key The key set on the tile.
-  * @return {!import("../Tile.js").default} Tile.
-  * @private
+  * @return {import("../ImageBase.js").default} Single image.
   */
-  TileImage.prototype.createTile_ = function (z, x, y, pixelRatio, projection, key) {
-    var tileCoord = [z, x, y];
-    var urlTileCoord = this.getTileCoordForTileUrlFunction(tileCoord, projection);
-    var tileUrl = urlTileCoord ? this.tileUrlFunction(urlTileCoord, pixelRatio, projection) : undefined;
-    var tile = new this.tileClass(tileCoord, tileUrl !== undefined ? _TileStateJsDefault.default.IDLE : _TileStateJsDefault.default.EMPTY, tileUrl !== undefined ? tileUrl : '', this.crossOrigin, this.tileLoadFunction, this.tileOptions);
-    tile.key = key;
-    tile.addEventListener(_eventsEventTypeJsDefault.default.CHANGE, this.handleTileChange.bind(this));
-    return tile;
-  };
-  /**
-  * @param {number} z Tile coordinate z.
-  * @param {number} x Tile coordinate x.
-  * @param {number} y Tile coordinate y.
-  * @param {number} pixelRatio Pixel ratio.
-  * @param {import("../proj/Projection.js").default} projection Projection.
-  * @return {!import("../Tile.js").default} Tile.
-  */
-  TileImage.prototype.getTile = function (z, x, y, pixelRatio, projection) {
+  ImageSource.prototype.getImage = function (extent, resolution, pixelRatio, projection) {
     var sourceProjection = this.getProjection();
     if (!_reprojCommonJs.ENABLE_RASTER_REPROJECTION || !sourceProjection || !projection || _projJs.equivalent(sourceProjection, projection)) {
-      return this.getTileInternal(z, x, y, pixelRatio, sourceProjection || projection);
+      if (sourceProjection) {
+        projection = sourceProjection;
+      }
+      return this.getImageInternal(extent, resolution, pixelRatio, projection);
     } else {
-      var cache = this.getTileCacheForProjection(projection);
-      var tileCoord = [z, x, y];
-      var tile = void 0;
-      var tileCoordKey = _tilecoordJs.getKey(tileCoord);
-      if (cache.containsKey(tileCoordKey)) {
-        tile = cache.get(tileCoordKey);
-      }
-      var key = this.getKey();
-      if (tile && tile.key == key) {
-        return tile;
-      } else {
-        var sourceTileGrid = this.getTileGridForProjection(sourceProjection);
-        var targetTileGrid = this.getTileGridForProjection(projection);
-        var wrappedTileCoord = this.getTileCoordForTileUrlFunction(tileCoord, projection);
-        var newTile = new _reprojTileJsDefault.default(sourceProjection, sourceTileGrid, projection, targetTileGrid, tileCoord, wrappedTileCoord, this.getTilePixelRatio(pixelRatio), this.getGutter(), (function (z, x, y, pixelRatio) {
-          return this.getTileInternal(z, x, y, pixelRatio, sourceProjection);
-        }).bind(this), this.reprojectionErrorThreshold_, this.renderReprojectionEdges_, this.contextOptions_);
-        newTile.key = key;
-        if (tile) {
-          newTile.interimTile = tile;
-          newTile.refreshInterimChain();
-          cache.replace(tileCoordKey, newTile);
-        } else {
-          cache.set(tileCoordKey, newTile);
+      if (this.reprojectedImage_) {
+        if (this.reprojectedRevision_ == this.getRevision() && _projJs.equivalent(this.reprojectedImage_.getProjection(), projection) && this.reprojectedImage_.getResolution() == resolution && _extentJs.equals(this.reprojectedImage_.getExtent(), extent)) {
+          return this.reprojectedImage_;
         }
-        return newTile;
+        this.reprojectedImage_.dispose();
+        this.reprojectedImage_ = null;
       }
+      this.reprojectedImage_ = new _reprojImageJsDefault.default(sourceProjection, projection, extent, resolution, pixelRatio, (function (extent, resolution, pixelRatio) {
+        return this.getImageInternal(extent, resolution, pixelRatio, sourceProjection);
+      }).bind(this), this.contextOptions_);
+      this.reprojectedRevision_ = this.getRevision();
+      return this.reprojectedImage_;
     }
   };
   /**
-  * @param {number} z Tile coordinate z.
-  * @param {number} x Tile coordinate x.
-  * @param {number} y Tile coordinate y.
-  * @param {number} pixelRatio Pixel ratio.
-  * @param {!import("../proj/Projection.js").default} projection Projection.
-  * @return {!import("../Tile.js").default} Tile.
-  * @protected
-  */
-  TileImage.prototype.getTileInternal = function (z, x, y, pixelRatio, projection) {
-    var tile = null;
-    var tileCoordKey = _tilecoordJs.getKeyZXY(z, x, y);
-    var key = this.getKey();
-    if (!this.tileCache.containsKey(tileCoordKey)) {
-      tile = this.createTile_(z, x, y, pixelRatio, projection, key);
-      this.tileCache.set(tileCoordKey, tile);
-    } else {
-      tile = this.tileCache.get(tileCoordKey);
-      if (tile.key != key) {
-        // The source's params changed. If the tile has an interim tile and if we
-        // can use it then we use it. Otherwise we create a new tile.  In both
-        // cases we attempt to assign an interim tile to the new tile.
-        var interimTile = tile;
-        tile = this.createTile_(z, x, y, pixelRatio, projection, key);
-        // make the new tile the head of the list,
-        if (interimTile.getState() == _TileStateJsDefault.default.IDLE) {
-          // the old tile hasn't begun loading yet, and is now outdated, so we can simply discard it
-          tile.interimTile = interimTile.interimTile;
-        } else {
-          tile.interimTile = interimTile;
-        }
-        tile.refreshInterimChain();
-        this.tileCache.replace(tileCoordKey, tile);
-      }
-    }
-    return tile;
-  };
-  /**
-  * Sets whether to render reprojection edges or not (usually for debugging).
-  * @param {boolean} render Render the edges.
-  * @api
-  */
-  TileImage.prototype.setRenderReprojectionEdges = function (render) {
-    if (!_reprojCommonJs.ENABLE_RASTER_REPROJECTION || this.renderReprojectionEdges_ == render) {
-      return;
-    }
-    this.renderReprojectionEdges_ = render;
-    for (var id in this.tileCacheForProjection) {
-      this.tileCacheForProjection[id].clear();
-    }
-    this.changed();
-  };
-  /**
-  * Sets the tile grid to use when reprojecting the tiles to the given
-  * projection instead of the default tile grid for the projection.
-  *
-  * This can be useful when the default tile grid cannot be created
-  * (e.g. projection has no extent defined) or
-  * for optimization reasons (custom tile size, resolutions, ...).
-  *
-  * @param {import("../proj.js").ProjectionLike} projection Projection.
-  * @param {import("../tilegrid/TileGrid.js").default} tilegrid Tile grid to use for the projection.
-  * @api
-  */
-  TileImage.prototype.setTileGridForProjection = function (projection, tilegrid) {
-    if (_reprojCommonJs.ENABLE_RASTER_REPROJECTION) {
-      var proj = _projJs.get(projection);
-      if (proj) {
-        var projKey = _utilJs.getUid(proj);
-        if (!((projKey in this.tileGridForProjection))) {
-          this.tileGridForProjection[projKey] = tilegrid;
-        }
-      }
-    }
-  };
-  return TileImage;
-})(_UrlTileJsDefault.default);
-/**
-* @param {ImageTile} imageTile Image tile.
-* @param {string} src Source.
-*/
-function defaultTileLoadFunction(imageTile, src) {
-  /** @type {HTMLImageElement|HTMLVideoElement}*/
-  imageTile.getImage().src = src;
-}
-exports.default = TileImage;
-
-},{"../events/EventType.js":"1VnyO","../ImageTile.js":"4Uwcv","../reproj/Tile.js":"5lSdx","../TileCache.js":"1oUcD","../TileState.js":"4w04B","./UrlTile.js":"2ULXC","../reproj/common.js":"5AFC2","./common.js":"1xpRq","../proj.js":"4Wdsb","../tilecoord.js":"2kkyx","../tilegrid.js":"1JyRQ","../util.js":"4k52K","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"4Uwcv":[function(require,module,exports) {
-var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
-_parcelHelpers.defineInteropFlag(exports);
-var _TileJs = require('./Tile.js');
-var _TileJsDefault = _parcelHelpers.interopDefault(_TileJs);
-var _TileStateJs = require('./TileState.js');
-var _TileStateJsDefault = _parcelHelpers.interopDefault(_TileStateJs);
-var _domJs = require('./dom.js');
-var _ImageJs = require('./Image.js');
-var __extends = undefined && undefined.__extends || (function () {
-  var extendStatics = function (d, b) {
-    extendStatics = Object.setPrototypeOf || ({
-      __proto__: []
-    }) instanceof Array && (function (d, b) {
-      d.__proto__ = b;
-    }) || (function (d, b) {
-      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-    });
-    return extendStatics(d, b);
-  };
-  return function (d, b) {
-    extendStatics(d, b);
-    function __() {
-      this.constructor = d;
-    }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-})();
-var ImageTile = /** @class*/
-(function (_super) {
-  __extends(ImageTile, _super);
-  /**
-  * @param {import("./tilecoord.js").TileCoord} tileCoord Tile coordinate.
-  * @param {import("./TileState.js").default} state State.
-  * @param {string} src Image source URI.
-  * @param {?string} crossOrigin Cross origin.
-  * @param {import("./Tile.js").LoadFunction} tileLoadFunction Tile load function.
-  * @param {import("./Tile.js").Options=} opt_options Tile options.
-  */
-  function ImageTile(tileCoord, state, src, crossOrigin, tileLoadFunction, opt_options) {
-    var _this = _super.call(this, tileCoord, state, opt_options) || this;
-    /**
-    * @private
-    * @type {?string}
-    */
-    _this.crossOrigin_ = crossOrigin;
-    /**
-    * Image URI
-    *
-    * @private
-    * @type {string}
-    */
-    _this.src_ = src;
-    _this.key = src;
-    /**
-    * @private
-    * @type {HTMLImageElement|HTMLCanvasElement}
-    */
-    _this.image_ = new Image();
-    if (crossOrigin !== null) {
-      _this.image_.crossOrigin = crossOrigin;
-    }
-    /**
-    * @private
-    * @type {?function():void}
-    */
-    _this.unlisten_ = null;
-    /**
-    * @private
-    * @type {import("./Tile.js").LoadFunction}
-    */
-    _this.tileLoadFunction_ = tileLoadFunction;
-    return _this;
-  }
-  /**
-  * Get the HTML image element for this tile (may be a Canvas, Image, or Video).
-  * @return {HTMLCanvasElement|HTMLImageElement|HTMLVideoElement} Image.
-  * @api
-  */
-  ImageTile.prototype.getImage = function () {
-    return this.image_;
-  };
-  /**
-  * Tracks loading or read errors.
-  *
-  * @private
-  */
-  ImageTile.prototype.handleImageError_ = function () {
-    this.state = _TileStateJsDefault.default.ERROR;
-    this.unlistenImage_();
-    this.image_ = getBlankImage();
-    this.changed();
-  };
-  /**
-  * Tracks successful image load.
-  *
-  * @private
-  */
-  ImageTile.prototype.handleImageLoad_ = function () {
-    var image = /** @type {HTMLImageElement}*/
-    this.image_;
-    if (image.naturalWidth && image.naturalHeight) {
-      this.state = _TileStateJsDefault.default.LOADED;
-    } else {
-      this.state = _TileStateJsDefault.default.EMPTY;
-    }
-    this.unlistenImage_();
-    this.changed();
-  };
-  /**
-  * Load not yet loaded URI.
-  * @api
-  */
-  ImageTile.prototype.load = function () {
-    if (this.state == _TileStateJsDefault.default.ERROR) {
-      this.state = _TileStateJsDefault.default.IDLE;
-      this.image_ = new Image();
-      if (this.crossOrigin_ !== null) {
-        this.image_.crossOrigin = this.crossOrigin_;
-      }
-    }
-    if (this.state == _TileStateJsDefault.default.IDLE) {
-      this.state = _TileStateJsDefault.default.LOADING;
-      this.changed();
-      this.tileLoadFunction_(this, this.src_);
-      this.unlisten_ = _ImageJs.listenImage(this.image_, this.handleImageLoad_.bind(this), this.handleImageError_.bind(this));
-    }
-  };
-  /**
-  * Discards event handlers which listen for load completion or errors.
-  *
-  * @private
-  */
-  ImageTile.prototype.unlistenImage_ = function () {
-    if (this.unlisten_) {
-      this.unlisten_();
-      this.unlisten_ = null;
-    }
-  };
-  return ImageTile;
-})(_TileJsDefault.default);
-/**
-* Get a 1-pixel blank image.
-* @return {HTMLCanvasElement} Blank image.
-*/
-function getBlankImage() {
-  var ctx = _domJs.createCanvasContext2D(1, 1);
-  ctx.fillStyle = 'rgba(0,0,0,0)';
-  ctx.fillRect(0, 0, 1, 1);
-  return ctx.canvas;
-}
-exports.default = ImageTile;
-
-},{"./Tile.js":"72Vcf","./TileState.js":"4w04B","./dom.js":"5oBTC","./Image.js":"6Osx2","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"72Vcf":[function(require,module,exports) {
-var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
-_parcelHelpers.defineInteropFlag(exports);
-var _eventsTargetJs = require('./events/Target.js');
-var _eventsTargetJsDefault = _parcelHelpers.interopDefault(_eventsTargetJs);
-var _eventsEventTypeJs = require('./events/EventType.js');
-var _eventsEventTypeJsDefault = _parcelHelpers.interopDefault(_eventsEventTypeJs);
-var _TileStateJs = require('./TileState.js');
-var _TileStateJsDefault = _parcelHelpers.interopDefault(_TileStateJs);
-var _utilJs = require('./util.js');
-var _easingJs = require('./easing.js');
-var __extends = undefined && undefined.__extends || (function () {
-  var extendStatics = function (d, b) {
-    extendStatics = Object.setPrototypeOf || ({
-      __proto__: []
-    }) instanceof Array && (function (d, b) {
-      d.__proto__ = b;
-    }) || (function (d, b) {
-      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-    });
-    return extendStatics(d, b);
-  };
-  return function (d, b) {
-    extendStatics(d, b);
-    function __() {
-      this.constructor = d;
-    }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-})();
-/**
-* A function that takes an {@link module:ol/Tile} for the tile and a
-* `{string}` for the url as arguments. The default is
-* ```js
-* source.setTileLoadFunction(function(tile, src) {
-*   tile.getImage().src = src;
-* });
-* ```
-* For more fine grained control, the load function can use fetch or XMLHttpRequest and involve
-* error handling:
-*
-* ```js
-* import TileState from 'ol/TileState';
-*
-* source.setTileLoadFunction(function(tile, src) {
-*   var xhr = new XMLHttpRequest();
-*   xhr.responseType = 'blob';
-*   xhr.addEventListener('loadend', function (evt) {
-*     var data = this.response;
-*     if (data !== undefined) {
-*       tile.getImage().src = URL.createObjectURL(data);
-*     } else {
-*       tile.setState(TileState.ERROR);
-*     }
-*   });
-*   xhr.addEventListener('error', function () {
-*     tile.setState(TileState.ERROR);
-*   });
-*   xhr.open('GET', src);
-*   xhr.send();
-* });
-* ```
-*
-* @typedef {function(Tile, string): void} LoadFunction
-* @api
-*/
-/**
-* {@link module:ol/source/Tile~Tile} sources use a function of this type to get
-* the url that provides a tile for a given tile coordinate.
-*
-* This function takes an {@link module:ol/tilecoord~TileCoord} for the tile
-* coordinate, a `{number}` representing the pixel ratio and a
-* {@link module:ol/proj/Projection} for the projection  as arguments
-* and returns a `{string}` representing the tile URL, or undefined if no tile
-* should be requested for the passed tile coordinate.
-*
-* @typedef {function(import("./tilecoord.js").TileCoord, number,
-*           import("./proj/Projection.js").default): (string|undefined)} UrlFunction
-* @api
-*/
-/**
-* @typedef {Object} Options
-* @property {number} [transition=250] A duration for tile opacity
-* transitions in milliseconds. A duration of 0 disables the opacity transition.
-* @api
-*/
-/**
-* @classdesc
-* Base class for tiles.
-*
-* @abstract
-*/
-var Tile = /** @class*/
-(function (_super) {
-  __extends(Tile, _super);
-  /**
-  * @param {import("./tilecoord.js").TileCoord} tileCoord Tile coordinate.
-  * @param {import("./TileState.js").default} state State.
-  * @param {Options=} opt_options Tile options.
-  */
-  function Tile(tileCoord, state, opt_options) {
-    var _this = _super.call(this) || this;
-    var options = opt_options ? opt_options : {};
-    /**
-    * @type {import("./tilecoord.js").TileCoord}
-    */
-    _this.tileCoord = tileCoord;
-    /**
-    * @protected
-    * @type {import("./TileState.js").default}
-    */
-    _this.state = state;
-    /**
-    * An "interim" tile for this tile. The interim tile may be used while this
-    * one is loading, for "smooth" transitions when changing params/dimensions
-    * on the source.
-    * @type {Tile}
-    */
-    _this.interimTile = null;
-    /**
-    * The tile is available at the highest possible resolution. Subclasses can
-    * set this to `false` initially. Tile load listeners will not be
-    * unregistered before this is set to `true` and a `#changed()` is called.
-    * @type {boolean}
-    */
-    _this.hifi = true;
-    /**
-    * A key assigned to the tile. This is used by the tile source to determine
-    * if this tile can effectively be used, or if a new tile should be created
-    * and this one be used as an interim tile for this new tile.
-    * @type {string}
-    */
-    _this.key = '';
-    /**
-    * The duration for the opacity transition.
-    * @type {number}
-    */
-    _this.transition_ = options.transition === undefined ? 250 : options.transition;
-    /**
-    * Lookup of start times for rendering transitions.  If the start time is
-    * equal to -1, the transition is complete.
-    * @type {Object<string, number>}
-    */
-    _this.transitionStarts_ = {};
-    return _this;
-  }
-  /**
-  * @protected
-  */
-  Tile.prototype.changed = function () {
-    this.dispatchEvent(_eventsEventTypeJsDefault.default.CHANGE);
-  };
-  /**
-  * Called by the tile cache when the tile is removed from the cache due to expiry
-  */
-  Tile.prototype.release = function () {};
-  /**
-  * @return {string} Key.
-  */
-  Tile.prototype.getKey = function () {
-    return this.key + '/' + this.tileCoord;
-  };
-  /**
-  * Get the interim tile most suitable for rendering using the chain of interim
-  * tiles. This corresponds to the  most recent tile that has been loaded, if no
-  * such tile exists, the original tile is returned.
-  * @return {!Tile} Best tile for rendering.
-  */
-  Tile.prototype.getInterimTile = function () {
-    if (!this.interimTile) {
-      // empty chain
-      return this;
-    }
-    var tile = this.interimTile;
-    // find the first loaded tile and return it. Since the chain is sorted in
-    // decreasing order of creation time, there is no need to search the remainder
-    // of the list (all those tiles correspond to older requests and will be
-    // cleaned up by refreshInterimChain)
-    do {
-      if (tile.getState() == _TileStateJsDefault.default.LOADED) {
-        // Show tile immediately instead of fading it in after loading, because
-        // the interim tile is in place already
-        this.transition_ = 0;
-        return tile;
-      }
-      tile = tile.interimTile;
-    } while (tile);
-    // we can not find a better tile
-    return this;
-  };
-  /**
-  * Goes through the chain of interim tiles and discards sections of the chain
-  * that are no longer relevant.
-  */
-  Tile.prototype.refreshInterimChain = function () {
-    if (!this.interimTile) {
-      return;
-    }
-    var tile = this.interimTile;
-    var prev = /** @type {Tile}*/
-    this;
-    do {
-      if (tile.getState() == _TileStateJsDefault.default.LOADED) {
-        // we have a loaded tile, we can discard the rest of the list
-        // we would could abort any LOADING tile request
-        // older than this tile (i.e. any LOADING tile following this entry in the chain)
-        tile.interimTile = null;
-        break;
-      } else if (tile.getState() == _TileStateJsDefault.default.LOADING) {
-        // keep this LOADING tile any loaded tiles later in the chain are
-        // older than this tile, so we're still interested in the request
-        prev = tile;
-      } else if (tile.getState() == _TileStateJsDefault.default.IDLE) {
-        // the head of the list is the most current tile, we don't need
-        // to start any other requests for this chain
-        prev.interimTile = tile.interimTile;
-      } else {
-        prev = tile;
-      }
-      tile = prev.interimTile;
-    } while (tile);
-  };
-  /**
-  * Get the tile coordinate for this tile.
-  * @return {import("./tilecoord.js").TileCoord} The tile coordinate.
-  * @api
-  */
-  Tile.prototype.getTileCoord = function () {
-    return this.tileCoord;
-  };
-  /**
-  * @return {import("./TileState.js").default} State.
-  */
-  Tile.prototype.getState = function () {
-    return this.state;
-  };
-  /**
-  * Sets the state of this tile. If you write your own {@link module:ol/Tile~LoadFunction tileLoadFunction} ,
-  * it is important to set the state correctly to {@link module:ol/TileState~ERROR}
-  * when the tile cannot be loaded. Otherwise the tile cannot be removed from
-  * the tile queue and will block other requests.
-  * @param {import("./TileState.js").default} state State.
-  * @api
-  */
-  Tile.prototype.setState = function (state) {
-    if (this.state !== _TileStateJsDefault.default.ERROR && this.state > state) {
-      throw new Error('Tile load sequence violation');
-    }
-    this.state = state;
-    this.changed();
-  };
-  /**
-  * Load the image or retry if loading previously failed.
-  * Loading is taken care of by the tile queue, and calling this method is
-  * only needed for preloading or for reloading in case of an error.
   * @abstract
-  * @api
+  * @param {import("../extent.js").Extent} extent Extent.
+  * @param {number} resolution Resolution.
+  * @param {number} pixelRatio Pixel ratio.
+  * @param {import("../proj/Projection.js").default} projection Projection.
+  * @return {import("../ImageBase.js").default} Single image.
+  * @protected
   */
-  Tile.prototype.load = function () {
-    _utilJs.abstract();
+  ImageSource.prototype.getImageInternal = function (extent, resolution, pixelRatio, projection) {
+    return _utilJs.abstract();
   };
   /**
-  * Get the alpha value for rendering.
-  * @param {string} id An id for the renderer.
-  * @param {number} time The render frame time.
-  * @return {number} A number between 0 and 1.
+  * Handle image change events.
+  * @param {import("../events/Event.js").default} event Event.
+  * @protected
   */
-  Tile.prototype.getAlpha = function (id, time) {
-    if (!this.transition_) {
-      return 1;
-    }
-    var start = this.transitionStarts_[id];
-    if (!start) {
-      start = time;
-      this.transitionStarts_[id] = start;
-    } else if (start === -1) {
-      return 1;
-    }
-    var delta = time - start + 1000 / 60;
-    // avoid rendering at 0
-    if (delta >= this.transition_) {
-      return 1;
-    }
-    return _easingJs.easeIn(delta / this.transition_);
-  };
-  /**
-  * Determine if a tile is in an alpha transition.  A tile is considered in
-  * transition if tile.getAlpha() has not yet been called or has been called
-  * and returned 1.
-  * @param {string} id An id for the renderer.
-  * @return {boolean} The tile is in transition.
-  */
-  Tile.prototype.inTransition = function (id) {
-    if (!this.transition_) {
-      return false;
-    }
-    return this.transitionStarts_[id] !== -1;
-  };
-  /**
-  * Mark a transition as complete.
-  * @param {string} id An id for the renderer.
-  */
-  Tile.prototype.endTransition = function (id) {
-    if (this.transition_) {
-      this.transitionStarts_[id] = -1;
+  ImageSource.prototype.handleImageChange = function (event) {
+    var image = /** @type {import("../Image.js").default}*/
+    event.target;
+    switch (image.getState()) {
+      case _ImageStateJsDefault.default.LOADING:
+        this.loading = true;
+        this.dispatchEvent(new ImageSourceEvent(ImageSourceEventType.IMAGELOADSTART, image));
+        break;
+      case _ImageStateJsDefault.default.LOADED:
+        this.loading = false;
+        this.dispatchEvent(new ImageSourceEvent(ImageSourceEventType.IMAGELOADEND, image));
+        break;
+      case _ImageStateJsDefault.default.ERROR:
+        this.loading = false;
+        this.dispatchEvent(new ImageSourceEvent(ImageSourceEventType.IMAGELOADERROR, image));
+        break;
+      default:
     }
   };
-  return Tile;
-})(_eventsTargetJsDefault.default);
-exports.default = Tile;
+  return ImageSource;
+})(_SourceJsDefault.default);
+function defaultImageLoadFunction(image, src) {
+  /** @type {HTMLImageElement|HTMLVideoElement}*/
+  image.getImage().src = src;
+}
+exports.default = ImageSource;
 
-},{"./events/Target.js":"3qhnX","./events/EventType.js":"1VnyO","./TileState.js":"4w04B","./util.js":"4k52K","./easing.js":"26glW","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"5lSdx":[function(require,module,exports) {
+},{"../events/Event.js":"eICPf","../ImageState.js":"2ZVds","../reproj/Image.js":"1gLWm","./Source.js":"6n6aD","../reproj/common.js":"5AFC2","./common.js":"1xpRq","../util.js":"4k52K","../extent.js":"5PMSh","../proj.js":"4Wdsb","../array.js":"Og3xJ","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"1gLWm":[function(require,module,exports) {
 var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
 _parcelHelpers.defineInteropFlag(exports);
 var _commonJs = require('./common.js');
 var _eventsEventTypeJs = require('../events/EventType.js');
 var _eventsEventTypeJsDefault = _parcelHelpers.interopDefault(_eventsEventTypeJs);
-var _TileJs = require('../Tile.js');
-var _TileJsDefault = _parcelHelpers.interopDefault(_TileJs);
-var _TileStateJs = require('../TileState.js');
-var _TileStateJsDefault = _parcelHelpers.interopDefault(_TileStateJs);
+var _ImageBaseJs = require('../ImageBase.js');
+var _ImageBaseJsDefault = _parcelHelpers.interopDefault(_ImageBaseJs);
+var _ImageStateJs = require('../ImageState.js');
+var _ImageStateJsDefault = _parcelHelpers.interopDefault(_ImageStateJs);
 var _TriangulationJs = require('./Triangulation.js');
 var _TriangulationJsDefault = _parcelHelpers.interopDefault(_TriangulationJs);
 var _reprojJs = require('../reproj.js');
-var _mathJs = require('../math.js');
 var _extentJs = require('../extent.js');
 var _eventsJs = require('../events.js');
 var __extends = undefined && undefined.__extends || (function () {
@@ -37797,39 +37317,75 @@ var __extends = undefined && undefined.__extends || (function () {
   };
 })();
 /**
-* @typedef {function(number, number, number, number) : import("../Tile.js").default} FunctionType
+* @typedef {function(import("../extent.js").Extent, number, number) : import("../ImageBase.js").default} FunctionType
 */
 /**
 * @classdesc
-* Class encapsulating single reprojected tile.
-* See {@link module:ol/source/TileImage~TileImage}.
-*
+* Class encapsulating single reprojected image.
+* See {@link module:ol/source/Image~ImageSource}.
 */
-var ReprojTile = /** @class*/
+var ReprojImage = /** @class*/
 (function (_super) {
-  __extends(ReprojTile, _super);
+  __extends(ReprojImage, _super);
   /**
-  * @param {import("../proj/Projection.js").default} sourceProj Source projection.
-  * @param {import("../tilegrid/TileGrid.js").default} sourceTileGrid Source tile grid.
+  * @param {import("../proj/Projection.js").default} sourceProj Source projection (of the data).
   * @param {import("../proj/Projection.js").default} targetProj Target projection.
-  * @param {import("../tilegrid/TileGrid.js").default} targetTileGrid Target tile grid.
-  * @param {import("../tilecoord.js").TileCoord} tileCoord Coordinate of the tile.
-  * @param {import("../tilecoord.js").TileCoord} wrappedTileCoord Coordinate of the tile wrapped in X.
+  * @param {import("../extent.js").Extent} targetExtent Target extent.
+  * @param {number} targetResolution Target resolution.
   * @param {number} pixelRatio Pixel ratio.
-  * @param {number} gutter Gutter of the source tiles.
-  * @param {FunctionType} getTileFunction
-  *     Function returning source tiles (z, x, y, pixelRatio).
-  * @param {number=} opt_errorThreshold Acceptable reprojection error (in px).
-  * @param {boolean=} opt_renderEdges Render reprojection edges.
+  * @param {FunctionType} getImageFunction
+  *     Function returning source images (extent, resolution, pixelRatio).
   * @param {object=} opt_contextOptions Properties to set on the canvas context.
   */
-  function ReprojTile(sourceProj, sourceTileGrid, targetProj, targetTileGrid, tileCoord, wrappedTileCoord, pixelRatio, gutter, getTileFunction, opt_errorThreshold, opt_renderEdges, opt_contextOptions) {
-    var _this = _super.call(this, tileCoord, _TileStateJsDefault.default.IDLE) || this;
+  function ReprojImage(sourceProj, targetProj, targetExtent, targetResolution, pixelRatio, getImageFunction, opt_contextOptions) {
+    var _this = this;
+    var maxSourceExtent = sourceProj.getExtent();
+    var maxTargetExtent = targetProj.getExtent();
+    var limitedTargetExtent = maxTargetExtent ? _extentJs.getIntersection(targetExtent, maxTargetExtent) : targetExtent;
+    var targetCenter = _extentJs.getCenter(limitedTargetExtent);
+    var sourceResolution = _reprojJs.calculateSourceResolution(sourceProj, targetProj, targetCenter, targetResolution);
+    var errorThresholdInPixels = _commonJs.ERROR_THRESHOLD;
+    var triangulation = new _TriangulationJsDefault.default(sourceProj, targetProj, limitedTargetExtent, maxSourceExtent, sourceResolution * errorThresholdInPixels, targetResolution);
+    var sourceExtent = triangulation.calculateSourceExtent();
+    var sourceImage = getImageFunction(sourceExtent, sourceResolution, pixelRatio);
+    var state = sourceImage ? _ImageStateJsDefault.default.IDLE : _ImageStateJsDefault.default.EMPTY;
+    var sourcePixelRatio = sourceImage ? sourceImage.getPixelRatio() : 1;
+    _this = _super.call(this, targetExtent, targetResolution, sourcePixelRatio, state) || this;
     /**
     * @private
-    * @type {boolean}
+    * @type {import("../proj/Projection.js").default}
     */
-    _this.renderEdges_ = opt_renderEdges !== undefined ? opt_renderEdges : false;
+    _this.targetProj_ = targetProj;
+    /**
+    * @private
+    * @type {import("../extent.js").Extent}
+    */
+    _this.maxSourceExtent_ = maxSourceExtent;
+    /**
+    * @private
+    * @type {!import("./Triangulation.js").default}
+    */
+    _this.triangulation_ = triangulation;
+    /**
+    * @private
+    * @type {number}
+    */
+    _this.targetResolution_ = targetResolution;
+    /**
+    * @private
+    * @type {import("../extent.js").Extent}
+    */
+    _this.targetExtent_ = targetExtent;
+    /**
+    * @private
+    * @type {import("../ImageBase.js").default}
+    */
+    _this.sourceImage_ = sourceImage;
+    /**
+    * @private
+    * @type {number}
+    */
+    _this.sourcePixelRatio_ = sourcePixelRatio;
     /**
     * @private
     * @type {object}
@@ -37837,200 +37393,88 @@ var ReprojTile = /** @class*/
     _this.contextOptions_ = opt_contextOptions;
     /**
     * @private
-    * @type {number}
-    */
-    _this.pixelRatio_ = pixelRatio;
-    /**
-    * @private
-    * @type {number}
-    */
-    _this.gutter_ = gutter;
-    /**
-    * @private
     * @type {HTMLCanvasElement}
     */
     _this.canvas_ = null;
     /**
     * @private
-    * @type {import("../tilegrid/TileGrid.js").default}
+    * @type {?import("../events.js").EventsKey}
     */
-    _this.sourceTileGrid_ = sourceTileGrid;
-    /**
-    * @private
-    * @type {import("../tilegrid/TileGrid.js").default}
-    */
-    _this.targetTileGrid_ = targetTileGrid;
-    /**
-    * @private
-    * @type {import("../tilecoord.js").TileCoord}
-    */
-    _this.wrappedTileCoord_ = wrappedTileCoord ? wrappedTileCoord : tileCoord;
-    /**
-    * @private
-    * @type {!Array<import("../Tile.js").default>}
-    */
-    _this.sourceTiles_ = [];
-    /**
-    * @private
-    * @type {?Array<import("../events.js").EventsKey>}
-    */
-    _this.sourcesListenerKeys_ = null;
-    /**
-    * @private
-    * @type {number}
-    */
-    _this.sourceZ_ = 0;
-    var targetExtent = targetTileGrid.getTileCoordExtent(_this.wrappedTileCoord_);
-    var maxTargetExtent = _this.targetTileGrid_.getExtent();
-    var maxSourceExtent = _this.sourceTileGrid_.getExtent();
-    var limitedTargetExtent = maxTargetExtent ? _extentJs.getIntersection(targetExtent, maxTargetExtent) : targetExtent;
-    if (_extentJs.getArea(limitedTargetExtent) === 0) {
-      // Tile is completely outside range -> EMPTY
-      // TODO: is it actually correct that the source even creates the tile ?
-      _this.state = _TileStateJsDefault.default.EMPTY;
-      return _this;
-    }
-    var sourceProjExtent = sourceProj.getExtent();
-    if (sourceProjExtent) {
-      if (!maxSourceExtent) {
-        maxSourceExtent = sourceProjExtent;
-      } else {
-        maxSourceExtent = _extentJs.getIntersection(maxSourceExtent, sourceProjExtent);
-      }
-    }
-    var targetResolution = targetTileGrid.getResolution(_this.wrappedTileCoord_[0]);
-    var sourceResolution = _reprojJs.calculateSourceExtentResolution(sourceProj, targetProj, limitedTargetExtent, targetResolution);
-    if (!isFinite(sourceResolution) || sourceResolution <= 0) {
-      // invalid sourceResolution -> EMPTY
-      // probably edges of the projections when no extent is defined
-      _this.state = _TileStateJsDefault.default.EMPTY;
-      return _this;
-    }
-    var errorThresholdInPixels = opt_errorThreshold !== undefined ? opt_errorThreshold : _commonJs.ERROR_THRESHOLD;
-    /**
-    * @private
-    * @type {!import("./Triangulation.js").default}
-    */
-    _this.triangulation_ = new _TriangulationJsDefault.default(sourceProj, targetProj, limitedTargetExtent, maxSourceExtent, sourceResolution * errorThresholdInPixels, targetResolution);
-    if (_this.triangulation_.getTriangles().length === 0) {
-      // no valid triangles -> EMPTY
-      _this.state = _TileStateJsDefault.default.EMPTY;
-      return _this;
-    }
-    _this.sourceZ_ = sourceTileGrid.getZForResolution(sourceResolution);
-    var sourceExtent = _this.triangulation_.calculateSourceExtent();
-    if (maxSourceExtent) {
-      if (sourceProj.canWrapX()) {
-        sourceExtent[1] = _mathJs.clamp(sourceExtent[1], maxSourceExtent[1], maxSourceExtent[3]);
-        sourceExtent[3] = _mathJs.clamp(sourceExtent[3], maxSourceExtent[1], maxSourceExtent[3]);
-      } else {
-        sourceExtent = _extentJs.getIntersection(sourceExtent, maxSourceExtent);
-      }
-    }
-    if (!_extentJs.getArea(sourceExtent)) {
-      _this.state = _TileStateJsDefault.default.EMPTY;
-    } else {
-      var sourceRange = sourceTileGrid.getTileRangeForExtentAndZ(sourceExtent, _this.sourceZ_);
-      for (var srcX = sourceRange.minX; srcX <= sourceRange.maxX; srcX++) {
-        for (var srcY = sourceRange.minY; srcY <= sourceRange.maxY; srcY++) {
-          var tile = getTileFunction(_this.sourceZ_, srcX, srcY, pixelRatio);
-          if (tile) {
-            _this.sourceTiles_.push(tile);
-          }
-        }
-      }
-      if (_this.sourceTiles_.length === 0) {
-        _this.state = _TileStateJsDefault.default.EMPTY;
-      }
-    }
+    _this.sourceListenerKey_ = null;
     return _this;
   }
   /**
-  * Get the HTML Canvas element for this tile.
-  * @return {HTMLCanvasElement} Canvas.
+  * Clean up.
   */
-  ReprojTile.prototype.getImage = function () {
+  ReprojImage.prototype.disposeInternal = function () {
+    if (this.state == _ImageStateJsDefault.default.LOADING) {
+      this.unlistenSource_();
+    }
+    _super.prototype.disposeInternal.call(this);
+  };
+  /**
+  * @return {HTMLCanvasElement} Image.
+  */
+  ReprojImage.prototype.getImage = function () {
     return this.canvas_;
+  };
+  /**
+  * @return {import("../proj/Projection.js").default} Projection.
+  */
+  ReprojImage.prototype.getProjection = function () {
+    return this.targetProj_;
   };
   /**
   * @private
   */
-  ReprojTile.prototype.reproject_ = function () {
-    var sources = [];
-    this.sourceTiles_.forEach((function (tile, i, arr) {
-      if (tile && tile.getState() == _TileStateJsDefault.default.LOADED) {
-        sources.push({
-          extent: this.sourceTileGrid_.getTileCoordExtent(tile.tileCoord),
-          image: tile.getImage()
-        });
-      }
-    }).bind(this));
-    this.sourceTiles_.length = 0;
-    if (sources.length === 0) {
-      this.state = _TileStateJsDefault.default.ERROR;
-    } else {
-      var z = this.wrappedTileCoord_[0];
-      var size = this.targetTileGrid_.getTileSize(z);
-      var width = typeof size === 'number' ? size : size[0];
-      var height = typeof size === 'number' ? size : size[1];
-      var targetResolution = this.targetTileGrid_.getResolution(z);
-      var sourceResolution = this.sourceTileGrid_.getResolution(this.sourceZ_);
-      var targetExtent = this.targetTileGrid_.getTileCoordExtent(this.wrappedTileCoord_);
-      this.canvas_ = _reprojJs.render(width, height, this.pixelRatio_, sourceResolution, this.sourceTileGrid_.getExtent(), targetResolution, targetExtent, this.triangulation_, sources, this.gutter_, this.renderEdges_, this.contextOptions_);
-      this.state = _TileStateJsDefault.default.LOADED;
+  ReprojImage.prototype.reproject_ = function () {
+    var sourceState = this.sourceImage_.getState();
+    if (sourceState == _ImageStateJsDefault.default.LOADED) {
+      var width = _extentJs.getWidth(this.targetExtent_) / this.targetResolution_;
+      var height = _extentJs.getHeight(this.targetExtent_) / this.targetResolution_;
+      this.canvas_ = _reprojJs.render(width, height, this.sourcePixelRatio_, this.sourceImage_.getResolution(), this.maxSourceExtent_, this.targetResolution_, this.targetExtent_, this.triangulation_, [{
+        extent: this.sourceImage_.getExtent(),
+        image: this.sourceImage_.getImage()
+      }], 0, undefined, this.contextOptions_);
     }
+    this.state = sourceState;
     this.changed();
   };
   /**
   * Load not yet loaded URI.
   */
-  ReprojTile.prototype.load = function () {
-    if (this.state == _TileStateJsDefault.default.IDLE) {
-      this.state = _TileStateJsDefault.default.LOADING;
+  ReprojImage.prototype.load = function () {
+    if (this.state == _ImageStateJsDefault.default.IDLE) {
+      this.state = _ImageStateJsDefault.default.LOADING;
       this.changed();
-      var leftToLoad_1 = 0;
-      this.sourcesListenerKeys_ = [];
-      this.sourceTiles_.forEach((function (tile, i, arr) {
-        var state = tile.getState();
-        if (state == _TileStateJsDefault.default.IDLE || state == _TileStateJsDefault.default.LOADING) {
-          leftToLoad_1++;
-          var sourceListenKey_1 = _eventsJs.listen(tile, _eventsEventTypeJsDefault.default.CHANGE, function (e) {
-            var state = tile.getState();
-            if (state == _TileStateJsDefault.default.LOADED || state == _TileStateJsDefault.default.ERROR || state == _TileStateJsDefault.default.EMPTY) {
-              _eventsJs.unlistenByKey(sourceListenKey_1);
-              leftToLoad_1--;
-              if (leftToLoad_1 === 0) {
-                this.unlistenSources_();
-                this.reproject_();
-              }
-            }
-          }, this);
-          this.sourcesListenerKeys_.push(sourceListenKey_1);
-        }
-      }).bind(this));
-      this.sourceTiles_.forEach(function (tile, i, arr) {
-        var state = tile.getState();
-        if (state == _TileStateJsDefault.default.IDLE) {
-          tile.load();
-        }
-      });
-      if (leftToLoad_1 === 0) {
-        setTimeout(this.reproject_.bind(this), 0);
+      var sourceState = this.sourceImage_.getState();
+      if (sourceState == _ImageStateJsDefault.default.LOADED || sourceState == _ImageStateJsDefault.default.ERROR) {
+        this.reproject_();
+      } else {
+        this.sourceListenerKey_ = _eventsJs.listen(this.sourceImage_, _eventsEventTypeJsDefault.default.CHANGE, function (e) {
+          var sourceState = this.sourceImage_.getState();
+          if (sourceState == _ImageStateJsDefault.default.LOADED || sourceState == _ImageStateJsDefault.default.ERROR) {
+            this.unlistenSource_();
+            this.reproject_();
+          }
+        }, this);
+        this.sourceImage_.load();
       }
     }
   };
   /**
   * @private
   */
-  ReprojTile.prototype.unlistenSources_ = function () {
-    this.sourcesListenerKeys_.forEach(_eventsJs.unlistenByKey);
-    this.sourcesListenerKeys_ = null;
+  ReprojImage.prototype.unlistenSource_ = function () {
+    _eventsJs.unlistenByKey(/** @type {!import("../events.js").EventsKey}*/
+    this.sourceListenerKey_);
+    this.sourceListenerKey_ = null;
   };
-  return ReprojTile;
-})(_TileJsDefault.default);
-exports.default = ReprojTile;
+  return ReprojImage;
+})(_ImageBaseJsDefault.default);
+exports.default = ReprojImage;
 
-},{"./common.js":"5AFC2","../events/EventType.js":"1VnyO","../Tile.js":"72Vcf","../TileState.js":"4w04B","./Triangulation.js":"4PEUW","../reproj.js":"6Jbh4","../math.js":"39Bdl","../extent.js":"5PMSh","../events.js":"16C0R","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"5AFC2":[function(require,module,exports) {
+},{"./common.js":"5AFC2","../events/EventType.js":"1VnyO","../ImageBase.js":"4jbDo","../ImageState.js":"2ZVds","./Triangulation.js":"4PEUW","../reproj.js":"6Jbh4","../extent.js":"5PMSh","../events.js":"16C0R","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"5AFC2":[function(require,module,exports) {
 var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
 _parcelHelpers.defineInteropFlag(exports);
 _parcelHelpers.export(exports, "ERROR_THRESHOLD", function () {
@@ -38606,1850 +38050,55 @@ function render(width, height, pixelRatio, sourceResolution, sourceExtent, targe
   return context.canvas;
 }
 
-},{"./source/common.js":"1xpRq","./obj.js":"fh3Rh","./extent.js":"5PMSh","./dom.js":"5oBTC","./proj.js":"4Wdsb","./math.js":"39Bdl","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"1xpRq":[function(require,module,exports) {
-var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
-_parcelHelpers.defineInteropFlag(exports);
-_parcelHelpers.export(exports, "DEFAULT_WMS_VERSION", function () {
-  return DEFAULT_WMS_VERSION;
-});
-_parcelHelpers.export(exports, "IMAGE_SMOOTHING_DISABLED", function () {
-  return IMAGE_SMOOTHING_DISABLED;
-});
-var DEFAULT_WMS_VERSION = '1.3.0';
-var IMAGE_SMOOTHING_DISABLED = {
-  imageSmoothingEnabled: false,
-  msImageSmoothingEnabled: false
-};
-
-},{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"1oUcD":[function(require,module,exports) {
-var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
-_parcelHelpers.defineInteropFlag(exports);
-var _structsLRUCacheJs = require('./structs/LRUCache.js');
-var _structsLRUCacheJsDefault = _parcelHelpers.interopDefault(_structsLRUCacheJs);
-var _tilecoordJs = require('./tilecoord.js');
-var __extends = undefined && undefined.__extends || (function () {
-  var extendStatics = function (d, b) {
-    extendStatics = Object.setPrototypeOf || ({
-      __proto__: []
-    }) instanceof Array && (function (d, b) {
-      d.__proto__ = b;
-    }) || (function (d, b) {
-      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-    });
-    return extendStatics(d, b);
-  };
-  return function (d, b) {
-    extendStatics(d, b);
-    function __() {
-      this.constructor = d;
-    }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-})();
-var TileCache = /** @class*/
-(function (_super) {
-  __extends(TileCache, _super);
-  function TileCache() {
-    return _super !== null && _super.apply(this, arguments) || this;
-  }
-  /**
-  * @param {!Object<string, boolean>} usedTiles Used tiles.
-  */
-  TileCache.prototype.expireCache = function (usedTiles) {
-    while (this.canExpireCache()) {
-      var tile = this.peekLast();
-      if ((tile.getKey() in usedTiles)) {
-        break;
-      } else {
-        this.pop().release();
-      }
-    }
-  };
-  /**
-  * Prune all tiles from the cache that don't have the same z as the newest tile.
-  */
-  TileCache.prototype.pruneExceptNewestZ = function () {
-    if (this.getCount() === 0) {
-      return;
-    }
-    var key = this.peekFirstKey();
-    var tileCoord = _tilecoordJs.fromKey(key);
-    var z = tileCoord[0];
-    this.forEach((function (tile) {
-      if (tile.tileCoord[0] !== z) {
-        this.remove(_tilecoordJs.getKey(tile.tileCoord));
-        tile.release();
-      }
-    }).bind(this));
-  };
-  return TileCache;
-})(_structsLRUCacheJsDefault.default);
-exports.default = TileCache;
-
-},{"./structs/LRUCache.js":"2cDTl","./tilecoord.js":"2kkyx","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"2cDTl":[function(require,module,exports) {
-var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
-_parcelHelpers.defineInteropFlag(exports);
-var _assertsJs = require('../asserts.js');
-/**
-* @typedef {Object} Entry
-* @property {string} key_
-* @property {Object} newer
-* @property {Object} older
-* @property {*} value_
-*/
-/**
-* @classdesc
-* Implements a Least-Recently-Used cache where the keys do not conflict with
-* Object's properties (e.g. 'hasOwnProperty' is not allowed as a key). Expiring
-* items from the cache is the responsibility of the user.
-*
-* @fires import("../events/Event.js").default
-* @template T
-*/
-var LRUCache = /** @class*/
-(function () {
-  /**
-  * @param {number=} opt_highWaterMark High water mark.
-  */
-  function LRUCache(opt_highWaterMark) {
-    /**
-    * Desired max cache size after expireCache(). If set to 0, no cache entries
-    * will be pruned at all.
-    * @type {number}
-    */
-    this.highWaterMark = opt_highWaterMark !== undefined ? opt_highWaterMark : 2048;
-    /**
-    * @private
-    * @type {number}
-    */
-    this.count_ = 0;
-    /**
-    * @private
-    * @type {!Object<string, Entry>}
-    */
-    this.entries_ = {};
-    /**
-    * @private
-    * @type {?Entry}
-    */
-    this.oldest_ = null;
-    /**
-    * @private
-    * @type {?Entry}
-    */
-    this.newest_ = null;
-  }
-  /**
-  * @return {boolean} Can expire cache.
-  */
-  LRUCache.prototype.canExpireCache = function () {
-    return this.highWaterMark > 0 && this.getCount() > this.highWaterMark;
-  };
-  /**
-  * FIXME empty description for jsdoc
-  */
-  LRUCache.prototype.clear = function () {
-    this.count_ = 0;
-    this.entries_ = {};
-    this.oldest_ = null;
-    this.newest_ = null;
-  };
-  /**
-  * @param {string} key Key.
-  * @return {boolean} Contains key.
-  */
-  LRUCache.prototype.containsKey = function (key) {
-    return this.entries_.hasOwnProperty(key);
-  };
-  /**
-  * @param {function(T, string, LRUCache<T>): ?} f The function
-  *     to call for every entry from the oldest to the newer. This function takes
-  *     3 arguments (the entry value, the entry key and the LRUCache object).
-  *     The return value is ignored.
-  */
-  LRUCache.prototype.forEach = function (f) {
-    var entry = this.oldest_;
-    while (entry) {
-      f(entry.value_, entry.key_, this);
-      entry = entry.newer;
-    }
-  };
-  /**
-  * @param {string} key Key.
-  * @param {*=} opt_options Options (reserverd for subclasses).
-  * @return {T} Value.
-  */
-  LRUCache.prototype.get = function (key, opt_options) {
-    var entry = this.entries_[key];
-    _assertsJs.assert(entry !== undefined, 15);
-    // Tried to get a value for a key that does not exist in the cache
-    if (entry === this.newest_) {
-      return entry.value_;
-    } else if (entry === this.oldest_) {
-      this.oldest_ = /** @type {Entry}*/
-      this.oldest_.newer;
-      this.oldest_.older = null;
-    } else {
-      entry.newer.older = entry.older;
-      entry.older.newer = entry.newer;
-    }
-    entry.newer = null;
-    entry.older = this.newest_;
-    this.newest_.newer = entry;
-    this.newest_ = entry;
-    return entry.value_;
-  };
-  /**
-  * Remove an entry from the cache.
-  * @param {string} key The entry key.
-  * @return {T} The removed entry.
-  */
-  LRUCache.prototype.remove = function (key) {
-    var entry = this.entries_[key];
-    _assertsJs.assert(entry !== undefined, 15);
-    // Tried to get a value for a key that does not exist in the cache
-    if (entry === this.newest_) {
-      this.newest_ = /** @type {Entry}*/
-      entry.older;
-      if (this.newest_) {
-        this.newest_.newer = null;
-      }
-    } else if (entry === this.oldest_) {
-      this.oldest_ = /** @type {Entry}*/
-      entry.newer;
-      if (this.oldest_) {
-        this.oldest_.older = null;
-      }
-    } else {
-      entry.newer.older = entry.older;
-      entry.older.newer = entry.newer;
-    }
-    delete this.entries_[key];
-    --this.count_;
-    return entry.value_;
-  };
-  /**
-  * @return {number} Count.
-  */
-  LRUCache.prototype.getCount = function () {
-    return this.count_;
-  };
-  /**
-  * @return {Array<string>} Keys.
-  */
-  LRUCache.prototype.getKeys = function () {
-    var keys = new Array(this.count_);
-    var i = 0;
-    var entry;
-    for (entry = this.newest_; entry; entry = entry.older) {
-      keys[i++] = entry.key_;
-    }
-    return keys;
-  };
-  /**
-  * @return {Array<T>} Values.
-  */
-  LRUCache.prototype.getValues = function () {
-    var values = new Array(this.count_);
-    var i = 0;
-    var entry;
-    for (entry = this.newest_; entry; entry = entry.older) {
-      values[i++] = entry.value_;
-    }
-    return values;
-  };
-  /**
-  * @return {T} Last value.
-  */
-  LRUCache.prototype.peekLast = function () {
-    return this.oldest_.value_;
-  };
-  /**
-  * @return {string} Last key.
-  */
-  LRUCache.prototype.peekLastKey = function () {
-    return this.oldest_.key_;
-  };
-  /**
-  * Get the key of the newest item in the cache.  Throws if the cache is empty.
-  * @return {string} The newest key.
-  */
-  LRUCache.prototype.peekFirstKey = function () {
-    return this.newest_.key_;
-  };
-  /**
-  * @return {T} value Value.
-  */
-  LRUCache.prototype.pop = function () {
-    var entry = this.oldest_;
-    delete this.entries_[entry.key_];
-    if (entry.newer) {
-      entry.newer.older = null;
-    }
-    this.oldest_ = /** @type {Entry}*/
-    entry.newer;
-    if (!this.oldest_) {
-      this.newest_ = null;
-    }
-    --this.count_;
-    return entry.value_;
-  };
-  /**
-  * @param {string} key Key.
-  * @param {T} value Value.
-  */
-  LRUCache.prototype.replace = function (key, value) {
-    this.get(key);
-    // update `newest_`
-    this.entries_[key].value_ = value;
-  };
-  /**
-  * @param {string} key Key.
-  * @param {T} value Value.
-  */
-  LRUCache.prototype.set = function (key, value) {
-    _assertsJs.assert(!((key in this.entries_)), 16);
-    // Tried to set a value for a key that is used already
-    var entry = {
-      key_: key,
-      newer: null,
-      older: this.newest_,
-      value_: value
-    };
-    if (!this.newest_) {
-      this.oldest_ = entry;
-    } else {
-      this.newest_.newer = entry;
-    }
-    this.newest_ = entry;
-    this.entries_[key] = entry;
-    ++this.count_;
-  };
-  /**
-  * Set a maximum number of entries for the cache.
-  * @param {number} size Cache size.
-  * @api
-  */
-  LRUCache.prototype.setSize = function (size) {
-    this.highWaterMark = size;
-  };
-  return LRUCache;
-})();
-exports.default = LRUCache;
-
-},{"../asserts.js":"1kfem","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"2kkyx":[function(require,module,exports) {
-var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
-_parcelHelpers.defineInteropFlag(exports);
-_parcelHelpers.export(exports, "createOrUpdate", function () {
-  return createOrUpdate;
-});
-_parcelHelpers.export(exports, "getKeyZXY", function () {
-  return getKeyZXY;
-});
-_parcelHelpers.export(exports, "getKey", function () {
-  return getKey;
-});
-_parcelHelpers.export(exports, "fromKey", function () {
-  return fromKey;
-});
-_parcelHelpers.export(exports, "hash", function () {
-  return hash;
-});
-_parcelHelpers.export(exports, "withinExtentAndZ", function () {
-  return withinExtentAndZ;
-});
-function createOrUpdate(z, x, y, opt_tileCoord) {
-  if (opt_tileCoord !== undefined) {
-    opt_tileCoord[0] = z;
-    opt_tileCoord[1] = x;
-    opt_tileCoord[2] = y;
-    return opt_tileCoord;
-  } else {
-    return [z, x, y];
-  }
-}
-function getKeyZXY(z, x, y) {
-  return z + '/' + x + '/' + y;
-}
-function getKey(tileCoord) {
-  return getKeyZXY(tileCoord[0], tileCoord[1], tileCoord[2]);
-}
-function fromKey(key) {
-  return key.split('/').map(Number);
-}
-function hash(tileCoord) {
-  return (tileCoord[1] << tileCoord[0]) + tileCoord[2];
-}
-function withinExtentAndZ(tileCoord, tileGrid) {
-  var z = tileCoord[0];
-  var x = tileCoord[1];
-  var y = tileCoord[2];
-  if (tileGrid.getMinZoom() > z || z > tileGrid.getMaxZoom()) {
-    return false;
-  }
-  var tileRange = tileGrid.getFullTileRange(z);
-  if (!tileRange) {
-    return true;
-  } else {
-    return tileRange.containsXY(x, y);
-  }
-}
-
-},{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"2ULXC":[function(require,module,exports) {
-var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
-_parcelHelpers.defineInteropFlag(exports);
-var _TileEventTypeJs = require('./TileEventType.js');
-var _TileEventTypeJsDefault = _parcelHelpers.interopDefault(_TileEventTypeJs);
-var _TileJs = require('./Tile.js');
-var _TileJsDefault = _parcelHelpers.interopDefault(_TileJs);
-var _TileStateJs = require('../TileState.js');
-var _TileStateJsDefault = _parcelHelpers.interopDefault(_TileStateJs);
-var _tileurlfunctionJs = require('../tileurlfunction.js');
-var _tilecoordJs = require('../tilecoord.js');
-var _utilJs = require('../util.js');
-var __extends = undefined && undefined.__extends || (function () {
-  var extendStatics = function (d, b) {
-    extendStatics = Object.setPrototypeOf || ({
-      __proto__: []
-    }) instanceof Array && (function (d, b) {
-      d.__proto__ = b;
-    }) || (function (d, b) {
-      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-    });
-    return extendStatics(d, b);
-  };
-  return function (d, b) {
-    extendStatics(d, b);
-    function __() {
-      this.constructor = d;
-    }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-})();
-/**
-* @typedef {Object} Options
-* @property {import("./Source.js").AttributionLike} [attributions]
-* @property {boolean} [attributionsCollapsible=true] Attributions are collapsible.
-* @property {number} [cacheSize]
-* @property {boolean} [opaque=false] Whether the layer is opaque.
-* @property {import("../proj.js").ProjectionLike} [projection]
-* @property {import("./State.js").default} [state]
-* @property {import("../tilegrid/TileGrid.js").default} [tileGrid]
-* @property {import("../Tile.js").LoadFunction} tileLoadFunction
-* @property {number} [tilePixelRatio]
-* @property {import("../Tile.js").UrlFunction} [tileUrlFunction]
-* @property {string} [url]
-* @property {Array<string>} [urls]
-* @property {boolean} [wrapX=true]
-* @property {number} [transition]
-* @property {string} [key]
-* @property {number} [zDirection=0]
-*/
-/**
-* @classdesc
-* Base class for sources providing tiles divided into a tile grid over http.
-*
-* @fires import("./Tile.js").TileSourceEvent
-*/
-var UrlTile = /** @class*/
-(function (_super) {
-  __extends(UrlTile, _super);
-  /**
-  * @param {Options} options Image tile options.
-  */
-  function UrlTile(options) {
-    var _this = _super.call(this, {
-      attributions: options.attributions,
-      cacheSize: options.cacheSize,
-      opaque: options.opaque,
-      projection: options.projection,
-      state: options.state,
-      tileGrid: options.tileGrid,
-      tilePixelRatio: options.tilePixelRatio,
-      wrapX: options.wrapX,
-      transition: options.transition,
-      key: options.key,
-      attributionsCollapsible: options.attributionsCollapsible,
-      zDirection: options.zDirection
-    }) || this;
-    /**
-    * @private
-    * @type {boolean}
-    */
-    _this.generateTileUrlFunction_ = _this.tileUrlFunction === UrlTile.prototype.tileUrlFunction;
-    /**
-    * @protected
-    * @type {import("../Tile.js").LoadFunction}
-    */
-    _this.tileLoadFunction = options.tileLoadFunction;
-    if (options.tileUrlFunction) {
-      _this.tileUrlFunction = options.tileUrlFunction;
-    }
-    /**
-    * @protected
-    * @type {!Array<string>|null}
-    */
-    _this.urls = null;
-    if (options.urls) {
-      _this.setUrls(options.urls);
-    } else if (options.url) {
-      _this.setUrl(options.url);
-    }
-    /**
-    * @private
-    * @type {!Object<string, boolean>}
-    */
-    _this.tileLoadingKeys_ = {};
-    return _this;
-  }
-  /**
-  * Return the tile load function of the source.
-  * @return {import("../Tile.js").LoadFunction} TileLoadFunction
-  * @api
-  */
-  UrlTile.prototype.getTileLoadFunction = function () {
-    return this.tileLoadFunction;
-  };
-  /**
-  * Return the tile URL function of the source.
-  * @return {import("../Tile.js").UrlFunction} TileUrlFunction
-  * @api
-  */
-  UrlTile.prototype.getTileUrlFunction = function () {
-    return Object.getPrototypeOf(this).tileUrlFunction === this.tileUrlFunction ? this.tileUrlFunction.bind(this) : this.tileUrlFunction;
-  };
-  /**
-  * Return the URLs used for this source.
-  * When a tileUrlFunction is used instead of url or urls,
-  * null will be returned.
-  * @return {!Array<string>|null} URLs.
-  * @api
-  */
-  UrlTile.prototype.getUrls = function () {
-    return this.urls;
-  };
-  /**
-  * Handle tile change events.
-  * @param {import("../events/Event.js").default} event Event.
-  * @protected
-  */
-  UrlTile.prototype.handleTileChange = function (event) {
-    var tile = /** @type {import("../Tile.js").default}*/
-    event.target;
-    var uid = _utilJs.getUid(tile);
-    var tileState = tile.getState();
-    var type;
-    if (tileState == _TileStateJsDefault.default.LOADING) {
-      this.tileLoadingKeys_[uid] = true;
-      type = _TileEventTypeJsDefault.default.TILELOADSTART;
-    } else if ((uid in this.tileLoadingKeys_)) {
-      delete this.tileLoadingKeys_[uid];
-      type = tileState == _TileStateJsDefault.default.ERROR ? _TileEventTypeJsDefault.default.TILELOADERROR : tileState == _TileStateJsDefault.default.LOADED ? _TileEventTypeJsDefault.default.TILELOADEND : undefined;
-    }
-    if (type != undefined) {
-      this.dispatchEvent(new _TileJs.TileSourceEvent(type, tile));
-    }
-  };
-  /**
-  * Set the tile load function of the source.
-  * @param {import("../Tile.js").LoadFunction} tileLoadFunction Tile load function.
-  * @api
-  */
-  UrlTile.prototype.setTileLoadFunction = function (tileLoadFunction) {
-    this.tileCache.clear();
-    this.tileLoadFunction = tileLoadFunction;
-    this.changed();
-  };
-  /**
-  * Set the tile URL function of the source.
-  * @param {import("../Tile.js").UrlFunction} tileUrlFunction Tile URL function.
-  * @param {string=} key Optional new tile key for the source.
-  * @api
-  */
-  UrlTile.prototype.setTileUrlFunction = function (tileUrlFunction, key) {
-    this.tileUrlFunction = tileUrlFunction;
-    this.tileCache.pruneExceptNewestZ();
-    if (typeof key !== 'undefined') {
-      this.setKey(key);
-    } else {
-      this.changed();
-    }
-  };
-  /**
-  * Set the URL to use for requests.
-  * @param {string} url URL.
-  * @api
-  */
-  UrlTile.prototype.setUrl = function (url) {
-    var urls = _tileurlfunctionJs.expandUrl(url);
-    this.urls = urls;
-    this.setUrls(urls);
-  };
-  /**
-  * Set the URLs to use for requests.
-  * @param {Array<string>} urls URLs.
-  * @api
-  */
-  UrlTile.prototype.setUrls = function (urls) {
-    this.urls = urls;
-    var key = urls.join('\n');
-    if (this.generateTileUrlFunction_) {
-      this.setTileUrlFunction(_tileurlfunctionJs.createFromTemplates(urls, this.tileGrid), key);
-    } else {
-      this.setKey(key);
-    }
-  };
-  /**
-  * @param {import("../tilecoord.js").TileCoord} tileCoord Tile coordinate.
-  * @param {number} pixelRatio Pixel ratio.
-  * @param {import("../proj/Projection.js").default} projection Projection.
-  * @return {string|undefined} Tile URL.
-  */
-  UrlTile.prototype.tileUrlFunction = function (tileCoord, pixelRatio, projection) {
-    return undefined;
-  };
-  /**
-  * Marks a tile coord as being used, without triggering a load.
-  * @param {number} z Tile coordinate z.
-  * @param {number} x Tile coordinate x.
-  * @param {number} y Tile coordinate y.
-  */
-  UrlTile.prototype.useTile = function (z, x, y) {
-    var tileCoordKey = _tilecoordJs.getKeyZXY(z, x, y);
-    if (this.tileCache.containsKey(tileCoordKey)) {
-      this.tileCache.get(tileCoordKey);
-    }
-  };
-  return UrlTile;
-})(_TileJsDefault.default);
-exports.default = UrlTile;
-
-},{"./TileEventType.js":"5zU8z","./Tile.js":"5ytHC","../TileState.js":"4w04B","../tileurlfunction.js":"2fA5K","../tilecoord.js":"2kkyx","../util.js":"4k52K","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"5zU8z":[function(require,module,exports) {
+},{"./source/common.js":"1xpRq","./obj.js":"fh3Rh","./extent.js":"5PMSh","./dom.js":"5oBTC","./proj.js":"4Wdsb","./math.js":"39Bdl","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"4P7Eo":[function(require,module,exports) {
 var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
 _parcelHelpers.defineInteropFlag(exports);
 exports.default = {
   /**
-  * Triggered when a tile starts loading.
-  * @event module:ol/source/Tile.TileSourceEvent#tileloadstart
+  * HiDPI support for [Carmenta Server](https://www.carmenta.com/en/products/carmenta-server)
   * @api
   */
-  TILELOADSTART: 'tileloadstart',
+  CARMENTA_SERVER: 'carmentaserver',
   /**
-  * Triggered when a tile finishes loading, either when its data is loaded,
-  * or when loading was aborted because the tile is no longer needed.
-  * @event module:ol/source/Tile.TileSourceEvent#tileloadend
+  * HiDPI support for [GeoServer](https://geoserver.org/)
   * @api
   */
-  TILELOADEND: 'tileloadend',
+  GEOSERVER: 'geoserver',
   /**
-  * Triggered if tile loading results in an error.
-  * @event module:ol/source/Tile.TileSourceEvent#tileloaderror
+  * HiDPI support for [MapServer](https://mapserver.org/)
   * @api
   */
-  TILELOADERROR: 'tileloaderror'
+  MAPSERVER: 'mapserver',
+  /**
+  * HiDPI support for [QGIS](https://qgis.org/)
+  * @api
+  */
+  QGIS: 'qgis'
 };
 
-},{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"5ytHC":[function(require,module,exports) {
+},{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"2CPqV":[function(require,module,exports) {
 var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
 _parcelHelpers.defineInteropFlag(exports);
-_parcelHelpers.export(exports, "TileSourceEvent", function () {
-  return TileSourceEvent;
+_parcelHelpers.export(exports, "appendParams", function () {
+  return appendParams;
 });
-var _eventsEventJs = require('../events/Event.js');
-var _eventsEventJsDefault = _parcelHelpers.interopDefault(_eventsEventJs);
-var _SourceJs = require('./Source.js');
-var _SourceJsDefault = _parcelHelpers.interopDefault(_SourceJs);
-var _TileCacheJs = require('../TileCache.js');
-var _TileCacheJsDefault = _parcelHelpers.interopDefault(_TileCacheJs);
-var _TileStateJs = require('../TileState.js');
-var _TileStateJsDefault = _parcelHelpers.interopDefault(_TileStateJs);
-var _utilJs = require('../util.js');
-var _assertsJs = require('../asserts.js');
-var _projJs = require('../proj.js');
-var _tilecoordJs = require('../tilecoord.js');
-var _tilegridJs = require('../tilegrid.js');
-var _sizeJs = require('../size.js');
-var __extends = undefined && undefined.__extends || (function () {
-  var extendStatics = function (d, b) {
-    extendStatics = Object.setPrototypeOf || ({
-      __proto__: []
-    }) instanceof Array && (function (d, b) {
-      d.__proto__ = b;
-    }) || (function (d, b) {
-      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-    });
-    return extendStatics(d, b);
-  };
-  return function (d, b) {
-    extendStatics(d, b);
-    function __() {
-      this.constructor = d;
+function appendParams(uri, params) {
+  var keyParams = [];
+  // Skip any null or undefined parameter values
+  Object.keys(params).forEach(function (k) {
+    if (params[k] !== null && params[k] !== undefined) {
+      keyParams.push(k + '=' + encodeURIComponent(params[k]));
     }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-})();
-/**
-* @typedef {Object} Options
-* @property {import("./Source.js").AttributionLike} [attributions]
-* @property {boolean} [attributionsCollapsible=true] Attributions are collapsible.
-* @property {number} [cacheSize]
-* @property {boolean} [opaque=false] Whether the layer is opaque.
-* @property {number} [tilePixelRatio]
-* @property {import("../proj.js").ProjectionLike} [projection]
-* @property {import("./State.js").default} [state]
-* @property {import("../tilegrid/TileGrid.js").default} [tileGrid]
-* @property {boolean} [wrapX=true]
-* @property {number} [transition]
-* @property {string} [key]
-* @property {number} [zDirection=0]
-*/
-/**
-* @classdesc
-* Abstract base class; normally only used for creating subclasses and not
-* instantiated in apps.
-* Base class for sources providing images divided into a tile grid.
-* @abstract
-* @api
-*/
-var TileSource = /** @class*/
-(function (_super) {
-  __extends(TileSource, _super);
-  /**
-  * @param {Options} options SourceTile source options.
-  */
-  function TileSource(options) {
-    var _this = _super.call(this, {
-      attributions: options.attributions,
-      attributionsCollapsible: options.attributionsCollapsible,
-      projection: options.projection,
-      state: options.state,
-      wrapX: options.wrapX
-    }) || this;
-    /**
-    * @private
-    * @type {boolean}
-    */
-    _this.opaque_ = options.opaque !== undefined ? options.opaque : false;
-    /**
-    * @private
-    * @type {number}
-    */
-    _this.tilePixelRatio_ = options.tilePixelRatio !== undefined ? options.tilePixelRatio : 1;
-    /**
-    * @protected
-    * @type {import("../tilegrid/TileGrid.js").default}
-    */
-    _this.tileGrid = options.tileGrid !== undefined ? options.tileGrid : null;
-    var tileSize = [256, 256];
-    var tileGrid = options.tileGrid;
-    if (tileGrid) {
-      _sizeJs.toSize(tileGrid.getTileSize(tileGrid.getMinZoom()), tileSize);
-    }
-    /**
-    * @protected
-    * @type {import("../TileCache.js").default}
-    */
-    _this.tileCache = new _TileCacheJsDefault.default(options.cacheSize || 0);
-    /**
-    * @protected
-    * @type {import("../size.js").Size}
-    */
-    _this.tmpSize = [0, 0];
-    /**
-    * @private
-    * @type {string}
-    */
-    _this.key_ = options.key || '';
-    /**
-    * @protected
-    * @type {import("../Tile.js").Options}
-    */
-    _this.tileOptions = {
-      transition: options.transition
-    };
-    /**
-    * zDirection hint, read by the renderer. Indicates which resolution should be used
-    * by a renderer if the views resolution does not match any resolution of the tile source.
-    * If 0, the nearest resolution will be used. If 1, the nearest lower resolution
-    * will be used. If -1, the nearest higher resolution will be used.
-    * @type {number}
-    */
-    _this.zDirection = options.zDirection ? options.zDirection : 0;
-    return _this;
-  }
-  /**
-  * @return {boolean} Can expire cache.
-  */
-  TileSource.prototype.canExpireCache = function () {
-    return this.tileCache.canExpireCache();
-  };
-  /**
-  * @param {import("../proj/Projection.js").default} projection Projection.
-  * @param {!Object<string, boolean>} usedTiles Used tiles.
-  */
-  TileSource.prototype.expireCache = function (projection, usedTiles) {
-    var tileCache = this.getTileCacheForProjection(projection);
-    if (tileCache) {
-      tileCache.expireCache(usedTiles);
-    }
-  };
-  /**
-  * @param {import("../proj/Projection.js").default} projection Projection.
-  * @param {number} z Zoom level.
-  * @param {import("../TileRange.js").default} tileRange Tile range.
-  * @param {function(import("../Tile.js").default):(boolean|void)} callback Called with each
-  *     loaded tile.  If the callback returns `false`, the tile will not be
-  *     considered loaded.
-  * @return {boolean} The tile range is fully covered with loaded tiles.
-  */
-  TileSource.prototype.forEachLoadedTile = function (projection, z, tileRange, callback) {
-    var tileCache = this.getTileCacheForProjection(projection);
-    if (!tileCache) {
-      return false;
-    }
-    var covered = true;
-    var tile, tileCoordKey, loaded;
-    for (var x = tileRange.minX; x <= tileRange.maxX; ++x) {
-      for (var y = tileRange.minY; y <= tileRange.maxY; ++y) {
-        tileCoordKey = _tilecoordJs.getKeyZXY(z, x, y);
-        loaded = false;
-        if (tileCache.containsKey(tileCoordKey)) {
-          tile = /** @type {!import("../Tile.js").default}*/
-          tileCache.get(tileCoordKey);
-          loaded = tile.getState() === _TileStateJsDefault.default.LOADED;
-          if (loaded) {
-            loaded = callback(tile) !== false;
-          }
-        }
-        if (!loaded) {
-          covered = false;
-        }
-      }
-    }
-    return covered;
-  };
-  /**
-  * @param {import("../proj/Projection.js").default} projection Projection.
-  * @return {number} Gutter.
-  */
-  TileSource.prototype.getGutterForProjection = function (projection) {
-    return 0;
-  };
-  /**
-  * Return the key to be used for all tiles in the source.
-  * @return {string} The key for all tiles.
-  * @protected
-  */
-  TileSource.prototype.getKey = function () {
-    return this.key_;
-  };
-  /**
-  * Set the value to be used as the key for all tiles in the source.
-  * @param {string} key The key for tiles.
-  * @protected
-  */
-  TileSource.prototype.setKey = function (key) {
-    if (this.key_ !== key) {
-      this.key_ = key;
-      this.changed();
-    }
-  };
-  /**
-  * @param {import("../proj/Projection.js").default} projection Projection.
-  * @return {boolean} Opaque.
-  */
-  TileSource.prototype.getOpaque = function (projection) {
-    return this.opaque_;
-  };
-  /**
-  * @return {Array<number>} Resolutions.
-  */
-  TileSource.prototype.getResolutions = function () {
-    return this.tileGrid.getResolutions();
-  };
-  /**
-  * @abstract
-  * @param {number} z Tile coordinate z.
-  * @param {number} x Tile coordinate x.
-  * @param {number} y Tile coordinate y.
-  * @param {number} pixelRatio Pixel ratio.
-  * @param {import("../proj/Projection.js").default} projection Projection.
-  * @return {!import("../Tile.js").default} Tile.
-  */
-  TileSource.prototype.getTile = function (z, x, y, pixelRatio, projection) {
-    return _utilJs.abstract();
-  };
-  /**
-  * Return the tile grid of the tile source.
-  * @return {import("../tilegrid/TileGrid.js").default} Tile grid.
-  * @api
-  */
-  TileSource.prototype.getTileGrid = function () {
-    return this.tileGrid;
-  };
-  /**
-  * @param {import("../proj/Projection.js").default} projection Projection.
-  * @return {!import("../tilegrid/TileGrid.js").default} Tile grid.
-  */
-  TileSource.prototype.getTileGridForProjection = function (projection) {
-    if (!this.tileGrid) {
-      return _tilegridJs.getForProjection(projection);
-    } else {
-      return this.tileGrid;
-    }
-  };
-  /**
-  * @param {import("../proj/Projection.js").default} projection Projection.
-  * @return {import("../TileCache.js").default} Tile cache.
-  * @protected
-  */
-  TileSource.prototype.getTileCacheForProjection = function (projection) {
-    _assertsJs.assert(_projJs.equivalent(this.getProjection(), projection), 68);
-    return this.tileCache;
-  };
-  /**
-  * Get the tile pixel ratio for this source. Subclasses may override this
-  * method, which is meant to return a supported pixel ratio that matches the
-  * provided `pixelRatio` as close as possible.
-  * @param {number} pixelRatio Pixel ratio.
-  * @return {number} Tile pixel ratio.
-  */
-  TileSource.prototype.getTilePixelRatio = function (pixelRatio) {
-    return this.tilePixelRatio_;
-  };
-  /**
-  * @param {number} z Z.
-  * @param {number} pixelRatio Pixel ratio.
-  * @param {import("../proj/Projection.js").default} projection Projection.
-  * @return {import("../size.js").Size} Tile size.
-  */
-  TileSource.prototype.getTilePixelSize = function (z, pixelRatio, projection) {
-    var tileGrid = this.getTileGridForProjection(projection);
-    var tilePixelRatio = this.getTilePixelRatio(pixelRatio);
-    var tileSize = _sizeJs.toSize(tileGrid.getTileSize(z), this.tmpSize);
-    if (tilePixelRatio == 1) {
-      return tileSize;
-    } else {
-      return _sizeJs.scale(tileSize, tilePixelRatio, this.tmpSize);
-    }
-  };
-  /**
-  * Returns a tile coordinate wrapped around the x-axis. When the tile coordinate
-  * is outside the resolution and extent range of the tile grid, `null` will be
-  * returned.
-  * @param {import("../tilecoord.js").TileCoord} tileCoord Tile coordinate.
-  * @param {import("../proj/Projection.js").default=} opt_projection Projection.
-  * @return {import("../tilecoord.js").TileCoord} Tile coordinate to be passed to the tileUrlFunction or
-  *     null if no tile URL should be created for the passed `tileCoord`.
-  */
-  TileSource.prototype.getTileCoordForTileUrlFunction = function (tileCoord, opt_projection) {
-    var projection = opt_projection !== undefined ? opt_projection : this.getProjection();
-    var tileGrid = this.getTileGridForProjection(projection);
-    if (this.getWrapX() && projection.isGlobal()) {
-      tileCoord = _tilegridJs.wrapX(tileGrid, tileCoord, projection);
-    }
-    return _tilecoordJs.withinExtentAndZ(tileCoord, tileGrid) ? tileCoord : null;
-  };
-  /**
-  * Remove all cached tiles from the source. The next render cycle will fetch new tiles.
-  * @api
-  */
-  TileSource.prototype.clear = function () {
-    this.tileCache.clear();
-  };
-  TileSource.prototype.refresh = function () {
-    this.clear();
-    _super.prototype.refresh.call(this);
-  };
-  /**
-  * Increases the cache size if needed
-  * @param {number} tileCount Minimum number of tiles needed.
-  * @param {import("../proj/Projection.js").default} projection Projection.
-  */
-  TileSource.prototype.updateCacheSize = function (tileCount, projection) {
-    var tileCache = this.getTileCacheForProjection(projection);
-    if (tileCount > tileCache.highWaterMark) {
-      tileCache.highWaterMark = tileCount;
-    }
-  };
-  /**
-  * Marks a tile coord as being used, without triggering a load.
-  * @abstract
-  * @param {number} z Tile coordinate z.
-  * @param {number} x Tile coordinate x.
-  * @param {number} y Tile coordinate y.
-  * @param {import("../proj/Projection.js").default} projection Projection.
-  */
-  TileSource.prototype.useTile = function (z, x, y, projection) {};
-  return TileSource;
-})(_SourceJsDefault.default);
-/**
-* @classdesc
-* Events emitted by {@link module:ol/source/Tile~TileSource} instances are instances of this
-* type.
-*/
-var TileSourceEvent = /** @class*/
-(function (_super) {
-  __extends(TileSourceEvent, _super);
-  /**
-  * @param {string} type Type.
-  * @param {import("../Tile.js").default} tile The tile.
-  */
-  function TileSourceEvent(type, tile) {
-    var _this = _super.call(this, type) || this;
-    /**
-    * The tile related to the event.
-    * @type {import("../Tile.js").default}
-    * @api
-    */
-    _this.tile = tile;
-    return _this;
-  }
-  return TileSourceEvent;
-})(_eventsEventJsDefault.default);
-exports.default = TileSource;
-
-},{"../events/Event.js":"eICPf","./Source.js":"6n6aD","../TileCache.js":"1oUcD","../TileState.js":"4w04B","../util.js":"4k52K","../asserts.js":"1kfem","../proj.js":"4Wdsb","../tilecoord.js":"2kkyx","../tilegrid.js":"1JyRQ","../size.js":"6N6PX","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"1JyRQ":[function(require,module,exports) {
-var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
-_parcelHelpers.defineInteropFlag(exports);
-_parcelHelpers.export(exports, "getForProjection", function () {
-  return getForProjection;
-});
-_parcelHelpers.export(exports, "wrapX", function () {
-  return wrapX;
-});
-_parcelHelpers.export(exports, "createForExtent", function () {
-  return createForExtent;
-});
-_parcelHelpers.export(exports, "createXYZ", function () {
-  return createXYZ;
-});
-_parcelHelpers.export(exports, "createForProjection", function () {
-  return createForProjection;
-});
-_parcelHelpers.export(exports, "extentFromProjection", function () {
-  return extentFromProjection;
-});
-var _extentCornerJs = require('./extent/Corner.js');
-var _extentCornerJsDefault = _parcelHelpers.interopDefault(_extentCornerJs);
-var _tilegridTileGridJs = require('./tilegrid/TileGrid.js');
-var _tilegridTileGridJsDefault = _parcelHelpers.interopDefault(_tilegridTileGridJs);
-var _projUnitsJs = require('./proj/Units.js');
-var _projUnitsJsDefault = _parcelHelpers.interopDefault(_projUnitsJs);
-var _tilegridCommonJs = require('./tilegrid/common.js');
-var _projJs = require('./proj.js');
-var _extentJs = require('./extent.js');
-var _sizeJs = require('./size.js');
-function getForProjection(projection) {
-  var tileGrid = projection.getDefaultTileGrid();
-  if (!tileGrid) {
-    tileGrid = createForProjection(projection);
-    projection.setDefaultTileGrid(tileGrid);
-  }
-  return tileGrid;
-}
-function wrapX(tileGrid, tileCoord, projection) {
-  var z = tileCoord[0];
-  var center = tileGrid.getTileCoordCenter(tileCoord);
-  var projectionExtent = extentFromProjection(projection);
-  if (!_extentJs.containsCoordinate(projectionExtent, center)) {
-    var worldWidth = _extentJs.getWidth(projectionExtent);
-    var worldsAway = Math.ceil((projectionExtent[0] - center[0]) / worldWidth);
-    center[0] += worldWidth * worldsAway;
-    return tileGrid.getTileCoordForCoordAndZ(center, z);
-  } else {
-    return tileCoord;
-  }
-}
-function createForExtent(extent, opt_maxZoom, opt_tileSize, opt_corner) {
-  var corner = opt_corner !== undefined ? opt_corner : _extentCornerJsDefault.default.TOP_LEFT;
-  var resolutions = resolutionsFromExtent(extent, opt_maxZoom, opt_tileSize);
-  return new _tilegridTileGridJsDefault.default({
-    extent: extent,
-    origin: _extentJs.getCorner(extent, corner),
-    resolutions: resolutions,
-    tileSize: opt_tileSize
   });
-}
-function createXYZ(opt_options) {
-  var xyzOptions = opt_options || ({});
-  var extent = xyzOptions.extent || _projJs.get('EPSG:3857').getExtent();
-  var gridOptions = {
-    extent: extent,
-    minZoom: xyzOptions.minZoom,
-    tileSize: xyzOptions.tileSize,
-    resolutions: resolutionsFromExtent(extent, xyzOptions.maxZoom, xyzOptions.tileSize, xyzOptions.maxResolution)
-  };
-  return new _tilegridTileGridJsDefault.default(gridOptions);
-}
-/**
-* Create a resolutions array from an extent.  A zoom factor of 2 is assumed.
-* @param {import("./extent.js").Extent} extent Extent.
-* @param {number=} opt_maxZoom Maximum zoom level (default is
-*     DEFAULT_MAX_ZOOM).
-* @param {number|import("./size.js").Size=} opt_tileSize Tile size (default uses
-*     DEFAULT_TILE_SIZE).
-* @param {number=} opt_maxResolution Resolution at level zero.
-* @return {!Array<number>} Resolutions array.
-*/
-function resolutionsFromExtent(extent, opt_maxZoom, opt_tileSize, opt_maxResolution) {
-  var maxZoom = opt_maxZoom !== undefined ? opt_maxZoom : _tilegridCommonJs.DEFAULT_MAX_ZOOM;
-  var height = _extentJs.getHeight(extent);
-  var width = _extentJs.getWidth(extent);
-  var tileSize = _sizeJs.toSize(opt_tileSize !== undefined ? opt_tileSize : _tilegridCommonJs.DEFAULT_TILE_SIZE);
-  var maxResolution = opt_maxResolution > 0 ? opt_maxResolution : Math.max(width / tileSize[0], height / tileSize[1]);
-  var length = maxZoom + 1;
-  var resolutions = new Array(length);
-  for (var z = 0; z < length; ++z) {
-    resolutions[z] = maxResolution / Math.pow(2, z);
-  }
-  return resolutions;
-}
-function createForProjection(projection, opt_maxZoom, opt_tileSize, opt_corner) {
-  var extent = extentFromProjection(projection);
-  return createForExtent(extent, opt_maxZoom, opt_tileSize, opt_corner);
-}
-function extentFromProjection(projection) {
-  projection = _projJs.get(projection);
-  var extent = projection.getExtent();
-  if (!extent) {
-    var half = 180 * _projJs.METERS_PER_UNIT[_projUnitsJsDefault.default.DEGREES] / projection.getMetersPerUnit();
-    extent = _extentJs.createOrUpdate(-half, -half, half, half);
-  }
-  return extent;
+  var qs = keyParams.join('&');
+  // remove any trailing ? or &
+  uri = uri.replace(/[?&]$/, '');
+  // append ? or & depending on whether uri has existing parameters
+  uri = uri.indexOf('?') === -1 ? uri + '?' : uri + '&';
+  return uri + qs;
 }
 
-},{"./extent/Corner.js":"5qLG1","./tilegrid/TileGrid.js":"594eg","./proj/Units.js":"6b4hy","./tilegrid/common.js":"3rMqG","./proj.js":"4Wdsb","./extent.js":"5PMSh","./size.js":"6N6PX","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"594eg":[function(require,module,exports) {
-var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
-_parcelHelpers.defineInteropFlag(exports);
-var _TileRangeJs = require('../TileRange.js');
-var _TileRangeJsDefault = _parcelHelpers.interopDefault(_TileRangeJs);
-var _commonJs = require('./common.js');
-var _assertsJs = require('../asserts.js');
-var _mathJs = require('../math.js');
-var _extentJs = require('../extent.js');
-var _tilecoordJs = require('../tilecoord.js');
-var _arrayJs = require('../array.js');
-var _sizeJs = require('../size.js');
-/**
-* @private
-* @type {import("../tilecoord.js").TileCoord}
-*/
-var tmpTileCoord = [0, 0, 0];
-/**
-* @typedef {Object} Options
-* @property {import("../extent.js").Extent} [extent] Extent for the tile grid. No tiles outside this
-* extent will be requested by {@link module:ol/source/Tile} sources. When no `origin` or
-* `origins` are configured, the `origin` will be set to the top-left corner of the extent.
-* @property {number} [minZoom=0] Minimum zoom.
-* @property {import("../coordinate.js").Coordinate} [origin] The tile grid origin, i.e. where the `x`
-* and `y` axes meet (`[z, 0, 0]`). Tile coordinates increase left to right and downwards. If not
-* specified, `extent` or `origins` must be provided.
-* @property {Array<import("../coordinate.js").Coordinate>} [origins] Tile grid origins, i.e. where
-* the `x` and `y` axes meet (`[z, 0, 0]`), for each zoom level. If given, the array length
-* should match the length of the `resolutions` array, i.e. each resolution can have a different
-* origin. Tile coordinates increase left to right and downwards. If not specified, `extent` or
-* `origin` must be provided.
-* @property {!Array<number>} resolutions Resolutions. The array index of each resolution needs
-* to match the zoom level. This means that even if a `minZoom` is configured, the resolutions
-* array will have a length of `maxZoom + 1`.
-* @property {Array<import("../size.js").Size>} [sizes] Number of tile rows and columns
-* of the grid for each zoom level. If specified the values
-* define each zoom level's extent together with the `origin` or `origins`.
-* A grid `extent` can be configured in addition, and will further limit the extent
-* for which tile requests are made by sources. If the bottom-left corner of
-* an extent is used as `origin` or `origins`, then the `y` value must be
-* negative because OpenLayers tile coordinates use the top left as the origin.
-* @property {number|import("../size.js").Size} [tileSize] Tile size.
-* Default is `[256, 256]`.
-* @property {Array<import("../size.js").Size>} [tileSizes] Tile sizes. If given, the array length
-* should match the length of the `resolutions` array, i.e. each resolution can have a different
-* tile size.
-*/
-/**
-* @classdesc
-* Base class for setting the grid pattern for sources accessing tiled-image
-* servers.
-* @api
-*/
-var TileGrid = /** @class*/
-(function () {
-  /**
-  * @param {Options} options Tile grid options.
-  */
-  function TileGrid(options) {
-    /**
-    * @protected
-    * @type {number}
-    */
-    this.minZoom = options.minZoom !== undefined ? options.minZoom : 0;
-    /**
-    * @private
-    * @type {!Array<number>}
-    */
-    this.resolutions_ = options.resolutions;
-    _assertsJs.assert(_arrayJs.isSorted(this.resolutions_, function (a, b) {
-      return b - a;
-    }, true), 17);
-    // `resolutions` must be sorted in descending order
-    // check if we've got a consistent zoom factor and origin
-    var zoomFactor;
-    if (!options.origins) {
-      for (var i = 0, ii = this.resolutions_.length - 1; i < ii; ++i) {
-        if (!zoomFactor) {
-          zoomFactor = this.resolutions_[i] / this.resolutions_[i + 1];
-        } else {
-          if (this.resolutions_[i] / this.resolutions_[i + 1] !== zoomFactor) {
-            zoomFactor = undefined;
-            break;
-          }
-        }
-      }
-    }
-    /**
-    * @private
-    * @type {number|undefined}
-    */
-    this.zoomFactor_ = zoomFactor;
-    /**
-    * @protected
-    * @type {number}
-    */
-    this.maxZoom = this.resolutions_.length - 1;
-    /**
-    * @private
-    * @type {import("../coordinate.js").Coordinate}
-    */
-    this.origin_ = options.origin !== undefined ? options.origin : null;
-    /**
-    * @private
-    * @type {Array<import("../coordinate.js").Coordinate>}
-    */
-    this.origins_ = null;
-    if (options.origins !== undefined) {
-      this.origins_ = options.origins;
-      _assertsJs.assert(this.origins_.length == this.resolutions_.length, 20);
-    }
-    var extent = options.extent;
-    if (extent !== undefined && !this.origin_ && !this.origins_) {
-      this.origin_ = _extentJs.getTopLeft(extent);
-    }
-    _assertsJs.assert(!this.origin_ && this.origins_ || this.origin_ && !this.origins_, 18);
-    // Either `origin` or `origins` must be configured, never both
-    /**
-    * @private
-    * @type {Array<number|import("../size.js").Size>}
-    */
-    this.tileSizes_ = null;
-    if (options.tileSizes !== undefined) {
-      this.tileSizes_ = options.tileSizes;
-      _assertsJs.assert(this.tileSizes_.length == this.resolutions_.length, 19);
-    }
-    /**
-    * @private
-    * @type {number|import("../size.js").Size}
-    */
-    this.tileSize_ = options.tileSize !== undefined ? options.tileSize : !this.tileSizes_ ? _commonJs.DEFAULT_TILE_SIZE : null;
-    _assertsJs.assert(!this.tileSize_ && this.tileSizes_ || this.tileSize_ && !this.tileSizes_, 22);
-    // Either `tileSize` or `tileSizes` must be configured, never both
-    /**
-    * @private
-    * @type {import("../extent.js").Extent}
-    */
-    this.extent_ = extent !== undefined ? extent : null;
-    /**
-    * @private
-    * @type {Array<import("../TileRange.js").default>}
-    */
-    this.fullTileRanges_ = null;
-    /**
-    * @private
-    * @type {import("../size.js").Size}
-    */
-    this.tmpSize_ = [0, 0];
-    if (options.sizes !== undefined) {
-      this.fullTileRanges_ = options.sizes.map(function (size, z) {
-        var tileRange = new _TileRangeJsDefault.default(Math.min(0, size[0]), Math.max(size[0] - 1, -1), Math.min(0, size[1]), Math.max(size[1] - 1, -1));
-        if (extent) {
-          var restrictedTileRange = this.getTileRangeForExtentAndZ(extent, z);
-          tileRange.minX = Math.max(restrictedTileRange.minX, tileRange.minX);
-          tileRange.maxX = Math.min(restrictedTileRange.maxX, tileRange.maxX);
-          tileRange.minY = Math.max(restrictedTileRange.minY, tileRange.minY);
-          tileRange.maxY = Math.min(restrictedTileRange.maxY, tileRange.maxY);
-        }
-        return tileRange;
-      }, this);
-    } else if (extent) {
-      this.calculateTileRanges_(extent);
-    }
-  }
-  /**
-  * Call a function with each tile coordinate for a given extent and zoom level.
-  *
-  * @param {import("../extent.js").Extent} extent Extent.
-  * @param {number} zoom Integer zoom level.
-  * @param {function(import("../tilecoord.js").TileCoord): void} callback Function called with each tile coordinate.
-  * @api
-  */
-  TileGrid.prototype.forEachTileCoord = function (extent, zoom, callback) {
-    var tileRange = this.getTileRangeForExtentAndZ(extent, zoom);
-    for (var i = tileRange.minX, ii = tileRange.maxX; i <= ii; ++i) {
-      for (var j = tileRange.minY, jj = tileRange.maxY; j <= jj; ++j) {
-        callback([zoom, i, j]);
-      }
-    }
-  };
-  /**
-  * @param {import("../tilecoord.js").TileCoord} tileCoord Tile coordinate.
-  * @param {function(number, import("../TileRange.js").default): boolean} callback Callback.
-  * @param {import("../TileRange.js").default=} opt_tileRange Temporary import("../TileRange.js").default object.
-  * @param {import("../extent.js").Extent=} opt_extent Temporary import("../extent.js").Extent object.
-  * @return {boolean} Callback succeeded.
-  */
-  TileGrid.prototype.forEachTileCoordParentTileRange = function (tileCoord, callback, opt_tileRange, opt_extent) {
-    var tileRange, x, y;
-    var tileCoordExtent = null;
-    var z = tileCoord[0] - 1;
-    if (this.zoomFactor_ === 2) {
-      x = tileCoord[1];
-      y = tileCoord[2];
-    } else {
-      tileCoordExtent = this.getTileCoordExtent(tileCoord, opt_extent);
-    }
-    while (z >= this.minZoom) {
-      if (this.zoomFactor_ === 2) {
-        x = Math.floor(x / 2);
-        y = Math.floor(y / 2);
-        tileRange = _TileRangeJs.createOrUpdate(x, x, y, y, opt_tileRange);
-      } else {
-        tileRange = this.getTileRangeForExtentAndZ(tileCoordExtent, z, opt_tileRange);
-      }
-      if (callback(z, tileRange)) {
-        return true;
-      }
-      --z;
-    }
-    return false;
-  };
-  /**
-  * Get the extent for this tile grid, if it was configured.
-  * @return {import("../extent.js").Extent} Extent.
-  * @api
-  */
-  TileGrid.prototype.getExtent = function () {
-    return this.extent_;
-  };
-  /**
-  * Get the maximum zoom level for the grid.
-  * @return {number} Max zoom.
-  * @api
-  */
-  TileGrid.prototype.getMaxZoom = function () {
-    return this.maxZoom;
-  };
-  /**
-  * Get the minimum zoom level for the grid.
-  * @return {number} Min zoom.
-  * @api
-  */
-  TileGrid.prototype.getMinZoom = function () {
-    return this.minZoom;
-  };
-  /**
-  * Get the origin for the grid at the given zoom level.
-  * @param {number} z Integer zoom level.
-  * @return {import("../coordinate.js").Coordinate} Origin.
-  * @api
-  */
-  TileGrid.prototype.getOrigin = function (z) {
-    if (this.origin_) {
-      return this.origin_;
-    } else {
-      return this.origins_[z];
-    }
-  };
-  /**
-  * Get the resolution for the given zoom level.
-  * @param {number} z Integer zoom level.
-  * @return {number} Resolution.
-  * @api
-  */
-  TileGrid.prototype.getResolution = function (z) {
-    return this.resolutions_[z];
-  };
-  /**
-  * Get the list of resolutions for the tile grid.
-  * @return {Array<number>} Resolutions.
-  * @api
-  */
-  TileGrid.prototype.getResolutions = function () {
-    return this.resolutions_;
-  };
-  /**
-  * @param {import("../tilecoord.js").TileCoord} tileCoord Tile coordinate.
-  * @param {import("../TileRange.js").default=} opt_tileRange Temporary import("../TileRange.js").default object.
-  * @param {import("../extent.js").Extent=} opt_extent Temporary import("../extent.js").Extent object.
-  * @return {import("../TileRange.js").default} Tile range.
-  */
-  TileGrid.prototype.getTileCoordChildTileRange = function (tileCoord, opt_tileRange, opt_extent) {
-    if (tileCoord[0] < this.maxZoom) {
-      if (this.zoomFactor_ === 2) {
-        var minX = tileCoord[1] * 2;
-        var minY = tileCoord[2] * 2;
-        return _TileRangeJs.createOrUpdate(minX, minX + 1, minY, minY + 1, opt_tileRange);
-      }
-      var tileCoordExtent = this.getTileCoordExtent(tileCoord, opt_extent);
-      return this.getTileRangeForExtentAndZ(tileCoordExtent, tileCoord[0] + 1, opt_tileRange);
-    }
-    return null;
-  };
-  /**
-  * Get the extent for a tile range.
-  * @param {number} z Integer zoom level.
-  * @param {import("../TileRange.js").default} tileRange Tile range.
-  * @param {import("../extent.js").Extent=} opt_extent Temporary import("../extent.js").Extent object.
-  * @return {import("../extent.js").Extent} Extent.
-  */
-  TileGrid.prototype.getTileRangeExtent = function (z, tileRange, opt_extent) {
-    var origin = this.getOrigin(z);
-    var resolution = this.getResolution(z);
-    var tileSize = _sizeJs.toSize(this.getTileSize(z), this.tmpSize_);
-    var minX = origin[0] + tileRange.minX * tileSize[0] * resolution;
-    var maxX = origin[0] + (tileRange.maxX + 1) * tileSize[0] * resolution;
-    var minY = origin[1] + tileRange.minY * tileSize[1] * resolution;
-    var maxY = origin[1] + (tileRange.maxY + 1) * tileSize[1] * resolution;
-    return _extentJs.createOrUpdate(minX, minY, maxX, maxY, opt_extent);
-  };
-  /**
-  * Get a tile range for the given extent and integer zoom level.
-  * @param {import("../extent.js").Extent} extent Extent.
-  * @param {number} z Integer zoom level.
-  * @param {import("../TileRange.js").default=} opt_tileRange Temporary tile range object.
-  * @return {import("../TileRange.js").default} Tile range.
-  */
-  TileGrid.prototype.getTileRangeForExtentAndZ = function (extent, z, opt_tileRange) {
-    var tileCoord = tmpTileCoord;
-    this.getTileCoordForXYAndZ_(extent[0], extent[3], z, false, tileCoord);
-    var minX = tileCoord[1];
-    var minY = tileCoord[2];
-    this.getTileCoordForXYAndZ_(extent[2], extent[1], z, true, tileCoord);
-    return _TileRangeJs.createOrUpdate(minX, tileCoord[1], minY, tileCoord[2], opt_tileRange);
-  };
-  /**
-  * @param {import("../tilecoord.js").TileCoord} tileCoord Tile coordinate.
-  * @return {import("../coordinate.js").Coordinate} Tile center.
-  */
-  TileGrid.prototype.getTileCoordCenter = function (tileCoord) {
-    var origin = this.getOrigin(tileCoord[0]);
-    var resolution = this.getResolution(tileCoord[0]);
-    var tileSize = _sizeJs.toSize(this.getTileSize(tileCoord[0]), this.tmpSize_);
-    return [origin[0] + (tileCoord[1] + 0.5) * tileSize[0] * resolution, origin[1] - (tileCoord[2] + 0.5) * tileSize[1] * resolution];
-  };
-  /**
-  * Get the extent of a tile coordinate.
-  *
-  * @param {import("../tilecoord.js").TileCoord} tileCoord Tile coordinate.
-  * @param {import("../extent.js").Extent=} opt_extent Temporary extent object.
-  * @return {import("../extent.js").Extent} Extent.
-  * @api
-  */
-  TileGrid.prototype.getTileCoordExtent = function (tileCoord, opt_extent) {
-    var origin = this.getOrigin(tileCoord[0]);
-    var resolution = this.getResolution(tileCoord[0]);
-    var tileSize = _sizeJs.toSize(this.getTileSize(tileCoord[0]), this.tmpSize_);
-    var minX = origin[0] + tileCoord[1] * tileSize[0] * resolution;
-    var minY = origin[1] - (tileCoord[2] + 1) * tileSize[1] * resolution;
-    var maxX = minX + tileSize[0] * resolution;
-    var maxY = minY + tileSize[1] * resolution;
-    return _extentJs.createOrUpdate(minX, minY, maxX, maxY, opt_extent);
-  };
-  /**
-  * Get the tile coordinate for the given map coordinate and resolution.  This
-  * method considers that coordinates that intersect tile boundaries should be
-  * assigned the higher tile coordinate.
-  *
-  * @param {import("../coordinate.js").Coordinate} coordinate Coordinate.
-  * @param {number} resolution Resolution.
-  * @param {import("../tilecoord.js").TileCoord=} opt_tileCoord Destination import("../tilecoord.js").TileCoord object.
-  * @return {import("../tilecoord.js").TileCoord} Tile coordinate.
-  * @api
-  */
-  TileGrid.prototype.getTileCoordForCoordAndResolution = function (coordinate, resolution, opt_tileCoord) {
-    return this.getTileCoordForXYAndResolution_(coordinate[0], coordinate[1], resolution, false, opt_tileCoord);
-  };
-  /**
-  * Note that this method should not be called for resolutions that correspond
-  * to an integer zoom level.  Instead call the `getTileCoordForXYAndZ_` method.
-  * @param {number} x X.
-  * @param {number} y Y.
-  * @param {number} resolution Resolution (for a non-integer zoom level).
-  * @param {boolean} reverseIntersectionPolicy Instead of letting edge
-  *     intersections go to the higher tile coordinate, let edge intersections
-  *     go to the lower tile coordinate.
-  * @param {import("../tilecoord.js").TileCoord=} opt_tileCoord Temporary import("../tilecoord.js").TileCoord object.
-  * @return {import("../tilecoord.js").TileCoord} Tile coordinate.
-  * @private
-  */
-  TileGrid.prototype.getTileCoordForXYAndResolution_ = function (x, y, resolution, reverseIntersectionPolicy, opt_tileCoord) {
-    var z = this.getZForResolution(resolution);
-    var scale = resolution / this.getResolution(z);
-    var origin = this.getOrigin(z);
-    var tileSize = _sizeJs.toSize(this.getTileSize(z), this.tmpSize_);
-    var adjustX = reverseIntersectionPolicy ? 0.5 : 0;
-    var adjustY = reverseIntersectionPolicy ? 0.5 : 0;
-    var xFromOrigin = Math.floor((x - origin[0]) / resolution + adjustX);
-    var yFromOrigin = Math.floor((origin[1] - y) / resolution + adjustY);
-    var tileCoordX = scale * xFromOrigin / tileSize[0];
-    var tileCoordY = scale * yFromOrigin / tileSize[1];
-    if (reverseIntersectionPolicy) {
-      tileCoordX = Math.ceil(tileCoordX) - 1;
-      tileCoordY = Math.ceil(tileCoordY) - 1;
-    } else {
-      tileCoordX = Math.floor(tileCoordX);
-      tileCoordY = Math.floor(tileCoordY);
-    }
-    return _tilecoordJs.createOrUpdate(z, tileCoordX, tileCoordY, opt_tileCoord);
-  };
-  /**
-  * Although there is repetition between this method and `getTileCoordForXYAndResolution_`,
-  * they should have separate implementations.  This method is for integer zoom
-  * levels.  The other method should only be called for resolutions corresponding
-  * to non-integer zoom levels.
-  * @param {number} x Map x coordinate.
-  * @param {number} y Map y coordinate.
-  * @param {number} z Integer zoom level.
-  * @param {boolean} reverseIntersectionPolicy Instead of letting edge
-  *     intersections go to the higher tile coordinate, let edge intersections
-  *     go to the lower tile coordinate.
-  * @param {import("../tilecoord.js").TileCoord=} opt_tileCoord Temporary import("../tilecoord.js").TileCoord object.
-  * @return {import("../tilecoord.js").TileCoord} Tile coordinate.
-  * @private
-  */
-  TileGrid.prototype.getTileCoordForXYAndZ_ = function (x, y, z, reverseIntersectionPolicy, opt_tileCoord) {
-    var origin = this.getOrigin(z);
-    var resolution = this.getResolution(z);
-    var tileSize = _sizeJs.toSize(this.getTileSize(z), this.tmpSize_);
-    var adjustX = reverseIntersectionPolicy ? 0.5 : 0;
-    var adjustY = reverseIntersectionPolicy ? 0.5 : 0;
-    var xFromOrigin = Math.floor((x - origin[0]) / resolution + adjustX);
-    var yFromOrigin = Math.floor((origin[1] - y) / resolution + adjustY);
-    var tileCoordX = xFromOrigin / tileSize[0];
-    var tileCoordY = yFromOrigin / tileSize[1];
-    if (reverseIntersectionPolicy) {
-      tileCoordX = Math.ceil(tileCoordX) - 1;
-      tileCoordY = Math.ceil(tileCoordY) - 1;
-    } else {
-      tileCoordX = Math.floor(tileCoordX);
-      tileCoordY = Math.floor(tileCoordY);
-    }
-    return _tilecoordJs.createOrUpdate(z, tileCoordX, tileCoordY, opt_tileCoord);
-  };
-  /**
-  * Get a tile coordinate given a map coordinate and zoom level.
-  * @param {import("../coordinate.js").Coordinate} coordinate Coordinate.
-  * @param {number} z Zoom level.
-  * @param {import("../tilecoord.js").TileCoord=} opt_tileCoord Destination import("../tilecoord.js").TileCoord object.
-  * @return {import("../tilecoord.js").TileCoord} Tile coordinate.
-  * @api
-  */
-  TileGrid.prototype.getTileCoordForCoordAndZ = function (coordinate, z, opt_tileCoord) {
-    return this.getTileCoordForXYAndZ_(coordinate[0], coordinate[1], z, false, opt_tileCoord);
-  };
-  /**
-  * @param {import("../tilecoord.js").TileCoord} tileCoord Tile coordinate.
-  * @return {number} Tile resolution.
-  */
-  TileGrid.prototype.getTileCoordResolution = function (tileCoord) {
-    return this.resolutions_[tileCoord[0]];
-  };
-  /**
-  * Get the tile size for a zoom level. The type of the return value matches the
-  * `tileSize` or `tileSizes` that the tile grid was configured with. To always
-  * get an `import("../size.js").Size`, run the result through `import("../size.js").Size.toSize()`.
-  * @param {number} z Z.
-  * @return {number|import("../size.js").Size} Tile size.
-  * @api
-  */
-  TileGrid.prototype.getTileSize = function (z) {
-    if (this.tileSize_) {
-      return this.tileSize_;
-    } else {
-      return this.tileSizes_[z];
-    }
-  };
-  /**
-  * @param {number} z Zoom level.
-  * @return {import("../TileRange.js").default} Extent tile range for the specified zoom level.
-  */
-  TileGrid.prototype.getFullTileRange = function (z) {
-    if (!this.fullTileRanges_) {
-      return this.extent_ ? this.getTileRangeForExtentAndZ(this.extent_, z) : null;
-    } else {
-      return this.fullTileRanges_[z];
-    }
-  };
-  /**
-  * @param {number} resolution Resolution.
-  * @param {number=} opt_direction If 0, the nearest resolution will be used.
-  *     If 1, the nearest lower resolution will be used. If -1, the nearest
-  *     higher resolution will be used. Default is 0.
-  * @return {number} Z.
-  * @api
-  */
-  TileGrid.prototype.getZForResolution = function (resolution, opt_direction) {
-    var z = _arrayJs.linearFindNearest(this.resolutions_, resolution, opt_direction || 0);
-    return _mathJs.clamp(z, this.minZoom, this.maxZoom);
-  };
-  /**
-  * @param {!import("../extent.js").Extent} extent Extent for this tile grid.
-  * @private
-  */
-  TileGrid.prototype.calculateTileRanges_ = function (extent) {
-    var length = this.resolutions_.length;
-    var fullTileRanges = new Array(length);
-    for (var z = this.minZoom; z < length; ++z) {
-      fullTileRanges[z] = this.getTileRangeForExtentAndZ(extent, z);
-    }
-    this.fullTileRanges_ = fullTileRanges;
-  };
-  return TileGrid;
-})();
-exports.default = TileGrid;
-
-},{"../TileRange.js":"3G6qD","./common.js":"3rMqG","../asserts.js":"1kfem","../math.js":"39Bdl","../extent.js":"5PMSh","../tilecoord.js":"2kkyx","../array.js":"Og3xJ","../size.js":"6N6PX","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"3G6qD":[function(require,module,exports) {
-var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
-_parcelHelpers.defineInteropFlag(exports);
-_parcelHelpers.export(exports, "createOrUpdate", function () {
-  return createOrUpdate;
-});
-/**
-* @module ol/TileRange
-*/
-/**
-* A representation of a contiguous block of tiles.  A tile range is specified
-* by its min/max tile coordinates and is inclusive of coordinates.
-*/
-var TileRange = /** @class*/
-(function () {
-  /**
-  * @param {number} minX Minimum X.
-  * @param {number} maxX Maximum X.
-  * @param {number} minY Minimum Y.
-  * @param {number} maxY Maximum Y.
-  */
-  function TileRange(minX, maxX, minY, maxY) {
-    /**
-    * @type {number}
-    */
-    this.minX = minX;
-    /**
-    * @type {number}
-    */
-    this.maxX = maxX;
-    /**
-    * @type {number}
-    */
-    this.minY = minY;
-    /**
-    * @type {number}
-    */
-    this.maxY = maxY;
-  }
-  /**
-  * @param {import("./tilecoord.js").TileCoord} tileCoord Tile coordinate.
-  * @return {boolean} Contains tile coordinate.
-  */
-  TileRange.prototype.contains = function (tileCoord) {
-    return this.containsXY(tileCoord[1], tileCoord[2]);
-  };
-  /**
-  * @param {TileRange} tileRange Tile range.
-  * @return {boolean} Contains.
-  */
-  TileRange.prototype.containsTileRange = function (tileRange) {
-    return this.minX <= tileRange.minX && tileRange.maxX <= this.maxX && this.minY <= tileRange.minY && tileRange.maxY <= this.maxY;
-  };
-  /**
-  * @param {number} x Tile coordinate x.
-  * @param {number} y Tile coordinate y.
-  * @return {boolean} Contains coordinate.
-  */
-  TileRange.prototype.containsXY = function (x, y) {
-    return this.minX <= x && x <= this.maxX && this.minY <= y && y <= this.maxY;
-  };
-  /**
-  * @param {TileRange} tileRange Tile range.
-  * @return {boolean} Equals.
-  */
-  TileRange.prototype.equals = function (tileRange) {
-    return this.minX == tileRange.minX && this.minY == tileRange.minY && this.maxX == tileRange.maxX && this.maxY == tileRange.maxY;
-  };
-  /**
-  * @param {TileRange} tileRange Tile range.
-  */
-  TileRange.prototype.extend = function (tileRange) {
-    if (tileRange.minX < this.minX) {
-      this.minX = tileRange.minX;
-    }
-    if (tileRange.maxX > this.maxX) {
-      this.maxX = tileRange.maxX;
-    }
-    if (tileRange.minY < this.minY) {
-      this.minY = tileRange.minY;
-    }
-    if (tileRange.maxY > this.maxY) {
-      this.maxY = tileRange.maxY;
-    }
-  };
-  /**
-  * @return {number} Height.
-  */
-  TileRange.prototype.getHeight = function () {
-    return this.maxY - this.minY + 1;
-  };
-  /**
-  * @return {import("./size.js").Size} Size.
-  */
-  TileRange.prototype.getSize = function () {
-    return [this.getWidth(), this.getHeight()];
-  };
-  /**
-  * @return {number} Width.
-  */
-  TileRange.prototype.getWidth = function () {
-    return this.maxX - this.minX + 1;
-  };
-  /**
-  * @param {TileRange} tileRange Tile range.
-  * @return {boolean} Intersects.
-  */
-  TileRange.prototype.intersects = function (tileRange) {
-    return this.minX <= tileRange.maxX && this.maxX >= tileRange.minX && this.minY <= tileRange.maxY && this.maxY >= tileRange.minY;
-  };
-  return TileRange;
-})();
-function createOrUpdate(minX, maxX, minY, maxY, tileRange) {
-  if (tileRange !== undefined) {
-    tileRange.minX = minX;
-    tileRange.maxX = maxX;
-    tileRange.minY = minY;
-    tileRange.maxY = maxY;
-    return tileRange;
-  } else {
-    return new TileRange(minX, maxX, minY, maxY);
-  }
-}
-exports.default = TileRange;
-
-},{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"2fA5K":[function(require,module,exports) {
-var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
-_parcelHelpers.defineInteropFlag(exports);
-_parcelHelpers.export(exports, "createFromTemplate", function () {
-  return createFromTemplate;
-});
-_parcelHelpers.export(exports, "createFromTemplates", function () {
-  return createFromTemplates;
-});
-_parcelHelpers.export(exports, "createFromTileUrlFunctions", function () {
-  return createFromTileUrlFunctions;
-});
-_parcelHelpers.export(exports, "nullTileUrlFunction", function () {
-  return nullTileUrlFunction;
-});
-_parcelHelpers.export(exports, "expandUrl", function () {
-  return expandUrl;
-});
-var _assertsJs = require('./asserts.js');
-var _mathJs = require('./math.js');
-var _tilecoordJs = require('./tilecoord.js');
-function createFromTemplate(template, tileGrid) {
-  var zRegEx = /\{z\}/g;
-  var xRegEx = /\{x\}/g;
-  var yRegEx = /\{y\}/g;
-  var dashYRegEx = /\{-y\}/g;
-  return (
-    /**
-    * @param {import("./tilecoord.js").TileCoord} tileCoord Tile Coordinate.
-    * @param {number} pixelRatio Pixel ratio.
-    * @param {import("./proj/Projection.js").default} projection Projection.
-    * @return {string|undefined} Tile URL.
-    */
-    function (tileCoord, pixelRatio, projection) {
-      if (!tileCoord) {
-        return undefined;
-      } else {
-        return template.replace(zRegEx, tileCoord[0].toString()).replace(xRegEx, tileCoord[1].toString()).replace(yRegEx, tileCoord[2].toString()).replace(dashYRegEx, function () {
-          var z = tileCoord[0];
-          var range = tileGrid.getFullTileRange(z);
-          _assertsJs.assert(range, 55);
-          // The {-y} placeholder requires a tile grid with extent
-          var y = range.getHeight() - tileCoord[2] - 1;
-          return y.toString();
-        });
-      }
-    }
-  );
-}
-function createFromTemplates(templates, tileGrid) {
-  var len = templates.length;
-  var tileUrlFunctions = new Array(len);
-  for (var i = 0; i < len; ++i) {
-    tileUrlFunctions[i] = createFromTemplate(templates[i], tileGrid);
-  }
-  return createFromTileUrlFunctions(tileUrlFunctions);
-}
-function createFromTileUrlFunctions(tileUrlFunctions) {
-  if (tileUrlFunctions.length === 1) {
-    return tileUrlFunctions[0];
-  }
-  return (
-    /**
-    * @param {import("./tilecoord.js").TileCoord} tileCoord Tile Coordinate.
-    * @param {number} pixelRatio Pixel ratio.
-    * @param {import("./proj/Projection.js").default} projection Projection.
-    * @return {string|undefined} Tile URL.
-    */
-    function (tileCoord, pixelRatio, projection) {
-      if (!tileCoord) {
-        return undefined;
-      } else {
-        var h = _tilecoordJs.hash(tileCoord);
-        var index = _mathJs.modulo(h, tileUrlFunctions.length);
-        return tileUrlFunctions[index](tileCoord, pixelRatio, projection);
-      }
-    }
-  );
-}
-function nullTileUrlFunction(tileCoord, pixelRatio, projection) {
-  return undefined;
-}
-function expandUrl(url) {
-  var urls = [];
-  var match = (/\{([a-z])-([a-z])\}/).exec(url);
-  if (match) {
-    // char range
-    var startCharCode = match[1].charCodeAt(0);
-    var stopCharCode = match[2].charCodeAt(0);
-    var charCode = void 0;
-    for (charCode = startCharCode; charCode <= stopCharCode; ++charCode) {
-      urls.push(url.replace(match[0], String.fromCharCode(charCode)));
-    }
-    return urls;
-  }
-  match = (/\{(\d+)-(\d+)\}/).exec(url);
-  if (match) {
-    // number range
-    var stop_1 = parseInt(match[2], 10);
-    for (var i = parseInt(match[1], 10); i <= stop_1; i++) {
-      urls.push(url.replace(match[0], i.toString()));
-    }
-    return urls;
-  }
-  urls.push(url);
-  return urls;
-}
-
-},{"./asserts.js":"1kfem","./math.js":"39Bdl","./tilecoord.js":"2kkyx","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"4ym9Z":[function(require,module,exports) {
+},{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"4ym9Z":[function(require,module,exports) {
 var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
 _parcelHelpers.defineInteropFlag(exports);
 _parcelHelpers.export(exports, "Graticule", function () {
@@ -47773,7 +45422,132 @@ var CanvasTileLayerRenderer = /** @class*/
 CanvasTileLayerRenderer.prototype.getLayer;
 exports.default = CanvasTileLayerRenderer;
 
-},{"./Layer.js":"32ZJ2","../../TileRange.js":"3G6qD","../../TileState.js":"4w04B","../../transform.js":"1NXos","../../obj.js":"fh3Rh","../../extent.js":"5PMSh","../../render/canvas.js":"3ihHw","../../proj.js":"4Wdsb","../../util.js":"4k52K","../../array.js":"Og3xJ","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"1wu4u":[function(require,module,exports) {
+},{"./Layer.js":"32ZJ2","../../TileRange.js":"3G6qD","../../TileState.js":"4w04B","../../transform.js":"1NXos","../../obj.js":"fh3Rh","../../extent.js":"5PMSh","../../render/canvas.js":"3ihHw","../../proj.js":"4Wdsb","../../util.js":"4k52K","../../array.js":"Og3xJ","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"3G6qD":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "createOrUpdate", function () {
+  return createOrUpdate;
+});
+/**
+* @module ol/TileRange
+*/
+/**
+* A representation of a contiguous block of tiles.  A tile range is specified
+* by its min/max tile coordinates and is inclusive of coordinates.
+*/
+var TileRange = /** @class*/
+(function () {
+  /**
+  * @param {number} minX Minimum X.
+  * @param {number} maxX Maximum X.
+  * @param {number} minY Minimum Y.
+  * @param {number} maxY Maximum Y.
+  */
+  function TileRange(minX, maxX, minY, maxY) {
+    /**
+    * @type {number}
+    */
+    this.minX = minX;
+    /**
+    * @type {number}
+    */
+    this.maxX = maxX;
+    /**
+    * @type {number}
+    */
+    this.minY = minY;
+    /**
+    * @type {number}
+    */
+    this.maxY = maxY;
+  }
+  /**
+  * @param {import("./tilecoord.js").TileCoord} tileCoord Tile coordinate.
+  * @return {boolean} Contains tile coordinate.
+  */
+  TileRange.prototype.contains = function (tileCoord) {
+    return this.containsXY(tileCoord[1], tileCoord[2]);
+  };
+  /**
+  * @param {TileRange} tileRange Tile range.
+  * @return {boolean} Contains.
+  */
+  TileRange.prototype.containsTileRange = function (tileRange) {
+    return this.minX <= tileRange.minX && tileRange.maxX <= this.maxX && this.minY <= tileRange.minY && tileRange.maxY <= this.maxY;
+  };
+  /**
+  * @param {number} x Tile coordinate x.
+  * @param {number} y Tile coordinate y.
+  * @return {boolean} Contains coordinate.
+  */
+  TileRange.prototype.containsXY = function (x, y) {
+    return this.minX <= x && x <= this.maxX && this.minY <= y && y <= this.maxY;
+  };
+  /**
+  * @param {TileRange} tileRange Tile range.
+  * @return {boolean} Equals.
+  */
+  TileRange.prototype.equals = function (tileRange) {
+    return this.minX == tileRange.minX && this.minY == tileRange.minY && this.maxX == tileRange.maxX && this.maxY == tileRange.maxY;
+  };
+  /**
+  * @param {TileRange} tileRange Tile range.
+  */
+  TileRange.prototype.extend = function (tileRange) {
+    if (tileRange.minX < this.minX) {
+      this.minX = tileRange.minX;
+    }
+    if (tileRange.maxX > this.maxX) {
+      this.maxX = tileRange.maxX;
+    }
+    if (tileRange.minY < this.minY) {
+      this.minY = tileRange.minY;
+    }
+    if (tileRange.maxY > this.maxY) {
+      this.maxY = tileRange.maxY;
+    }
+  };
+  /**
+  * @return {number} Height.
+  */
+  TileRange.prototype.getHeight = function () {
+    return this.maxY - this.minY + 1;
+  };
+  /**
+  * @return {import("./size.js").Size} Size.
+  */
+  TileRange.prototype.getSize = function () {
+    return [this.getWidth(), this.getHeight()];
+  };
+  /**
+  * @return {number} Width.
+  */
+  TileRange.prototype.getWidth = function () {
+    return this.maxX - this.minX + 1;
+  };
+  /**
+  * @param {TileRange} tileRange Tile range.
+  * @return {boolean} Intersects.
+  */
+  TileRange.prototype.intersects = function (tileRange) {
+    return this.minX <= tileRange.maxX && this.maxX >= tileRange.minX && this.minY <= tileRange.maxY && this.maxY >= tileRange.minY;
+  };
+  return TileRange;
+})();
+function createOrUpdate(minX, maxX, minY, maxY, tileRange) {
+  if (tileRange !== undefined) {
+    tileRange.minX = minX;
+    tileRange.maxX = maxX;
+    tileRange.minY = minY;
+    tileRange.maxY = maxY;
+    return tileRange;
+  } else {
+    return new TileRange(minX, maxX, minY, maxY);
+  }
+}
+exports.default = TileRange;
+
+},{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"1wu4u":[function(require,module,exports) {
 var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
 _parcelHelpers.defineInteropFlag(exports);
 exports.default = {
@@ -48400,7 +46174,2021 @@ var VectorTile = /** @class*/
 })(_TileJsDefault.default);
 exports.default = VectorTile;
 
-},{"./Tile.js":"72Vcf","./TileState.js":"4w04B","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"6ayzs":[function(require,module,exports) {
+},{"./Tile.js":"72Vcf","./TileState.js":"4w04B","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"72Vcf":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var _eventsTargetJs = require('./events/Target.js');
+var _eventsTargetJsDefault = _parcelHelpers.interopDefault(_eventsTargetJs);
+var _eventsEventTypeJs = require('./events/EventType.js');
+var _eventsEventTypeJsDefault = _parcelHelpers.interopDefault(_eventsEventTypeJs);
+var _TileStateJs = require('./TileState.js');
+var _TileStateJsDefault = _parcelHelpers.interopDefault(_TileStateJs);
+var _utilJs = require('./util.js');
+var _easingJs = require('./easing.js');
+var __extends = undefined && undefined.__extends || (function () {
+  var extendStatics = function (d, b) {
+    extendStatics = Object.setPrototypeOf || ({
+      __proto__: []
+    }) instanceof Array && (function (d, b) {
+      d.__proto__ = b;
+    }) || (function (d, b) {
+      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+    });
+    return extendStatics(d, b);
+  };
+  return function (d, b) {
+    extendStatics(d, b);
+    function __() {
+      this.constructor = d;
+    }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+})();
+/**
+* A function that takes an {@link module:ol/Tile} for the tile and a
+* `{string}` for the url as arguments. The default is
+* ```js
+* source.setTileLoadFunction(function(tile, src) {
+*   tile.getImage().src = src;
+* });
+* ```
+* For more fine grained control, the load function can use fetch or XMLHttpRequest and involve
+* error handling:
+*
+* ```js
+* import TileState from 'ol/TileState';
+*
+* source.setTileLoadFunction(function(tile, src) {
+*   var xhr = new XMLHttpRequest();
+*   xhr.responseType = 'blob';
+*   xhr.addEventListener('loadend', function (evt) {
+*     var data = this.response;
+*     if (data !== undefined) {
+*       tile.getImage().src = URL.createObjectURL(data);
+*     } else {
+*       tile.setState(TileState.ERROR);
+*     }
+*   });
+*   xhr.addEventListener('error', function () {
+*     tile.setState(TileState.ERROR);
+*   });
+*   xhr.open('GET', src);
+*   xhr.send();
+* });
+* ```
+*
+* @typedef {function(Tile, string): void} LoadFunction
+* @api
+*/
+/**
+* {@link module:ol/source/Tile~Tile} sources use a function of this type to get
+* the url that provides a tile for a given tile coordinate.
+*
+* This function takes an {@link module:ol/tilecoord~TileCoord} for the tile
+* coordinate, a `{number}` representing the pixel ratio and a
+* {@link module:ol/proj/Projection} for the projection  as arguments
+* and returns a `{string}` representing the tile URL, or undefined if no tile
+* should be requested for the passed tile coordinate.
+*
+* @typedef {function(import("./tilecoord.js").TileCoord, number,
+*           import("./proj/Projection.js").default): (string|undefined)} UrlFunction
+* @api
+*/
+/**
+* @typedef {Object} Options
+* @property {number} [transition=250] A duration for tile opacity
+* transitions in milliseconds. A duration of 0 disables the opacity transition.
+* @api
+*/
+/**
+* @classdesc
+* Base class for tiles.
+*
+* @abstract
+*/
+var Tile = /** @class*/
+(function (_super) {
+  __extends(Tile, _super);
+  /**
+  * @param {import("./tilecoord.js").TileCoord} tileCoord Tile coordinate.
+  * @param {import("./TileState.js").default} state State.
+  * @param {Options=} opt_options Tile options.
+  */
+  function Tile(tileCoord, state, opt_options) {
+    var _this = _super.call(this) || this;
+    var options = opt_options ? opt_options : {};
+    /**
+    * @type {import("./tilecoord.js").TileCoord}
+    */
+    _this.tileCoord = tileCoord;
+    /**
+    * @protected
+    * @type {import("./TileState.js").default}
+    */
+    _this.state = state;
+    /**
+    * An "interim" tile for this tile. The interim tile may be used while this
+    * one is loading, for "smooth" transitions when changing params/dimensions
+    * on the source.
+    * @type {Tile}
+    */
+    _this.interimTile = null;
+    /**
+    * The tile is available at the highest possible resolution. Subclasses can
+    * set this to `false` initially. Tile load listeners will not be
+    * unregistered before this is set to `true` and a `#changed()` is called.
+    * @type {boolean}
+    */
+    _this.hifi = true;
+    /**
+    * A key assigned to the tile. This is used by the tile source to determine
+    * if this tile can effectively be used, or if a new tile should be created
+    * and this one be used as an interim tile for this new tile.
+    * @type {string}
+    */
+    _this.key = '';
+    /**
+    * The duration for the opacity transition.
+    * @type {number}
+    */
+    _this.transition_ = options.transition === undefined ? 250 : options.transition;
+    /**
+    * Lookup of start times for rendering transitions.  If the start time is
+    * equal to -1, the transition is complete.
+    * @type {Object<string, number>}
+    */
+    _this.transitionStarts_ = {};
+    return _this;
+  }
+  /**
+  * @protected
+  */
+  Tile.prototype.changed = function () {
+    this.dispatchEvent(_eventsEventTypeJsDefault.default.CHANGE);
+  };
+  /**
+  * Called by the tile cache when the tile is removed from the cache due to expiry
+  */
+  Tile.prototype.release = function () {};
+  /**
+  * @return {string} Key.
+  */
+  Tile.prototype.getKey = function () {
+    return this.key + '/' + this.tileCoord;
+  };
+  /**
+  * Get the interim tile most suitable for rendering using the chain of interim
+  * tiles. This corresponds to the  most recent tile that has been loaded, if no
+  * such tile exists, the original tile is returned.
+  * @return {!Tile} Best tile for rendering.
+  */
+  Tile.prototype.getInterimTile = function () {
+    if (!this.interimTile) {
+      // empty chain
+      return this;
+    }
+    var tile = this.interimTile;
+    // find the first loaded tile and return it. Since the chain is sorted in
+    // decreasing order of creation time, there is no need to search the remainder
+    // of the list (all those tiles correspond to older requests and will be
+    // cleaned up by refreshInterimChain)
+    do {
+      if (tile.getState() == _TileStateJsDefault.default.LOADED) {
+        // Show tile immediately instead of fading it in after loading, because
+        // the interim tile is in place already
+        this.transition_ = 0;
+        return tile;
+      }
+      tile = tile.interimTile;
+    } while (tile);
+    // we can not find a better tile
+    return this;
+  };
+  /**
+  * Goes through the chain of interim tiles and discards sections of the chain
+  * that are no longer relevant.
+  */
+  Tile.prototype.refreshInterimChain = function () {
+    if (!this.interimTile) {
+      return;
+    }
+    var tile = this.interimTile;
+    var prev = /** @type {Tile}*/
+    this;
+    do {
+      if (tile.getState() == _TileStateJsDefault.default.LOADED) {
+        // we have a loaded tile, we can discard the rest of the list
+        // we would could abort any LOADING tile request
+        // older than this tile (i.e. any LOADING tile following this entry in the chain)
+        tile.interimTile = null;
+        break;
+      } else if (tile.getState() == _TileStateJsDefault.default.LOADING) {
+        // keep this LOADING tile any loaded tiles later in the chain are
+        // older than this tile, so we're still interested in the request
+        prev = tile;
+      } else if (tile.getState() == _TileStateJsDefault.default.IDLE) {
+        // the head of the list is the most current tile, we don't need
+        // to start any other requests for this chain
+        prev.interimTile = tile.interimTile;
+      } else {
+        prev = tile;
+      }
+      tile = prev.interimTile;
+    } while (tile);
+  };
+  /**
+  * Get the tile coordinate for this tile.
+  * @return {import("./tilecoord.js").TileCoord} The tile coordinate.
+  * @api
+  */
+  Tile.prototype.getTileCoord = function () {
+    return this.tileCoord;
+  };
+  /**
+  * @return {import("./TileState.js").default} State.
+  */
+  Tile.prototype.getState = function () {
+    return this.state;
+  };
+  /**
+  * Sets the state of this tile. If you write your own {@link module:ol/Tile~LoadFunction tileLoadFunction} ,
+  * it is important to set the state correctly to {@link module:ol/TileState~ERROR}
+  * when the tile cannot be loaded. Otherwise the tile cannot be removed from
+  * the tile queue and will block other requests.
+  * @param {import("./TileState.js").default} state State.
+  * @api
+  */
+  Tile.prototype.setState = function (state) {
+    if (this.state !== _TileStateJsDefault.default.ERROR && this.state > state) {
+      throw new Error('Tile load sequence violation');
+    }
+    this.state = state;
+    this.changed();
+  };
+  /**
+  * Load the image or retry if loading previously failed.
+  * Loading is taken care of by the tile queue, and calling this method is
+  * only needed for preloading or for reloading in case of an error.
+  * @abstract
+  * @api
+  */
+  Tile.prototype.load = function () {
+    _utilJs.abstract();
+  };
+  /**
+  * Get the alpha value for rendering.
+  * @param {string} id An id for the renderer.
+  * @param {number} time The render frame time.
+  * @return {number} A number between 0 and 1.
+  */
+  Tile.prototype.getAlpha = function (id, time) {
+    if (!this.transition_) {
+      return 1;
+    }
+    var start = this.transitionStarts_[id];
+    if (!start) {
+      start = time;
+      this.transitionStarts_[id] = start;
+    } else if (start === -1) {
+      return 1;
+    }
+    var delta = time - start + 1000 / 60;
+    // avoid rendering at 0
+    if (delta >= this.transition_) {
+      return 1;
+    }
+    return _easingJs.easeIn(delta / this.transition_);
+  };
+  /**
+  * Determine if a tile is in an alpha transition.  A tile is considered in
+  * transition if tile.getAlpha() has not yet been called or has been called
+  * and returned 1.
+  * @param {string} id An id for the renderer.
+  * @return {boolean} The tile is in transition.
+  */
+  Tile.prototype.inTransition = function (id) {
+    if (!this.transition_) {
+      return false;
+    }
+    return this.transitionStarts_[id] !== -1;
+  };
+  /**
+  * Mark a transition as complete.
+  * @param {string} id An id for the renderer.
+  */
+  Tile.prototype.endTransition = function (id) {
+    if (this.transition_) {
+      this.transitionStarts_[id] = -1;
+    }
+  };
+  return Tile;
+})(_eventsTargetJsDefault.default);
+exports.default = Tile;
+
+},{"./events/Target.js":"3qhnX","./events/EventType.js":"1VnyO","./TileState.js":"4w04B","./util.js":"4k52K","./easing.js":"26glW","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"1oUcD":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var _structsLRUCacheJs = require('./structs/LRUCache.js');
+var _structsLRUCacheJsDefault = _parcelHelpers.interopDefault(_structsLRUCacheJs);
+var _tilecoordJs = require('./tilecoord.js');
+var __extends = undefined && undefined.__extends || (function () {
+  var extendStatics = function (d, b) {
+    extendStatics = Object.setPrototypeOf || ({
+      __proto__: []
+    }) instanceof Array && (function (d, b) {
+      d.__proto__ = b;
+    }) || (function (d, b) {
+      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+    });
+    return extendStatics(d, b);
+  };
+  return function (d, b) {
+    extendStatics(d, b);
+    function __() {
+      this.constructor = d;
+    }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+})();
+var TileCache = /** @class*/
+(function (_super) {
+  __extends(TileCache, _super);
+  function TileCache() {
+    return _super !== null && _super.apply(this, arguments) || this;
+  }
+  /**
+  * @param {!Object<string, boolean>} usedTiles Used tiles.
+  */
+  TileCache.prototype.expireCache = function (usedTiles) {
+    while (this.canExpireCache()) {
+      var tile = this.peekLast();
+      if ((tile.getKey() in usedTiles)) {
+        break;
+      } else {
+        this.pop().release();
+      }
+    }
+  };
+  /**
+  * Prune all tiles from the cache that don't have the same z as the newest tile.
+  */
+  TileCache.prototype.pruneExceptNewestZ = function () {
+    if (this.getCount() === 0) {
+      return;
+    }
+    var key = this.peekFirstKey();
+    var tileCoord = _tilecoordJs.fromKey(key);
+    var z = tileCoord[0];
+    this.forEach((function (tile) {
+      if (tile.tileCoord[0] !== z) {
+        this.remove(_tilecoordJs.getKey(tile.tileCoord));
+        tile.release();
+      }
+    }).bind(this));
+  };
+  return TileCache;
+})(_structsLRUCacheJsDefault.default);
+exports.default = TileCache;
+
+},{"./structs/LRUCache.js":"2cDTl","./tilecoord.js":"2kkyx","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"2cDTl":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var _assertsJs = require('../asserts.js');
+/**
+* @typedef {Object} Entry
+* @property {string} key_
+* @property {Object} newer
+* @property {Object} older
+* @property {*} value_
+*/
+/**
+* @classdesc
+* Implements a Least-Recently-Used cache where the keys do not conflict with
+* Object's properties (e.g. 'hasOwnProperty' is not allowed as a key). Expiring
+* items from the cache is the responsibility of the user.
+*
+* @fires import("../events/Event.js").default
+* @template T
+*/
+var LRUCache = /** @class*/
+(function () {
+  /**
+  * @param {number=} opt_highWaterMark High water mark.
+  */
+  function LRUCache(opt_highWaterMark) {
+    /**
+    * Desired max cache size after expireCache(). If set to 0, no cache entries
+    * will be pruned at all.
+    * @type {number}
+    */
+    this.highWaterMark = opt_highWaterMark !== undefined ? opt_highWaterMark : 2048;
+    /**
+    * @private
+    * @type {number}
+    */
+    this.count_ = 0;
+    /**
+    * @private
+    * @type {!Object<string, Entry>}
+    */
+    this.entries_ = {};
+    /**
+    * @private
+    * @type {?Entry}
+    */
+    this.oldest_ = null;
+    /**
+    * @private
+    * @type {?Entry}
+    */
+    this.newest_ = null;
+  }
+  /**
+  * @return {boolean} Can expire cache.
+  */
+  LRUCache.prototype.canExpireCache = function () {
+    return this.highWaterMark > 0 && this.getCount() > this.highWaterMark;
+  };
+  /**
+  * FIXME empty description for jsdoc
+  */
+  LRUCache.prototype.clear = function () {
+    this.count_ = 0;
+    this.entries_ = {};
+    this.oldest_ = null;
+    this.newest_ = null;
+  };
+  /**
+  * @param {string} key Key.
+  * @return {boolean} Contains key.
+  */
+  LRUCache.prototype.containsKey = function (key) {
+    return this.entries_.hasOwnProperty(key);
+  };
+  /**
+  * @param {function(T, string, LRUCache<T>): ?} f The function
+  *     to call for every entry from the oldest to the newer. This function takes
+  *     3 arguments (the entry value, the entry key and the LRUCache object).
+  *     The return value is ignored.
+  */
+  LRUCache.prototype.forEach = function (f) {
+    var entry = this.oldest_;
+    while (entry) {
+      f(entry.value_, entry.key_, this);
+      entry = entry.newer;
+    }
+  };
+  /**
+  * @param {string} key Key.
+  * @param {*=} opt_options Options (reserverd for subclasses).
+  * @return {T} Value.
+  */
+  LRUCache.prototype.get = function (key, opt_options) {
+    var entry = this.entries_[key];
+    _assertsJs.assert(entry !== undefined, 15);
+    // Tried to get a value for a key that does not exist in the cache
+    if (entry === this.newest_) {
+      return entry.value_;
+    } else if (entry === this.oldest_) {
+      this.oldest_ = /** @type {Entry}*/
+      this.oldest_.newer;
+      this.oldest_.older = null;
+    } else {
+      entry.newer.older = entry.older;
+      entry.older.newer = entry.newer;
+    }
+    entry.newer = null;
+    entry.older = this.newest_;
+    this.newest_.newer = entry;
+    this.newest_ = entry;
+    return entry.value_;
+  };
+  /**
+  * Remove an entry from the cache.
+  * @param {string} key The entry key.
+  * @return {T} The removed entry.
+  */
+  LRUCache.prototype.remove = function (key) {
+    var entry = this.entries_[key];
+    _assertsJs.assert(entry !== undefined, 15);
+    // Tried to get a value for a key that does not exist in the cache
+    if (entry === this.newest_) {
+      this.newest_ = /** @type {Entry}*/
+      entry.older;
+      if (this.newest_) {
+        this.newest_.newer = null;
+      }
+    } else if (entry === this.oldest_) {
+      this.oldest_ = /** @type {Entry}*/
+      entry.newer;
+      if (this.oldest_) {
+        this.oldest_.older = null;
+      }
+    } else {
+      entry.newer.older = entry.older;
+      entry.older.newer = entry.newer;
+    }
+    delete this.entries_[key];
+    --this.count_;
+    return entry.value_;
+  };
+  /**
+  * @return {number} Count.
+  */
+  LRUCache.prototype.getCount = function () {
+    return this.count_;
+  };
+  /**
+  * @return {Array<string>} Keys.
+  */
+  LRUCache.prototype.getKeys = function () {
+    var keys = new Array(this.count_);
+    var i = 0;
+    var entry;
+    for (entry = this.newest_; entry; entry = entry.older) {
+      keys[i++] = entry.key_;
+    }
+    return keys;
+  };
+  /**
+  * @return {Array<T>} Values.
+  */
+  LRUCache.prototype.getValues = function () {
+    var values = new Array(this.count_);
+    var i = 0;
+    var entry;
+    for (entry = this.newest_; entry; entry = entry.older) {
+      values[i++] = entry.value_;
+    }
+    return values;
+  };
+  /**
+  * @return {T} Last value.
+  */
+  LRUCache.prototype.peekLast = function () {
+    return this.oldest_.value_;
+  };
+  /**
+  * @return {string} Last key.
+  */
+  LRUCache.prototype.peekLastKey = function () {
+    return this.oldest_.key_;
+  };
+  /**
+  * Get the key of the newest item in the cache.  Throws if the cache is empty.
+  * @return {string} The newest key.
+  */
+  LRUCache.prototype.peekFirstKey = function () {
+    return this.newest_.key_;
+  };
+  /**
+  * @return {T} value Value.
+  */
+  LRUCache.prototype.pop = function () {
+    var entry = this.oldest_;
+    delete this.entries_[entry.key_];
+    if (entry.newer) {
+      entry.newer.older = null;
+    }
+    this.oldest_ = /** @type {Entry}*/
+    entry.newer;
+    if (!this.oldest_) {
+      this.newest_ = null;
+    }
+    --this.count_;
+    return entry.value_;
+  };
+  /**
+  * @param {string} key Key.
+  * @param {T} value Value.
+  */
+  LRUCache.prototype.replace = function (key, value) {
+    this.get(key);
+    // update `newest_`
+    this.entries_[key].value_ = value;
+  };
+  /**
+  * @param {string} key Key.
+  * @param {T} value Value.
+  */
+  LRUCache.prototype.set = function (key, value) {
+    _assertsJs.assert(!((key in this.entries_)), 16);
+    // Tried to set a value for a key that is used already
+    var entry = {
+      key_: key,
+      newer: null,
+      older: this.newest_,
+      value_: value
+    };
+    if (!this.newest_) {
+      this.oldest_ = entry;
+    } else {
+      this.newest_.newer = entry;
+    }
+    this.newest_ = entry;
+    this.entries_[key] = entry;
+    ++this.count_;
+  };
+  /**
+  * Set a maximum number of entries for the cache.
+  * @param {number} size Cache size.
+  * @api
+  */
+  LRUCache.prototype.setSize = function (size) {
+    this.highWaterMark = size;
+  };
+  return LRUCache;
+})();
+exports.default = LRUCache;
+
+},{"../asserts.js":"1kfem","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"2kkyx":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "createOrUpdate", function () {
+  return createOrUpdate;
+});
+_parcelHelpers.export(exports, "getKeyZXY", function () {
+  return getKeyZXY;
+});
+_parcelHelpers.export(exports, "getKey", function () {
+  return getKey;
+});
+_parcelHelpers.export(exports, "fromKey", function () {
+  return fromKey;
+});
+_parcelHelpers.export(exports, "hash", function () {
+  return hash;
+});
+_parcelHelpers.export(exports, "withinExtentAndZ", function () {
+  return withinExtentAndZ;
+});
+function createOrUpdate(z, x, y, opt_tileCoord) {
+  if (opt_tileCoord !== undefined) {
+    opt_tileCoord[0] = z;
+    opt_tileCoord[1] = x;
+    opt_tileCoord[2] = y;
+    return opt_tileCoord;
+  } else {
+    return [z, x, y];
+  }
+}
+function getKeyZXY(z, x, y) {
+  return z + '/' + x + '/' + y;
+}
+function getKey(tileCoord) {
+  return getKeyZXY(tileCoord[0], tileCoord[1], tileCoord[2]);
+}
+function fromKey(key) {
+  return key.split('/').map(Number);
+}
+function hash(tileCoord) {
+  return (tileCoord[1] << tileCoord[0]) + tileCoord[2];
+}
+function withinExtentAndZ(tileCoord, tileGrid) {
+  var z = tileCoord[0];
+  var x = tileCoord[1];
+  var y = tileCoord[2];
+  if (tileGrid.getMinZoom() > z || z > tileGrid.getMaxZoom()) {
+    return false;
+  }
+  var tileRange = tileGrid.getFullTileRange(z);
+  if (!tileRange) {
+    return true;
+  } else {
+    return tileRange.containsXY(x, y);
+  }
+}
+
+},{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"2ULXC":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var _TileEventTypeJs = require('./TileEventType.js');
+var _TileEventTypeJsDefault = _parcelHelpers.interopDefault(_TileEventTypeJs);
+var _TileJs = require('./Tile.js');
+var _TileJsDefault = _parcelHelpers.interopDefault(_TileJs);
+var _TileStateJs = require('../TileState.js');
+var _TileStateJsDefault = _parcelHelpers.interopDefault(_TileStateJs);
+var _tileurlfunctionJs = require('../tileurlfunction.js');
+var _tilecoordJs = require('../tilecoord.js');
+var _utilJs = require('../util.js');
+var __extends = undefined && undefined.__extends || (function () {
+  var extendStatics = function (d, b) {
+    extendStatics = Object.setPrototypeOf || ({
+      __proto__: []
+    }) instanceof Array && (function (d, b) {
+      d.__proto__ = b;
+    }) || (function (d, b) {
+      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+    });
+    return extendStatics(d, b);
+  };
+  return function (d, b) {
+    extendStatics(d, b);
+    function __() {
+      this.constructor = d;
+    }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+})();
+/**
+* @typedef {Object} Options
+* @property {import("./Source.js").AttributionLike} [attributions]
+* @property {boolean} [attributionsCollapsible=true] Attributions are collapsible.
+* @property {number} [cacheSize]
+* @property {boolean} [opaque=false] Whether the layer is opaque.
+* @property {import("../proj.js").ProjectionLike} [projection]
+* @property {import("./State.js").default} [state]
+* @property {import("../tilegrid/TileGrid.js").default} [tileGrid]
+* @property {import("../Tile.js").LoadFunction} tileLoadFunction
+* @property {number} [tilePixelRatio]
+* @property {import("../Tile.js").UrlFunction} [tileUrlFunction]
+* @property {string} [url]
+* @property {Array<string>} [urls]
+* @property {boolean} [wrapX=true]
+* @property {number} [transition]
+* @property {string} [key]
+* @property {number} [zDirection=0]
+*/
+/**
+* @classdesc
+* Base class for sources providing tiles divided into a tile grid over http.
+*
+* @fires import("./Tile.js").TileSourceEvent
+*/
+var UrlTile = /** @class*/
+(function (_super) {
+  __extends(UrlTile, _super);
+  /**
+  * @param {Options} options Image tile options.
+  */
+  function UrlTile(options) {
+    var _this = _super.call(this, {
+      attributions: options.attributions,
+      cacheSize: options.cacheSize,
+      opaque: options.opaque,
+      projection: options.projection,
+      state: options.state,
+      tileGrid: options.tileGrid,
+      tilePixelRatio: options.tilePixelRatio,
+      wrapX: options.wrapX,
+      transition: options.transition,
+      key: options.key,
+      attributionsCollapsible: options.attributionsCollapsible,
+      zDirection: options.zDirection
+    }) || this;
+    /**
+    * @private
+    * @type {boolean}
+    */
+    _this.generateTileUrlFunction_ = _this.tileUrlFunction === UrlTile.prototype.tileUrlFunction;
+    /**
+    * @protected
+    * @type {import("../Tile.js").LoadFunction}
+    */
+    _this.tileLoadFunction = options.tileLoadFunction;
+    if (options.tileUrlFunction) {
+      _this.tileUrlFunction = options.tileUrlFunction;
+    }
+    /**
+    * @protected
+    * @type {!Array<string>|null}
+    */
+    _this.urls = null;
+    if (options.urls) {
+      _this.setUrls(options.urls);
+    } else if (options.url) {
+      _this.setUrl(options.url);
+    }
+    /**
+    * @private
+    * @type {!Object<string, boolean>}
+    */
+    _this.tileLoadingKeys_ = {};
+    return _this;
+  }
+  /**
+  * Return the tile load function of the source.
+  * @return {import("../Tile.js").LoadFunction} TileLoadFunction
+  * @api
+  */
+  UrlTile.prototype.getTileLoadFunction = function () {
+    return this.tileLoadFunction;
+  };
+  /**
+  * Return the tile URL function of the source.
+  * @return {import("../Tile.js").UrlFunction} TileUrlFunction
+  * @api
+  */
+  UrlTile.prototype.getTileUrlFunction = function () {
+    return Object.getPrototypeOf(this).tileUrlFunction === this.tileUrlFunction ? this.tileUrlFunction.bind(this) : this.tileUrlFunction;
+  };
+  /**
+  * Return the URLs used for this source.
+  * When a tileUrlFunction is used instead of url or urls,
+  * null will be returned.
+  * @return {!Array<string>|null} URLs.
+  * @api
+  */
+  UrlTile.prototype.getUrls = function () {
+    return this.urls;
+  };
+  /**
+  * Handle tile change events.
+  * @param {import("../events/Event.js").default} event Event.
+  * @protected
+  */
+  UrlTile.prototype.handleTileChange = function (event) {
+    var tile = /** @type {import("../Tile.js").default}*/
+    event.target;
+    var uid = _utilJs.getUid(tile);
+    var tileState = tile.getState();
+    var type;
+    if (tileState == _TileStateJsDefault.default.LOADING) {
+      this.tileLoadingKeys_[uid] = true;
+      type = _TileEventTypeJsDefault.default.TILELOADSTART;
+    } else if ((uid in this.tileLoadingKeys_)) {
+      delete this.tileLoadingKeys_[uid];
+      type = tileState == _TileStateJsDefault.default.ERROR ? _TileEventTypeJsDefault.default.TILELOADERROR : tileState == _TileStateJsDefault.default.LOADED ? _TileEventTypeJsDefault.default.TILELOADEND : undefined;
+    }
+    if (type != undefined) {
+      this.dispatchEvent(new _TileJs.TileSourceEvent(type, tile));
+    }
+  };
+  /**
+  * Set the tile load function of the source.
+  * @param {import("../Tile.js").LoadFunction} tileLoadFunction Tile load function.
+  * @api
+  */
+  UrlTile.prototype.setTileLoadFunction = function (tileLoadFunction) {
+    this.tileCache.clear();
+    this.tileLoadFunction = tileLoadFunction;
+    this.changed();
+  };
+  /**
+  * Set the tile URL function of the source.
+  * @param {import("../Tile.js").UrlFunction} tileUrlFunction Tile URL function.
+  * @param {string=} key Optional new tile key for the source.
+  * @api
+  */
+  UrlTile.prototype.setTileUrlFunction = function (tileUrlFunction, key) {
+    this.tileUrlFunction = tileUrlFunction;
+    this.tileCache.pruneExceptNewestZ();
+    if (typeof key !== 'undefined') {
+      this.setKey(key);
+    } else {
+      this.changed();
+    }
+  };
+  /**
+  * Set the URL to use for requests.
+  * @param {string} url URL.
+  * @api
+  */
+  UrlTile.prototype.setUrl = function (url) {
+    var urls = _tileurlfunctionJs.expandUrl(url);
+    this.urls = urls;
+    this.setUrls(urls);
+  };
+  /**
+  * Set the URLs to use for requests.
+  * @param {Array<string>} urls URLs.
+  * @api
+  */
+  UrlTile.prototype.setUrls = function (urls) {
+    this.urls = urls;
+    var key = urls.join('\n');
+    if (this.generateTileUrlFunction_) {
+      this.setTileUrlFunction(_tileurlfunctionJs.createFromTemplates(urls, this.tileGrid), key);
+    } else {
+      this.setKey(key);
+    }
+  };
+  /**
+  * @param {import("../tilecoord.js").TileCoord} tileCoord Tile coordinate.
+  * @param {number} pixelRatio Pixel ratio.
+  * @param {import("../proj/Projection.js").default} projection Projection.
+  * @return {string|undefined} Tile URL.
+  */
+  UrlTile.prototype.tileUrlFunction = function (tileCoord, pixelRatio, projection) {
+    return undefined;
+  };
+  /**
+  * Marks a tile coord as being used, without triggering a load.
+  * @param {number} z Tile coordinate z.
+  * @param {number} x Tile coordinate x.
+  * @param {number} y Tile coordinate y.
+  */
+  UrlTile.prototype.useTile = function (z, x, y) {
+    var tileCoordKey = _tilecoordJs.getKeyZXY(z, x, y);
+    if (this.tileCache.containsKey(tileCoordKey)) {
+      this.tileCache.get(tileCoordKey);
+    }
+  };
+  return UrlTile;
+})(_TileJsDefault.default);
+exports.default = UrlTile;
+
+},{"./TileEventType.js":"5zU8z","./Tile.js":"5ytHC","../TileState.js":"4w04B","../tileurlfunction.js":"2fA5K","../tilecoord.js":"2kkyx","../util.js":"4k52K","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"5zU8z":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+exports.default = {
+  /**
+  * Triggered when a tile starts loading.
+  * @event module:ol/source/Tile.TileSourceEvent#tileloadstart
+  * @api
+  */
+  TILELOADSTART: 'tileloadstart',
+  /**
+  * Triggered when a tile finishes loading, either when its data is loaded,
+  * or when loading was aborted because the tile is no longer needed.
+  * @event module:ol/source/Tile.TileSourceEvent#tileloadend
+  * @api
+  */
+  TILELOADEND: 'tileloadend',
+  /**
+  * Triggered if tile loading results in an error.
+  * @event module:ol/source/Tile.TileSourceEvent#tileloaderror
+  * @api
+  */
+  TILELOADERROR: 'tileloaderror'
+};
+
+},{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"5ytHC":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "TileSourceEvent", function () {
+  return TileSourceEvent;
+});
+var _eventsEventJs = require('../events/Event.js');
+var _eventsEventJsDefault = _parcelHelpers.interopDefault(_eventsEventJs);
+var _SourceJs = require('./Source.js');
+var _SourceJsDefault = _parcelHelpers.interopDefault(_SourceJs);
+var _TileCacheJs = require('../TileCache.js');
+var _TileCacheJsDefault = _parcelHelpers.interopDefault(_TileCacheJs);
+var _TileStateJs = require('../TileState.js');
+var _TileStateJsDefault = _parcelHelpers.interopDefault(_TileStateJs);
+var _utilJs = require('../util.js');
+var _assertsJs = require('../asserts.js');
+var _projJs = require('../proj.js');
+var _tilecoordJs = require('../tilecoord.js');
+var _tilegridJs = require('../tilegrid.js');
+var _sizeJs = require('../size.js');
+var __extends = undefined && undefined.__extends || (function () {
+  var extendStatics = function (d, b) {
+    extendStatics = Object.setPrototypeOf || ({
+      __proto__: []
+    }) instanceof Array && (function (d, b) {
+      d.__proto__ = b;
+    }) || (function (d, b) {
+      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+    });
+    return extendStatics(d, b);
+  };
+  return function (d, b) {
+    extendStatics(d, b);
+    function __() {
+      this.constructor = d;
+    }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+})();
+/**
+* @typedef {Object} Options
+* @property {import("./Source.js").AttributionLike} [attributions]
+* @property {boolean} [attributionsCollapsible=true] Attributions are collapsible.
+* @property {number} [cacheSize]
+* @property {boolean} [opaque=false] Whether the layer is opaque.
+* @property {number} [tilePixelRatio]
+* @property {import("../proj.js").ProjectionLike} [projection]
+* @property {import("./State.js").default} [state]
+* @property {import("../tilegrid/TileGrid.js").default} [tileGrid]
+* @property {boolean} [wrapX=true]
+* @property {number} [transition]
+* @property {string} [key]
+* @property {number} [zDirection=0]
+*/
+/**
+* @classdesc
+* Abstract base class; normally only used for creating subclasses and not
+* instantiated in apps.
+* Base class for sources providing images divided into a tile grid.
+* @abstract
+* @api
+*/
+var TileSource = /** @class*/
+(function (_super) {
+  __extends(TileSource, _super);
+  /**
+  * @param {Options} options SourceTile source options.
+  */
+  function TileSource(options) {
+    var _this = _super.call(this, {
+      attributions: options.attributions,
+      attributionsCollapsible: options.attributionsCollapsible,
+      projection: options.projection,
+      state: options.state,
+      wrapX: options.wrapX
+    }) || this;
+    /**
+    * @private
+    * @type {boolean}
+    */
+    _this.opaque_ = options.opaque !== undefined ? options.opaque : false;
+    /**
+    * @private
+    * @type {number}
+    */
+    _this.tilePixelRatio_ = options.tilePixelRatio !== undefined ? options.tilePixelRatio : 1;
+    /**
+    * @protected
+    * @type {import("../tilegrid/TileGrid.js").default}
+    */
+    _this.tileGrid = options.tileGrid !== undefined ? options.tileGrid : null;
+    var tileSize = [256, 256];
+    var tileGrid = options.tileGrid;
+    if (tileGrid) {
+      _sizeJs.toSize(tileGrid.getTileSize(tileGrid.getMinZoom()), tileSize);
+    }
+    /**
+    * @protected
+    * @type {import("../TileCache.js").default}
+    */
+    _this.tileCache = new _TileCacheJsDefault.default(options.cacheSize || 0);
+    /**
+    * @protected
+    * @type {import("../size.js").Size}
+    */
+    _this.tmpSize = [0, 0];
+    /**
+    * @private
+    * @type {string}
+    */
+    _this.key_ = options.key || '';
+    /**
+    * @protected
+    * @type {import("../Tile.js").Options}
+    */
+    _this.tileOptions = {
+      transition: options.transition
+    };
+    /**
+    * zDirection hint, read by the renderer. Indicates which resolution should be used
+    * by a renderer if the views resolution does not match any resolution of the tile source.
+    * If 0, the nearest resolution will be used. If 1, the nearest lower resolution
+    * will be used. If -1, the nearest higher resolution will be used.
+    * @type {number}
+    */
+    _this.zDirection = options.zDirection ? options.zDirection : 0;
+    return _this;
+  }
+  /**
+  * @return {boolean} Can expire cache.
+  */
+  TileSource.prototype.canExpireCache = function () {
+    return this.tileCache.canExpireCache();
+  };
+  /**
+  * @param {import("../proj/Projection.js").default} projection Projection.
+  * @param {!Object<string, boolean>} usedTiles Used tiles.
+  */
+  TileSource.prototype.expireCache = function (projection, usedTiles) {
+    var tileCache = this.getTileCacheForProjection(projection);
+    if (tileCache) {
+      tileCache.expireCache(usedTiles);
+    }
+  };
+  /**
+  * @param {import("../proj/Projection.js").default} projection Projection.
+  * @param {number} z Zoom level.
+  * @param {import("../TileRange.js").default} tileRange Tile range.
+  * @param {function(import("../Tile.js").default):(boolean|void)} callback Called with each
+  *     loaded tile.  If the callback returns `false`, the tile will not be
+  *     considered loaded.
+  * @return {boolean} The tile range is fully covered with loaded tiles.
+  */
+  TileSource.prototype.forEachLoadedTile = function (projection, z, tileRange, callback) {
+    var tileCache = this.getTileCacheForProjection(projection);
+    if (!tileCache) {
+      return false;
+    }
+    var covered = true;
+    var tile, tileCoordKey, loaded;
+    for (var x = tileRange.minX; x <= tileRange.maxX; ++x) {
+      for (var y = tileRange.minY; y <= tileRange.maxY; ++y) {
+        tileCoordKey = _tilecoordJs.getKeyZXY(z, x, y);
+        loaded = false;
+        if (tileCache.containsKey(tileCoordKey)) {
+          tile = /** @type {!import("../Tile.js").default}*/
+          tileCache.get(tileCoordKey);
+          loaded = tile.getState() === _TileStateJsDefault.default.LOADED;
+          if (loaded) {
+            loaded = callback(tile) !== false;
+          }
+        }
+        if (!loaded) {
+          covered = false;
+        }
+      }
+    }
+    return covered;
+  };
+  /**
+  * @param {import("../proj/Projection.js").default} projection Projection.
+  * @return {number} Gutter.
+  */
+  TileSource.prototype.getGutterForProjection = function (projection) {
+    return 0;
+  };
+  /**
+  * Return the key to be used for all tiles in the source.
+  * @return {string} The key for all tiles.
+  * @protected
+  */
+  TileSource.prototype.getKey = function () {
+    return this.key_;
+  };
+  /**
+  * Set the value to be used as the key for all tiles in the source.
+  * @param {string} key The key for tiles.
+  * @protected
+  */
+  TileSource.prototype.setKey = function (key) {
+    if (this.key_ !== key) {
+      this.key_ = key;
+      this.changed();
+    }
+  };
+  /**
+  * @param {import("../proj/Projection.js").default} projection Projection.
+  * @return {boolean} Opaque.
+  */
+  TileSource.prototype.getOpaque = function (projection) {
+    return this.opaque_;
+  };
+  /**
+  * @return {Array<number>} Resolutions.
+  */
+  TileSource.prototype.getResolutions = function () {
+    return this.tileGrid.getResolutions();
+  };
+  /**
+  * @abstract
+  * @param {number} z Tile coordinate z.
+  * @param {number} x Tile coordinate x.
+  * @param {number} y Tile coordinate y.
+  * @param {number} pixelRatio Pixel ratio.
+  * @param {import("../proj/Projection.js").default} projection Projection.
+  * @return {!import("../Tile.js").default} Tile.
+  */
+  TileSource.prototype.getTile = function (z, x, y, pixelRatio, projection) {
+    return _utilJs.abstract();
+  };
+  /**
+  * Return the tile grid of the tile source.
+  * @return {import("../tilegrid/TileGrid.js").default} Tile grid.
+  * @api
+  */
+  TileSource.prototype.getTileGrid = function () {
+    return this.tileGrid;
+  };
+  /**
+  * @param {import("../proj/Projection.js").default} projection Projection.
+  * @return {!import("../tilegrid/TileGrid.js").default} Tile grid.
+  */
+  TileSource.prototype.getTileGridForProjection = function (projection) {
+    if (!this.tileGrid) {
+      return _tilegridJs.getForProjection(projection);
+    } else {
+      return this.tileGrid;
+    }
+  };
+  /**
+  * @param {import("../proj/Projection.js").default} projection Projection.
+  * @return {import("../TileCache.js").default} Tile cache.
+  * @protected
+  */
+  TileSource.prototype.getTileCacheForProjection = function (projection) {
+    _assertsJs.assert(_projJs.equivalent(this.getProjection(), projection), 68);
+    return this.tileCache;
+  };
+  /**
+  * Get the tile pixel ratio for this source. Subclasses may override this
+  * method, which is meant to return a supported pixel ratio that matches the
+  * provided `pixelRatio` as close as possible.
+  * @param {number} pixelRatio Pixel ratio.
+  * @return {number} Tile pixel ratio.
+  */
+  TileSource.prototype.getTilePixelRatio = function (pixelRatio) {
+    return this.tilePixelRatio_;
+  };
+  /**
+  * @param {number} z Z.
+  * @param {number} pixelRatio Pixel ratio.
+  * @param {import("../proj/Projection.js").default} projection Projection.
+  * @return {import("../size.js").Size} Tile size.
+  */
+  TileSource.prototype.getTilePixelSize = function (z, pixelRatio, projection) {
+    var tileGrid = this.getTileGridForProjection(projection);
+    var tilePixelRatio = this.getTilePixelRatio(pixelRatio);
+    var tileSize = _sizeJs.toSize(tileGrid.getTileSize(z), this.tmpSize);
+    if (tilePixelRatio == 1) {
+      return tileSize;
+    } else {
+      return _sizeJs.scale(tileSize, tilePixelRatio, this.tmpSize);
+    }
+  };
+  /**
+  * Returns a tile coordinate wrapped around the x-axis. When the tile coordinate
+  * is outside the resolution and extent range of the tile grid, `null` will be
+  * returned.
+  * @param {import("../tilecoord.js").TileCoord} tileCoord Tile coordinate.
+  * @param {import("../proj/Projection.js").default=} opt_projection Projection.
+  * @return {import("../tilecoord.js").TileCoord} Tile coordinate to be passed to the tileUrlFunction or
+  *     null if no tile URL should be created for the passed `tileCoord`.
+  */
+  TileSource.prototype.getTileCoordForTileUrlFunction = function (tileCoord, opt_projection) {
+    var projection = opt_projection !== undefined ? opt_projection : this.getProjection();
+    var tileGrid = this.getTileGridForProjection(projection);
+    if (this.getWrapX() && projection.isGlobal()) {
+      tileCoord = _tilegridJs.wrapX(tileGrid, tileCoord, projection);
+    }
+    return _tilecoordJs.withinExtentAndZ(tileCoord, tileGrid) ? tileCoord : null;
+  };
+  /**
+  * Remove all cached tiles from the source. The next render cycle will fetch new tiles.
+  * @api
+  */
+  TileSource.prototype.clear = function () {
+    this.tileCache.clear();
+  };
+  TileSource.prototype.refresh = function () {
+    this.clear();
+    _super.prototype.refresh.call(this);
+  };
+  /**
+  * Increases the cache size if needed
+  * @param {number} tileCount Minimum number of tiles needed.
+  * @param {import("../proj/Projection.js").default} projection Projection.
+  */
+  TileSource.prototype.updateCacheSize = function (tileCount, projection) {
+    var tileCache = this.getTileCacheForProjection(projection);
+    if (tileCount > tileCache.highWaterMark) {
+      tileCache.highWaterMark = tileCount;
+    }
+  };
+  /**
+  * Marks a tile coord as being used, without triggering a load.
+  * @abstract
+  * @param {number} z Tile coordinate z.
+  * @param {number} x Tile coordinate x.
+  * @param {number} y Tile coordinate y.
+  * @param {import("../proj/Projection.js").default} projection Projection.
+  */
+  TileSource.prototype.useTile = function (z, x, y, projection) {};
+  return TileSource;
+})(_SourceJsDefault.default);
+/**
+* @classdesc
+* Events emitted by {@link module:ol/source/Tile~TileSource} instances are instances of this
+* type.
+*/
+var TileSourceEvent = /** @class*/
+(function (_super) {
+  __extends(TileSourceEvent, _super);
+  /**
+  * @param {string} type Type.
+  * @param {import("../Tile.js").default} tile The tile.
+  */
+  function TileSourceEvent(type, tile) {
+    var _this = _super.call(this, type) || this;
+    /**
+    * The tile related to the event.
+    * @type {import("../Tile.js").default}
+    * @api
+    */
+    _this.tile = tile;
+    return _this;
+  }
+  return TileSourceEvent;
+})(_eventsEventJsDefault.default);
+exports.default = TileSource;
+
+},{"../events/Event.js":"eICPf","./Source.js":"6n6aD","../TileCache.js":"1oUcD","../TileState.js":"4w04B","../util.js":"4k52K","../asserts.js":"1kfem","../proj.js":"4Wdsb","../tilecoord.js":"2kkyx","../tilegrid.js":"1JyRQ","../size.js":"6N6PX","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"1JyRQ":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "getForProjection", function () {
+  return getForProjection;
+});
+_parcelHelpers.export(exports, "wrapX", function () {
+  return wrapX;
+});
+_parcelHelpers.export(exports, "createForExtent", function () {
+  return createForExtent;
+});
+_parcelHelpers.export(exports, "createXYZ", function () {
+  return createXYZ;
+});
+_parcelHelpers.export(exports, "createForProjection", function () {
+  return createForProjection;
+});
+_parcelHelpers.export(exports, "extentFromProjection", function () {
+  return extentFromProjection;
+});
+var _extentCornerJs = require('./extent/Corner.js');
+var _extentCornerJsDefault = _parcelHelpers.interopDefault(_extentCornerJs);
+var _tilegridTileGridJs = require('./tilegrid/TileGrid.js');
+var _tilegridTileGridJsDefault = _parcelHelpers.interopDefault(_tilegridTileGridJs);
+var _projUnitsJs = require('./proj/Units.js');
+var _projUnitsJsDefault = _parcelHelpers.interopDefault(_projUnitsJs);
+var _tilegridCommonJs = require('./tilegrid/common.js');
+var _projJs = require('./proj.js');
+var _extentJs = require('./extent.js');
+var _sizeJs = require('./size.js');
+function getForProjection(projection) {
+  var tileGrid = projection.getDefaultTileGrid();
+  if (!tileGrid) {
+    tileGrid = createForProjection(projection);
+    projection.setDefaultTileGrid(tileGrid);
+  }
+  return tileGrid;
+}
+function wrapX(tileGrid, tileCoord, projection) {
+  var z = tileCoord[0];
+  var center = tileGrid.getTileCoordCenter(tileCoord);
+  var projectionExtent = extentFromProjection(projection);
+  if (!_extentJs.containsCoordinate(projectionExtent, center)) {
+    var worldWidth = _extentJs.getWidth(projectionExtent);
+    var worldsAway = Math.ceil((projectionExtent[0] - center[0]) / worldWidth);
+    center[0] += worldWidth * worldsAway;
+    return tileGrid.getTileCoordForCoordAndZ(center, z);
+  } else {
+    return tileCoord;
+  }
+}
+function createForExtent(extent, opt_maxZoom, opt_tileSize, opt_corner) {
+  var corner = opt_corner !== undefined ? opt_corner : _extentCornerJsDefault.default.TOP_LEFT;
+  var resolutions = resolutionsFromExtent(extent, opt_maxZoom, opt_tileSize);
+  return new _tilegridTileGridJsDefault.default({
+    extent: extent,
+    origin: _extentJs.getCorner(extent, corner),
+    resolutions: resolutions,
+    tileSize: opt_tileSize
+  });
+}
+function createXYZ(opt_options) {
+  var xyzOptions = opt_options || ({});
+  var extent = xyzOptions.extent || _projJs.get('EPSG:3857').getExtent();
+  var gridOptions = {
+    extent: extent,
+    minZoom: xyzOptions.minZoom,
+    tileSize: xyzOptions.tileSize,
+    resolutions: resolutionsFromExtent(extent, xyzOptions.maxZoom, xyzOptions.tileSize, xyzOptions.maxResolution)
+  };
+  return new _tilegridTileGridJsDefault.default(gridOptions);
+}
+/**
+* Create a resolutions array from an extent.  A zoom factor of 2 is assumed.
+* @param {import("./extent.js").Extent} extent Extent.
+* @param {number=} opt_maxZoom Maximum zoom level (default is
+*     DEFAULT_MAX_ZOOM).
+* @param {number|import("./size.js").Size=} opt_tileSize Tile size (default uses
+*     DEFAULT_TILE_SIZE).
+* @param {number=} opt_maxResolution Resolution at level zero.
+* @return {!Array<number>} Resolutions array.
+*/
+function resolutionsFromExtent(extent, opt_maxZoom, opt_tileSize, opt_maxResolution) {
+  var maxZoom = opt_maxZoom !== undefined ? opt_maxZoom : _tilegridCommonJs.DEFAULT_MAX_ZOOM;
+  var height = _extentJs.getHeight(extent);
+  var width = _extentJs.getWidth(extent);
+  var tileSize = _sizeJs.toSize(opt_tileSize !== undefined ? opt_tileSize : _tilegridCommonJs.DEFAULT_TILE_SIZE);
+  var maxResolution = opt_maxResolution > 0 ? opt_maxResolution : Math.max(width / tileSize[0], height / tileSize[1]);
+  var length = maxZoom + 1;
+  var resolutions = new Array(length);
+  for (var z = 0; z < length; ++z) {
+    resolutions[z] = maxResolution / Math.pow(2, z);
+  }
+  return resolutions;
+}
+function createForProjection(projection, opt_maxZoom, opt_tileSize, opt_corner) {
+  var extent = extentFromProjection(projection);
+  return createForExtent(extent, opt_maxZoom, opt_tileSize, opt_corner);
+}
+function extentFromProjection(projection) {
+  projection = _projJs.get(projection);
+  var extent = projection.getExtent();
+  if (!extent) {
+    var half = 180 * _projJs.METERS_PER_UNIT[_projUnitsJsDefault.default.DEGREES] / projection.getMetersPerUnit();
+    extent = _extentJs.createOrUpdate(-half, -half, half, half);
+  }
+  return extent;
+}
+
+},{"./extent/Corner.js":"5qLG1","./tilegrid/TileGrid.js":"594eg","./proj/Units.js":"6b4hy","./tilegrid/common.js":"3rMqG","./proj.js":"4Wdsb","./extent.js":"5PMSh","./size.js":"6N6PX","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"594eg":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var _TileRangeJs = require('../TileRange.js');
+var _TileRangeJsDefault = _parcelHelpers.interopDefault(_TileRangeJs);
+var _commonJs = require('./common.js');
+var _assertsJs = require('../asserts.js');
+var _mathJs = require('../math.js');
+var _extentJs = require('../extent.js');
+var _tilecoordJs = require('../tilecoord.js');
+var _arrayJs = require('../array.js');
+var _sizeJs = require('../size.js');
+/**
+* @private
+* @type {import("../tilecoord.js").TileCoord}
+*/
+var tmpTileCoord = [0, 0, 0];
+/**
+* @typedef {Object} Options
+* @property {import("../extent.js").Extent} [extent] Extent for the tile grid. No tiles outside this
+* extent will be requested by {@link module:ol/source/Tile} sources. When no `origin` or
+* `origins` are configured, the `origin` will be set to the top-left corner of the extent.
+* @property {number} [minZoom=0] Minimum zoom.
+* @property {import("../coordinate.js").Coordinate} [origin] The tile grid origin, i.e. where the `x`
+* and `y` axes meet (`[z, 0, 0]`). Tile coordinates increase left to right and downwards. If not
+* specified, `extent` or `origins` must be provided.
+* @property {Array<import("../coordinate.js").Coordinate>} [origins] Tile grid origins, i.e. where
+* the `x` and `y` axes meet (`[z, 0, 0]`), for each zoom level. If given, the array length
+* should match the length of the `resolutions` array, i.e. each resolution can have a different
+* origin. Tile coordinates increase left to right and downwards. If not specified, `extent` or
+* `origin` must be provided.
+* @property {!Array<number>} resolutions Resolutions. The array index of each resolution needs
+* to match the zoom level. This means that even if a `minZoom` is configured, the resolutions
+* array will have a length of `maxZoom + 1`.
+* @property {Array<import("../size.js").Size>} [sizes] Number of tile rows and columns
+* of the grid for each zoom level. If specified the values
+* define each zoom level's extent together with the `origin` or `origins`.
+* A grid `extent` can be configured in addition, and will further limit the extent
+* for which tile requests are made by sources. If the bottom-left corner of
+* an extent is used as `origin` or `origins`, then the `y` value must be
+* negative because OpenLayers tile coordinates use the top left as the origin.
+* @property {number|import("../size.js").Size} [tileSize] Tile size.
+* Default is `[256, 256]`.
+* @property {Array<import("../size.js").Size>} [tileSizes] Tile sizes. If given, the array length
+* should match the length of the `resolutions` array, i.e. each resolution can have a different
+* tile size.
+*/
+/**
+* @classdesc
+* Base class for setting the grid pattern for sources accessing tiled-image
+* servers.
+* @api
+*/
+var TileGrid = /** @class*/
+(function () {
+  /**
+  * @param {Options} options Tile grid options.
+  */
+  function TileGrid(options) {
+    /**
+    * @protected
+    * @type {number}
+    */
+    this.minZoom = options.minZoom !== undefined ? options.minZoom : 0;
+    /**
+    * @private
+    * @type {!Array<number>}
+    */
+    this.resolutions_ = options.resolutions;
+    _assertsJs.assert(_arrayJs.isSorted(this.resolutions_, function (a, b) {
+      return b - a;
+    }, true), 17);
+    // `resolutions` must be sorted in descending order
+    // check if we've got a consistent zoom factor and origin
+    var zoomFactor;
+    if (!options.origins) {
+      for (var i = 0, ii = this.resolutions_.length - 1; i < ii; ++i) {
+        if (!zoomFactor) {
+          zoomFactor = this.resolutions_[i] / this.resolutions_[i + 1];
+        } else {
+          if (this.resolutions_[i] / this.resolutions_[i + 1] !== zoomFactor) {
+            zoomFactor = undefined;
+            break;
+          }
+        }
+      }
+    }
+    /**
+    * @private
+    * @type {number|undefined}
+    */
+    this.zoomFactor_ = zoomFactor;
+    /**
+    * @protected
+    * @type {number}
+    */
+    this.maxZoom = this.resolutions_.length - 1;
+    /**
+    * @private
+    * @type {import("../coordinate.js").Coordinate}
+    */
+    this.origin_ = options.origin !== undefined ? options.origin : null;
+    /**
+    * @private
+    * @type {Array<import("../coordinate.js").Coordinate>}
+    */
+    this.origins_ = null;
+    if (options.origins !== undefined) {
+      this.origins_ = options.origins;
+      _assertsJs.assert(this.origins_.length == this.resolutions_.length, 20);
+    }
+    var extent = options.extent;
+    if (extent !== undefined && !this.origin_ && !this.origins_) {
+      this.origin_ = _extentJs.getTopLeft(extent);
+    }
+    _assertsJs.assert(!this.origin_ && this.origins_ || this.origin_ && !this.origins_, 18);
+    // Either `origin` or `origins` must be configured, never both
+    /**
+    * @private
+    * @type {Array<number|import("../size.js").Size>}
+    */
+    this.tileSizes_ = null;
+    if (options.tileSizes !== undefined) {
+      this.tileSizes_ = options.tileSizes;
+      _assertsJs.assert(this.tileSizes_.length == this.resolutions_.length, 19);
+    }
+    /**
+    * @private
+    * @type {number|import("../size.js").Size}
+    */
+    this.tileSize_ = options.tileSize !== undefined ? options.tileSize : !this.tileSizes_ ? _commonJs.DEFAULT_TILE_SIZE : null;
+    _assertsJs.assert(!this.tileSize_ && this.tileSizes_ || this.tileSize_ && !this.tileSizes_, 22);
+    // Either `tileSize` or `tileSizes` must be configured, never both
+    /**
+    * @private
+    * @type {import("../extent.js").Extent}
+    */
+    this.extent_ = extent !== undefined ? extent : null;
+    /**
+    * @private
+    * @type {Array<import("../TileRange.js").default>}
+    */
+    this.fullTileRanges_ = null;
+    /**
+    * @private
+    * @type {import("../size.js").Size}
+    */
+    this.tmpSize_ = [0, 0];
+    if (options.sizes !== undefined) {
+      this.fullTileRanges_ = options.sizes.map(function (size, z) {
+        var tileRange = new _TileRangeJsDefault.default(Math.min(0, size[0]), Math.max(size[0] - 1, -1), Math.min(0, size[1]), Math.max(size[1] - 1, -1));
+        if (extent) {
+          var restrictedTileRange = this.getTileRangeForExtentAndZ(extent, z);
+          tileRange.minX = Math.max(restrictedTileRange.minX, tileRange.minX);
+          tileRange.maxX = Math.min(restrictedTileRange.maxX, tileRange.maxX);
+          tileRange.minY = Math.max(restrictedTileRange.minY, tileRange.minY);
+          tileRange.maxY = Math.min(restrictedTileRange.maxY, tileRange.maxY);
+        }
+        return tileRange;
+      }, this);
+    } else if (extent) {
+      this.calculateTileRanges_(extent);
+    }
+  }
+  /**
+  * Call a function with each tile coordinate for a given extent and zoom level.
+  *
+  * @param {import("../extent.js").Extent} extent Extent.
+  * @param {number} zoom Integer zoom level.
+  * @param {function(import("../tilecoord.js").TileCoord): void} callback Function called with each tile coordinate.
+  * @api
+  */
+  TileGrid.prototype.forEachTileCoord = function (extent, zoom, callback) {
+    var tileRange = this.getTileRangeForExtentAndZ(extent, zoom);
+    for (var i = tileRange.minX, ii = tileRange.maxX; i <= ii; ++i) {
+      for (var j = tileRange.minY, jj = tileRange.maxY; j <= jj; ++j) {
+        callback([zoom, i, j]);
+      }
+    }
+  };
+  /**
+  * @param {import("../tilecoord.js").TileCoord} tileCoord Tile coordinate.
+  * @param {function(number, import("../TileRange.js").default): boolean} callback Callback.
+  * @param {import("../TileRange.js").default=} opt_tileRange Temporary import("../TileRange.js").default object.
+  * @param {import("../extent.js").Extent=} opt_extent Temporary import("../extent.js").Extent object.
+  * @return {boolean} Callback succeeded.
+  */
+  TileGrid.prototype.forEachTileCoordParentTileRange = function (tileCoord, callback, opt_tileRange, opt_extent) {
+    var tileRange, x, y;
+    var tileCoordExtent = null;
+    var z = tileCoord[0] - 1;
+    if (this.zoomFactor_ === 2) {
+      x = tileCoord[1];
+      y = tileCoord[2];
+    } else {
+      tileCoordExtent = this.getTileCoordExtent(tileCoord, opt_extent);
+    }
+    while (z >= this.minZoom) {
+      if (this.zoomFactor_ === 2) {
+        x = Math.floor(x / 2);
+        y = Math.floor(y / 2);
+        tileRange = _TileRangeJs.createOrUpdate(x, x, y, y, opt_tileRange);
+      } else {
+        tileRange = this.getTileRangeForExtentAndZ(tileCoordExtent, z, opt_tileRange);
+      }
+      if (callback(z, tileRange)) {
+        return true;
+      }
+      --z;
+    }
+    return false;
+  };
+  /**
+  * Get the extent for this tile grid, if it was configured.
+  * @return {import("../extent.js").Extent} Extent.
+  * @api
+  */
+  TileGrid.prototype.getExtent = function () {
+    return this.extent_;
+  };
+  /**
+  * Get the maximum zoom level for the grid.
+  * @return {number} Max zoom.
+  * @api
+  */
+  TileGrid.prototype.getMaxZoom = function () {
+    return this.maxZoom;
+  };
+  /**
+  * Get the minimum zoom level for the grid.
+  * @return {number} Min zoom.
+  * @api
+  */
+  TileGrid.prototype.getMinZoom = function () {
+    return this.minZoom;
+  };
+  /**
+  * Get the origin for the grid at the given zoom level.
+  * @param {number} z Integer zoom level.
+  * @return {import("../coordinate.js").Coordinate} Origin.
+  * @api
+  */
+  TileGrid.prototype.getOrigin = function (z) {
+    if (this.origin_) {
+      return this.origin_;
+    } else {
+      return this.origins_[z];
+    }
+  };
+  /**
+  * Get the resolution for the given zoom level.
+  * @param {number} z Integer zoom level.
+  * @return {number} Resolution.
+  * @api
+  */
+  TileGrid.prototype.getResolution = function (z) {
+    return this.resolutions_[z];
+  };
+  /**
+  * Get the list of resolutions for the tile grid.
+  * @return {Array<number>} Resolutions.
+  * @api
+  */
+  TileGrid.prototype.getResolutions = function () {
+    return this.resolutions_;
+  };
+  /**
+  * @param {import("../tilecoord.js").TileCoord} tileCoord Tile coordinate.
+  * @param {import("../TileRange.js").default=} opt_tileRange Temporary import("../TileRange.js").default object.
+  * @param {import("../extent.js").Extent=} opt_extent Temporary import("../extent.js").Extent object.
+  * @return {import("../TileRange.js").default} Tile range.
+  */
+  TileGrid.prototype.getTileCoordChildTileRange = function (tileCoord, opt_tileRange, opt_extent) {
+    if (tileCoord[0] < this.maxZoom) {
+      if (this.zoomFactor_ === 2) {
+        var minX = tileCoord[1] * 2;
+        var minY = tileCoord[2] * 2;
+        return _TileRangeJs.createOrUpdate(minX, minX + 1, minY, minY + 1, opt_tileRange);
+      }
+      var tileCoordExtent = this.getTileCoordExtent(tileCoord, opt_extent);
+      return this.getTileRangeForExtentAndZ(tileCoordExtent, tileCoord[0] + 1, opt_tileRange);
+    }
+    return null;
+  };
+  /**
+  * Get the extent for a tile range.
+  * @param {number} z Integer zoom level.
+  * @param {import("../TileRange.js").default} tileRange Tile range.
+  * @param {import("../extent.js").Extent=} opt_extent Temporary import("../extent.js").Extent object.
+  * @return {import("../extent.js").Extent} Extent.
+  */
+  TileGrid.prototype.getTileRangeExtent = function (z, tileRange, opt_extent) {
+    var origin = this.getOrigin(z);
+    var resolution = this.getResolution(z);
+    var tileSize = _sizeJs.toSize(this.getTileSize(z), this.tmpSize_);
+    var minX = origin[0] + tileRange.minX * tileSize[0] * resolution;
+    var maxX = origin[0] + (tileRange.maxX + 1) * tileSize[0] * resolution;
+    var minY = origin[1] + tileRange.minY * tileSize[1] * resolution;
+    var maxY = origin[1] + (tileRange.maxY + 1) * tileSize[1] * resolution;
+    return _extentJs.createOrUpdate(minX, minY, maxX, maxY, opt_extent);
+  };
+  /**
+  * Get a tile range for the given extent and integer zoom level.
+  * @param {import("../extent.js").Extent} extent Extent.
+  * @param {number} z Integer zoom level.
+  * @param {import("../TileRange.js").default=} opt_tileRange Temporary tile range object.
+  * @return {import("../TileRange.js").default} Tile range.
+  */
+  TileGrid.prototype.getTileRangeForExtentAndZ = function (extent, z, opt_tileRange) {
+    var tileCoord = tmpTileCoord;
+    this.getTileCoordForXYAndZ_(extent[0], extent[3], z, false, tileCoord);
+    var minX = tileCoord[1];
+    var minY = tileCoord[2];
+    this.getTileCoordForXYAndZ_(extent[2], extent[1], z, true, tileCoord);
+    return _TileRangeJs.createOrUpdate(minX, tileCoord[1], minY, tileCoord[2], opt_tileRange);
+  };
+  /**
+  * @param {import("../tilecoord.js").TileCoord} tileCoord Tile coordinate.
+  * @return {import("../coordinate.js").Coordinate} Tile center.
+  */
+  TileGrid.prototype.getTileCoordCenter = function (tileCoord) {
+    var origin = this.getOrigin(tileCoord[0]);
+    var resolution = this.getResolution(tileCoord[0]);
+    var tileSize = _sizeJs.toSize(this.getTileSize(tileCoord[0]), this.tmpSize_);
+    return [origin[0] + (tileCoord[1] + 0.5) * tileSize[0] * resolution, origin[1] - (tileCoord[2] + 0.5) * tileSize[1] * resolution];
+  };
+  /**
+  * Get the extent of a tile coordinate.
+  *
+  * @param {import("../tilecoord.js").TileCoord} tileCoord Tile coordinate.
+  * @param {import("../extent.js").Extent=} opt_extent Temporary extent object.
+  * @return {import("../extent.js").Extent} Extent.
+  * @api
+  */
+  TileGrid.prototype.getTileCoordExtent = function (tileCoord, opt_extent) {
+    var origin = this.getOrigin(tileCoord[0]);
+    var resolution = this.getResolution(tileCoord[0]);
+    var tileSize = _sizeJs.toSize(this.getTileSize(tileCoord[0]), this.tmpSize_);
+    var minX = origin[0] + tileCoord[1] * tileSize[0] * resolution;
+    var minY = origin[1] - (tileCoord[2] + 1) * tileSize[1] * resolution;
+    var maxX = minX + tileSize[0] * resolution;
+    var maxY = minY + tileSize[1] * resolution;
+    return _extentJs.createOrUpdate(minX, minY, maxX, maxY, opt_extent);
+  };
+  /**
+  * Get the tile coordinate for the given map coordinate and resolution.  This
+  * method considers that coordinates that intersect tile boundaries should be
+  * assigned the higher tile coordinate.
+  *
+  * @param {import("../coordinate.js").Coordinate} coordinate Coordinate.
+  * @param {number} resolution Resolution.
+  * @param {import("../tilecoord.js").TileCoord=} opt_tileCoord Destination import("../tilecoord.js").TileCoord object.
+  * @return {import("../tilecoord.js").TileCoord} Tile coordinate.
+  * @api
+  */
+  TileGrid.prototype.getTileCoordForCoordAndResolution = function (coordinate, resolution, opt_tileCoord) {
+    return this.getTileCoordForXYAndResolution_(coordinate[0], coordinate[1], resolution, false, opt_tileCoord);
+  };
+  /**
+  * Note that this method should not be called for resolutions that correspond
+  * to an integer zoom level.  Instead call the `getTileCoordForXYAndZ_` method.
+  * @param {number} x X.
+  * @param {number} y Y.
+  * @param {number} resolution Resolution (for a non-integer zoom level).
+  * @param {boolean} reverseIntersectionPolicy Instead of letting edge
+  *     intersections go to the higher tile coordinate, let edge intersections
+  *     go to the lower tile coordinate.
+  * @param {import("../tilecoord.js").TileCoord=} opt_tileCoord Temporary import("../tilecoord.js").TileCoord object.
+  * @return {import("../tilecoord.js").TileCoord} Tile coordinate.
+  * @private
+  */
+  TileGrid.prototype.getTileCoordForXYAndResolution_ = function (x, y, resolution, reverseIntersectionPolicy, opt_tileCoord) {
+    var z = this.getZForResolution(resolution);
+    var scale = resolution / this.getResolution(z);
+    var origin = this.getOrigin(z);
+    var tileSize = _sizeJs.toSize(this.getTileSize(z), this.tmpSize_);
+    var adjustX = reverseIntersectionPolicy ? 0.5 : 0;
+    var adjustY = reverseIntersectionPolicy ? 0.5 : 0;
+    var xFromOrigin = Math.floor((x - origin[0]) / resolution + adjustX);
+    var yFromOrigin = Math.floor((origin[1] - y) / resolution + adjustY);
+    var tileCoordX = scale * xFromOrigin / tileSize[0];
+    var tileCoordY = scale * yFromOrigin / tileSize[1];
+    if (reverseIntersectionPolicy) {
+      tileCoordX = Math.ceil(tileCoordX) - 1;
+      tileCoordY = Math.ceil(tileCoordY) - 1;
+    } else {
+      tileCoordX = Math.floor(tileCoordX);
+      tileCoordY = Math.floor(tileCoordY);
+    }
+    return _tilecoordJs.createOrUpdate(z, tileCoordX, tileCoordY, opt_tileCoord);
+  };
+  /**
+  * Although there is repetition between this method and `getTileCoordForXYAndResolution_`,
+  * they should have separate implementations.  This method is for integer zoom
+  * levels.  The other method should only be called for resolutions corresponding
+  * to non-integer zoom levels.
+  * @param {number} x Map x coordinate.
+  * @param {number} y Map y coordinate.
+  * @param {number} z Integer zoom level.
+  * @param {boolean} reverseIntersectionPolicy Instead of letting edge
+  *     intersections go to the higher tile coordinate, let edge intersections
+  *     go to the lower tile coordinate.
+  * @param {import("../tilecoord.js").TileCoord=} opt_tileCoord Temporary import("../tilecoord.js").TileCoord object.
+  * @return {import("../tilecoord.js").TileCoord} Tile coordinate.
+  * @private
+  */
+  TileGrid.prototype.getTileCoordForXYAndZ_ = function (x, y, z, reverseIntersectionPolicy, opt_tileCoord) {
+    var origin = this.getOrigin(z);
+    var resolution = this.getResolution(z);
+    var tileSize = _sizeJs.toSize(this.getTileSize(z), this.tmpSize_);
+    var adjustX = reverseIntersectionPolicy ? 0.5 : 0;
+    var adjustY = reverseIntersectionPolicy ? 0.5 : 0;
+    var xFromOrigin = Math.floor((x - origin[0]) / resolution + adjustX);
+    var yFromOrigin = Math.floor((origin[1] - y) / resolution + adjustY);
+    var tileCoordX = xFromOrigin / tileSize[0];
+    var tileCoordY = yFromOrigin / tileSize[1];
+    if (reverseIntersectionPolicy) {
+      tileCoordX = Math.ceil(tileCoordX) - 1;
+      tileCoordY = Math.ceil(tileCoordY) - 1;
+    } else {
+      tileCoordX = Math.floor(tileCoordX);
+      tileCoordY = Math.floor(tileCoordY);
+    }
+    return _tilecoordJs.createOrUpdate(z, tileCoordX, tileCoordY, opt_tileCoord);
+  };
+  /**
+  * Get a tile coordinate given a map coordinate and zoom level.
+  * @param {import("../coordinate.js").Coordinate} coordinate Coordinate.
+  * @param {number} z Zoom level.
+  * @param {import("../tilecoord.js").TileCoord=} opt_tileCoord Destination import("../tilecoord.js").TileCoord object.
+  * @return {import("../tilecoord.js").TileCoord} Tile coordinate.
+  * @api
+  */
+  TileGrid.prototype.getTileCoordForCoordAndZ = function (coordinate, z, opt_tileCoord) {
+    return this.getTileCoordForXYAndZ_(coordinate[0], coordinate[1], z, false, opt_tileCoord);
+  };
+  /**
+  * @param {import("../tilecoord.js").TileCoord} tileCoord Tile coordinate.
+  * @return {number} Tile resolution.
+  */
+  TileGrid.prototype.getTileCoordResolution = function (tileCoord) {
+    return this.resolutions_[tileCoord[0]];
+  };
+  /**
+  * Get the tile size for a zoom level. The type of the return value matches the
+  * `tileSize` or `tileSizes` that the tile grid was configured with. To always
+  * get an `import("../size.js").Size`, run the result through `import("../size.js").Size.toSize()`.
+  * @param {number} z Z.
+  * @return {number|import("../size.js").Size} Tile size.
+  * @api
+  */
+  TileGrid.prototype.getTileSize = function (z) {
+    if (this.tileSize_) {
+      return this.tileSize_;
+    } else {
+      return this.tileSizes_[z];
+    }
+  };
+  /**
+  * @param {number} z Zoom level.
+  * @return {import("../TileRange.js").default} Extent tile range for the specified zoom level.
+  */
+  TileGrid.prototype.getFullTileRange = function (z) {
+    if (!this.fullTileRanges_) {
+      return this.extent_ ? this.getTileRangeForExtentAndZ(this.extent_, z) : null;
+    } else {
+      return this.fullTileRanges_[z];
+    }
+  };
+  /**
+  * @param {number} resolution Resolution.
+  * @param {number=} opt_direction If 0, the nearest resolution will be used.
+  *     If 1, the nearest lower resolution will be used. If -1, the nearest
+  *     higher resolution will be used. Default is 0.
+  * @return {number} Z.
+  * @api
+  */
+  TileGrid.prototype.getZForResolution = function (resolution, opt_direction) {
+    var z = _arrayJs.linearFindNearest(this.resolutions_, resolution, opt_direction || 0);
+    return _mathJs.clamp(z, this.minZoom, this.maxZoom);
+  };
+  /**
+  * @param {!import("../extent.js").Extent} extent Extent for this tile grid.
+  * @private
+  */
+  TileGrid.prototype.calculateTileRanges_ = function (extent) {
+    var length = this.resolutions_.length;
+    var fullTileRanges = new Array(length);
+    for (var z = this.minZoom; z < length; ++z) {
+      fullTileRanges[z] = this.getTileRangeForExtentAndZ(extent, z);
+    }
+    this.fullTileRanges_ = fullTileRanges;
+  };
+  return TileGrid;
+})();
+exports.default = TileGrid;
+
+},{"../TileRange.js":"3G6qD","./common.js":"3rMqG","../asserts.js":"1kfem","../math.js":"39Bdl","../extent.js":"5PMSh","../tilecoord.js":"2kkyx","../array.js":"Og3xJ","../size.js":"6N6PX","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"2fA5K":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "createFromTemplate", function () {
+  return createFromTemplate;
+});
+_parcelHelpers.export(exports, "createFromTemplates", function () {
+  return createFromTemplates;
+});
+_parcelHelpers.export(exports, "createFromTileUrlFunctions", function () {
+  return createFromTileUrlFunctions;
+});
+_parcelHelpers.export(exports, "nullTileUrlFunction", function () {
+  return nullTileUrlFunction;
+});
+_parcelHelpers.export(exports, "expandUrl", function () {
+  return expandUrl;
+});
+var _assertsJs = require('./asserts.js');
+var _mathJs = require('./math.js');
+var _tilecoordJs = require('./tilecoord.js');
+function createFromTemplate(template, tileGrid) {
+  var zRegEx = /\{z\}/g;
+  var xRegEx = /\{x\}/g;
+  var yRegEx = /\{y\}/g;
+  var dashYRegEx = /\{-y\}/g;
+  return (
+    /**
+    * @param {import("./tilecoord.js").TileCoord} tileCoord Tile Coordinate.
+    * @param {number} pixelRatio Pixel ratio.
+    * @param {import("./proj/Projection.js").default} projection Projection.
+    * @return {string|undefined} Tile URL.
+    */
+    function (tileCoord, pixelRatio, projection) {
+      if (!tileCoord) {
+        return undefined;
+      } else {
+        return template.replace(zRegEx, tileCoord[0].toString()).replace(xRegEx, tileCoord[1].toString()).replace(yRegEx, tileCoord[2].toString()).replace(dashYRegEx, function () {
+          var z = tileCoord[0];
+          var range = tileGrid.getFullTileRange(z);
+          _assertsJs.assert(range, 55);
+          // The {-y} placeholder requires a tile grid with extent
+          var y = range.getHeight() - tileCoord[2] - 1;
+          return y.toString();
+        });
+      }
+    }
+  );
+}
+function createFromTemplates(templates, tileGrid) {
+  var len = templates.length;
+  var tileUrlFunctions = new Array(len);
+  for (var i = 0; i < len; ++i) {
+    tileUrlFunctions[i] = createFromTemplate(templates[i], tileGrid);
+  }
+  return createFromTileUrlFunctions(tileUrlFunctions);
+}
+function createFromTileUrlFunctions(tileUrlFunctions) {
+  if (tileUrlFunctions.length === 1) {
+    return tileUrlFunctions[0];
+  }
+  return (
+    /**
+    * @param {import("./tilecoord.js").TileCoord} tileCoord Tile Coordinate.
+    * @param {number} pixelRatio Pixel ratio.
+    * @param {import("./proj/Projection.js").default} projection Projection.
+    * @return {string|undefined} Tile URL.
+    */
+    function (tileCoord, pixelRatio, projection) {
+      if (!tileCoord) {
+        return undefined;
+      } else {
+        var h = _tilecoordJs.hash(tileCoord);
+        var index = _mathJs.modulo(h, tileUrlFunctions.length);
+        return tileUrlFunctions[index](tileCoord, pixelRatio, projection);
+      }
+    }
+  );
+}
+function nullTileUrlFunction(tileCoord, pixelRatio, projection) {
+  return undefined;
+}
+function expandUrl(url) {
+  var urls = [];
+  var match = (/\{([a-z])-([a-z])\}/).exec(url);
+  if (match) {
+    // char range
+    var startCharCode = match[1].charCodeAt(0);
+    var stopCharCode = match[2].charCodeAt(0);
+    var charCode = void 0;
+    for (charCode = startCharCode; charCode <= stopCharCode; ++charCode) {
+      urls.push(url.replace(match[0], String.fromCharCode(charCode)));
+    }
+    return urls;
+  }
+  match = (/\{(\d+)-(\d+)\}/).exec(url);
+  if (match) {
+    // number range
+    var stop_1 = parseInt(match[2], 10);
+    for (var i = parseInt(match[1], 10); i <= stop_1; i++) {
+      urls.push(url.replace(match[0], i.toString()));
+    }
+    return urls;
+  }
+  urls.push(url);
+  return urls;
+}
+
+},{"./asserts.js":"1kfem","./math.js":"39Bdl","./tilecoord.js":"2kkyx","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"6ayzs":[function(require,module,exports) {
 var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
 _parcelHelpers.defineInteropFlag(exports);
 var _TileJs = require('./Tile.js');
@@ -66322,7 +66110,844 @@ var TileJSON = /** @class*/
 })(_TileImageJsDefault.default);
 exports.default = TileJSON;
 
-},{"./State.js":"6G5no","./TileImage.js":"sKtx9","../extent.js":"5PMSh","../asserts.js":"1kfem","../tileurlfunction.js":"2fA5K","../tilegrid.js":"1JyRQ","../proj.js":"4Wdsb","../net.js":"4XnCS","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"4XnCS":[function(require,module,exports) {
+},{"./State.js":"6G5no","./TileImage.js":"sKtx9","../extent.js":"5PMSh","../asserts.js":"1kfem","../tileurlfunction.js":"2fA5K","../tilegrid.js":"1JyRQ","../proj.js":"4Wdsb","../net.js":"4XnCS","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"sKtx9":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var _eventsEventTypeJs = require('../events/EventType.js');
+var _eventsEventTypeJsDefault = _parcelHelpers.interopDefault(_eventsEventTypeJs);
+var _ImageTileJs = require('../ImageTile.js');
+var _ImageTileJsDefault = _parcelHelpers.interopDefault(_ImageTileJs);
+var _reprojTileJs = require('../reproj/Tile.js');
+var _reprojTileJsDefault = _parcelHelpers.interopDefault(_reprojTileJs);
+var _TileCacheJs = require('../TileCache.js');
+var _TileCacheJsDefault = _parcelHelpers.interopDefault(_TileCacheJs);
+var _TileStateJs = require('../TileState.js');
+var _TileStateJsDefault = _parcelHelpers.interopDefault(_TileStateJs);
+var _UrlTileJs = require('./UrlTile.js');
+var _UrlTileJsDefault = _parcelHelpers.interopDefault(_UrlTileJs);
+var _reprojCommonJs = require('../reproj/common.js');
+var _commonJs = require('./common.js');
+var _projJs = require('../proj.js');
+var _tilecoordJs = require('../tilecoord.js');
+var _tilegridJs = require('../tilegrid.js');
+var _utilJs = require('../util.js');
+var __extends = undefined && undefined.__extends || (function () {
+  var extendStatics = function (d, b) {
+    extendStatics = Object.setPrototypeOf || ({
+      __proto__: []
+    }) instanceof Array && (function (d, b) {
+      d.__proto__ = b;
+    }) || (function (d, b) {
+      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+    });
+    return extendStatics(d, b);
+  };
+  return function (d, b) {
+    extendStatics(d, b);
+    function __() {
+      this.constructor = d;
+    }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+})();
+/**
+* @typedef {Object} Options
+* @property {import("./Source.js").AttributionLike} [attributions] Attributions.
+* @property {boolean} [attributionsCollapsible=true] Attributions are collapsible.
+* @property {number} [cacheSize] Initial tile cache size. Will auto-grow to hold at least the number of tiles in the viewport.
+* @property {null|string} [crossOrigin] The `crossOrigin` attribute for loaded images.  Note that
+* you must provide a `crossOrigin` value if you want to access pixel data with the Canvas renderer.
+* See https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image for more detail.
+* @property {boolean} [imageSmoothing=true] Enable image smoothing.
+* @property {boolean} [opaque=false] Whether the layer is opaque.
+* @property {import("../proj.js").ProjectionLike} [projection] Projection. Default is the view projection.
+* @property {number} [reprojectionErrorThreshold=0.5] Maximum allowed reprojection error (in pixels).
+* Higher values can increase reprojection performance, but decrease precision.
+* @property {import("./State.js").default} [state] Source state.
+* @property {typeof import("../ImageTile.js").default} [tileClass] Class used to instantiate image tiles.
+* Default is {@link module:ol/ImageTile~ImageTile}.
+* @property {import("../tilegrid/TileGrid.js").default} [tileGrid] Tile grid.
+* @property {import("../Tile.js").LoadFunction} [tileLoadFunction] Optional function to load a tile given a URL. The default is
+* ```js
+* function(imageTile, src) {
+*   imageTile.getImage().src = src;
+* };
+* ```
+* @property {number} [tilePixelRatio=1] The pixel ratio used by the tile service. For example, if the tile
+* service advertizes 256px by 256px tiles but actually sends 512px
+* by 512px images (for retina/hidpi devices) then `tilePixelRatio`
+* should be set to `2`.
+* @property {import("../Tile.js").UrlFunction} [tileUrlFunction] Optional function to get tile URL given a tile coordinate and the projection.
+* @property {string} [url] URL template. Must include `{x}`, `{y}` or `{-y}`, and `{z}` placeholders.
+* A `{?-?}` template pattern, for example `subdomain{a-f}.domain.com`, may be
+* used instead of defining each one separately in the `urls` option.
+* @property {Array<string>} [urls] An array of URL templates.
+* @property {boolean} [wrapX] Whether to wrap the world horizontally. The default, is to
+* request out-of-bounds tiles from the server. When set to `false`, only one
+* world will be rendered. When set to `true`, tiles will be requested for one
+* world only, but they will be wrapped horizontally to render multiple worlds.
+* @property {number} [transition] Duration of the opacity transition for rendering.
+* To disable the opacity transition, pass `transition: 0`.
+* @property {string} [key] Optional tile key for proper cache fetching
+* @property {number} [zDirection=0] Indicate which resolution should be used
+* by a renderer if the view resolution does not match any resolution of the tile source.
+* If 0, the nearest resolution will be used. If 1, the nearest lower resolution
+* will be used. If -1, the nearest higher resolution will be used.
+*/
+/**
+* @classdesc
+* Base class for sources providing images divided into a tile grid.
+*
+* @fires import("./Tile.js").TileSourceEvent
+* @api
+*/
+var TileImage = /** @class*/
+(function (_super) {
+  __extends(TileImage, _super);
+  /**
+  * @param {!Options} options Image tile options.
+  */
+  function TileImage(options) {
+    var _this = _super.call(this, {
+      attributions: options.attributions,
+      cacheSize: options.cacheSize,
+      opaque: options.opaque,
+      projection: options.projection,
+      state: options.state,
+      tileGrid: options.tileGrid,
+      tileLoadFunction: options.tileLoadFunction ? options.tileLoadFunction : defaultTileLoadFunction,
+      tilePixelRatio: options.tilePixelRatio,
+      tileUrlFunction: options.tileUrlFunction,
+      url: options.url,
+      urls: options.urls,
+      wrapX: options.wrapX,
+      transition: options.transition,
+      key: options.key,
+      attributionsCollapsible: options.attributionsCollapsible,
+      zDirection: options.zDirection
+    }) || this;
+    /**
+    * @protected
+    * @type {?string}
+    */
+    _this.crossOrigin = options.crossOrigin !== undefined ? options.crossOrigin : null;
+    /**
+    * @protected
+    * @type {typeof ImageTile}
+    */
+    _this.tileClass = options.tileClass !== undefined ? options.tileClass : _ImageTileJsDefault.default;
+    /**
+    * @protected
+    * @type {!Object<string, TileCache>}
+    */
+    _this.tileCacheForProjection = {};
+    /**
+    * @protected
+    * @type {!Object<string, import("../tilegrid/TileGrid.js").default>}
+    */
+    _this.tileGridForProjection = {};
+    /**
+    * @private
+    * @type {number|undefined}
+    */
+    _this.reprojectionErrorThreshold_ = options.reprojectionErrorThreshold;
+    /**
+    * @private
+    * @type {object|undefined}
+    */
+    _this.contextOptions_ = options.imageSmoothing === false ? _commonJs.IMAGE_SMOOTHING_DISABLED : undefined;
+    /**
+    * @private
+    * @type {boolean}
+    */
+    _this.renderReprojectionEdges_ = false;
+    return _this;
+  }
+  /**
+  * @return {boolean} Can expire cache.
+  */
+  TileImage.prototype.canExpireCache = function () {
+    if (!_reprojCommonJs.ENABLE_RASTER_REPROJECTION) {
+      return _super.prototype.canExpireCache.call(this);
+    }
+    if (this.tileCache.canExpireCache()) {
+      return true;
+    } else {
+      for (var key in this.tileCacheForProjection) {
+        if (this.tileCacheForProjection[key].canExpireCache()) {
+          return true;
+        }
+      }
+    }
+    return false;
+  };
+  /**
+  * @param {import("../proj/Projection.js").default} projection Projection.
+  * @param {!Object<string, boolean>} usedTiles Used tiles.
+  */
+  TileImage.prototype.expireCache = function (projection, usedTiles) {
+    if (!_reprojCommonJs.ENABLE_RASTER_REPROJECTION) {
+      _super.prototype.expireCache.call(this, projection, usedTiles);
+      return;
+    }
+    var usedTileCache = this.getTileCacheForProjection(projection);
+    this.tileCache.expireCache(this.tileCache == usedTileCache ? usedTiles : {});
+    for (var id in this.tileCacheForProjection) {
+      var tileCache = this.tileCacheForProjection[id];
+      tileCache.expireCache(tileCache == usedTileCache ? usedTiles : {});
+    }
+  };
+  /**
+  * @return {Object|undefined} Context options.
+  */
+  TileImage.prototype.getContextOptions = function () {
+    return this.contextOptions_;
+  };
+  /**
+  * @param {import("../proj/Projection.js").default} projection Projection.
+  * @return {number} Gutter.
+  */
+  TileImage.prototype.getGutterForProjection = function (projection) {
+    if (_reprojCommonJs.ENABLE_RASTER_REPROJECTION && this.getProjection() && projection && !_projJs.equivalent(this.getProjection(), projection)) {
+      return 0;
+    } else {
+      return this.getGutter();
+    }
+  };
+  /**
+  * @return {number} Gutter.
+  */
+  TileImage.prototype.getGutter = function () {
+    return 0;
+  };
+  /**
+  * Return the key to be used for all tiles in the source.
+  * @return {string} The key for all tiles.
+  * @protected
+  */
+  TileImage.prototype.getKey = function () {
+    return _super.prototype.getKey.call(this) + (this.contextOptions_ ? '\n' + JSON.stringify(this.contextOptions_) : '');
+  };
+  /**
+  * @param {import("../proj/Projection.js").default} projection Projection.
+  * @return {boolean} Opaque.
+  */
+  TileImage.prototype.getOpaque = function (projection) {
+    if (_reprojCommonJs.ENABLE_RASTER_REPROJECTION && this.getProjection() && projection && !_projJs.equivalent(this.getProjection(), projection)) {
+      return false;
+    } else {
+      return _super.prototype.getOpaque.call(this, projection);
+    }
+  };
+  /**
+  * @param {import("../proj/Projection.js").default} projection Projection.
+  * @return {!import("../tilegrid/TileGrid.js").default} Tile grid.
+  */
+  TileImage.prototype.getTileGridForProjection = function (projection) {
+    if (!_reprojCommonJs.ENABLE_RASTER_REPROJECTION) {
+      return _super.prototype.getTileGridForProjection.call(this, projection);
+    }
+    var thisProj = this.getProjection();
+    if (this.tileGrid && (!thisProj || _projJs.equivalent(thisProj, projection))) {
+      return this.tileGrid;
+    } else {
+      var projKey = _utilJs.getUid(projection);
+      if (!((projKey in this.tileGridForProjection))) {
+        this.tileGridForProjection[projKey] = _tilegridJs.getForProjection(projection);
+      }
+      return this.tileGridForProjection[projKey];
+    }
+  };
+  /**
+  * @param {import("../proj/Projection.js").default} projection Projection.
+  * @return {import("../TileCache.js").default} Tile cache.
+  */
+  TileImage.prototype.getTileCacheForProjection = function (projection) {
+    if (!_reprojCommonJs.ENABLE_RASTER_REPROJECTION) {
+      return _super.prototype.getTileCacheForProjection.call(this, projection);
+    }
+    var thisProj = this.getProjection();
+    if (!thisProj || _projJs.equivalent(thisProj, projection)) {
+      return this.tileCache;
+    } else {
+      var projKey = _utilJs.getUid(projection);
+      if (!((projKey in this.tileCacheForProjection))) {
+        this.tileCacheForProjection[projKey] = new _TileCacheJsDefault.default(this.tileCache.highWaterMark);
+      }
+      return this.tileCacheForProjection[projKey];
+    }
+  };
+  /**
+  * @param {number} z Tile coordinate z.
+  * @param {number} x Tile coordinate x.
+  * @param {number} y Tile coordinate y.
+  * @param {number} pixelRatio Pixel ratio.
+  * @param {import("../proj/Projection.js").default} projection Projection.
+  * @param {string} key The key set on the tile.
+  * @return {!import("../Tile.js").default} Tile.
+  * @private
+  */
+  TileImage.prototype.createTile_ = function (z, x, y, pixelRatio, projection, key) {
+    var tileCoord = [z, x, y];
+    var urlTileCoord = this.getTileCoordForTileUrlFunction(tileCoord, projection);
+    var tileUrl = urlTileCoord ? this.tileUrlFunction(urlTileCoord, pixelRatio, projection) : undefined;
+    var tile = new this.tileClass(tileCoord, tileUrl !== undefined ? _TileStateJsDefault.default.IDLE : _TileStateJsDefault.default.EMPTY, tileUrl !== undefined ? tileUrl : '', this.crossOrigin, this.tileLoadFunction, this.tileOptions);
+    tile.key = key;
+    tile.addEventListener(_eventsEventTypeJsDefault.default.CHANGE, this.handleTileChange.bind(this));
+    return tile;
+  };
+  /**
+  * @param {number} z Tile coordinate z.
+  * @param {number} x Tile coordinate x.
+  * @param {number} y Tile coordinate y.
+  * @param {number} pixelRatio Pixel ratio.
+  * @param {import("../proj/Projection.js").default} projection Projection.
+  * @return {!import("../Tile.js").default} Tile.
+  */
+  TileImage.prototype.getTile = function (z, x, y, pixelRatio, projection) {
+    var sourceProjection = this.getProjection();
+    if (!_reprojCommonJs.ENABLE_RASTER_REPROJECTION || !sourceProjection || !projection || _projJs.equivalent(sourceProjection, projection)) {
+      return this.getTileInternal(z, x, y, pixelRatio, sourceProjection || projection);
+    } else {
+      var cache = this.getTileCacheForProjection(projection);
+      var tileCoord = [z, x, y];
+      var tile = void 0;
+      var tileCoordKey = _tilecoordJs.getKey(tileCoord);
+      if (cache.containsKey(tileCoordKey)) {
+        tile = cache.get(tileCoordKey);
+      }
+      var key = this.getKey();
+      if (tile && tile.key == key) {
+        return tile;
+      } else {
+        var sourceTileGrid = this.getTileGridForProjection(sourceProjection);
+        var targetTileGrid = this.getTileGridForProjection(projection);
+        var wrappedTileCoord = this.getTileCoordForTileUrlFunction(tileCoord, projection);
+        var newTile = new _reprojTileJsDefault.default(sourceProjection, sourceTileGrid, projection, targetTileGrid, tileCoord, wrappedTileCoord, this.getTilePixelRatio(pixelRatio), this.getGutter(), (function (z, x, y, pixelRatio) {
+          return this.getTileInternal(z, x, y, pixelRatio, sourceProjection);
+        }).bind(this), this.reprojectionErrorThreshold_, this.renderReprojectionEdges_, this.contextOptions_);
+        newTile.key = key;
+        if (tile) {
+          newTile.interimTile = tile;
+          newTile.refreshInterimChain();
+          cache.replace(tileCoordKey, newTile);
+        } else {
+          cache.set(tileCoordKey, newTile);
+        }
+        return newTile;
+      }
+    }
+  };
+  /**
+  * @param {number} z Tile coordinate z.
+  * @param {number} x Tile coordinate x.
+  * @param {number} y Tile coordinate y.
+  * @param {number} pixelRatio Pixel ratio.
+  * @param {!import("../proj/Projection.js").default} projection Projection.
+  * @return {!import("../Tile.js").default} Tile.
+  * @protected
+  */
+  TileImage.prototype.getTileInternal = function (z, x, y, pixelRatio, projection) {
+    var tile = null;
+    var tileCoordKey = _tilecoordJs.getKeyZXY(z, x, y);
+    var key = this.getKey();
+    if (!this.tileCache.containsKey(tileCoordKey)) {
+      tile = this.createTile_(z, x, y, pixelRatio, projection, key);
+      this.tileCache.set(tileCoordKey, tile);
+    } else {
+      tile = this.tileCache.get(tileCoordKey);
+      if (tile.key != key) {
+        // The source's params changed. If the tile has an interim tile and if we
+        // can use it then we use it. Otherwise we create a new tile.  In both
+        // cases we attempt to assign an interim tile to the new tile.
+        var interimTile = tile;
+        tile = this.createTile_(z, x, y, pixelRatio, projection, key);
+        // make the new tile the head of the list,
+        if (interimTile.getState() == _TileStateJsDefault.default.IDLE) {
+          // the old tile hasn't begun loading yet, and is now outdated, so we can simply discard it
+          tile.interimTile = interimTile.interimTile;
+        } else {
+          tile.interimTile = interimTile;
+        }
+        tile.refreshInterimChain();
+        this.tileCache.replace(tileCoordKey, tile);
+      }
+    }
+    return tile;
+  };
+  /**
+  * Sets whether to render reprojection edges or not (usually for debugging).
+  * @param {boolean} render Render the edges.
+  * @api
+  */
+  TileImage.prototype.setRenderReprojectionEdges = function (render) {
+    if (!_reprojCommonJs.ENABLE_RASTER_REPROJECTION || this.renderReprojectionEdges_ == render) {
+      return;
+    }
+    this.renderReprojectionEdges_ = render;
+    for (var id in this.tileCacheForProjection) {
+      this.tileCacheForProjection[id].clear();
+    }
+    this.changed();
+  };
+  /**
+  * Sets the tile grid to use when reprojecting the tiles to the given
+  * projection instead of the default tile grid for the projection.
+  *
+  * This can be useful when the default tile grid cannot be created
+  * (e.g. projection has no extent defined) or
+  * for optimization reasons (custom tile size, resolutions, ...).
+  *
+  * @param {import("../proj.js").ProjectionLike} projection Projection.
+  * @param {import("../tilegrid/TileGrid.js").default} tilegrid Tile grid to use for the projection.
+  * @api
+  */
+  TileImage.prototype.setTileGridForProjection = function (projection, tilegrid) {
+    if (_reprojCommonJs.ENABLE_RASTER_REPROJECTION) {
+      var proj = _projJs.get(projection);
+      if (proj) {
+        var projKey = _utilJs.getUid(proj);
+        if (!((projKey in this.tileGridForProjection))) {
+          this.tileGridForProjection[projKey] = tilegrid;
+        }
+      }
+    }
+  };
+  return TileImage;
+})(_UrlTileJsDefault.default);
+/**
+* @param {ImageTile} imageTile Image tile.
+* @param {string} src Source.
+*/
+function defaultTileLoadFunction(imageTile, src) {
+  /** @type {HTMLImageElement|HTMLVideoElement}*/
+  imageTile.getImage().src = src;
+}
+exports.default = TileImage;
+
+},{"../events/EventType.js":"1VnyO","../ImageTile.js":"4Uwcv","../reproj/Tile.js":"5lSdx","../TileCache.js":"1oUcD","../TileState.js":"4w04B","./UrlTile.js":"2ULXC","../reproj/common.js":"5AFC2","./common.js":"1xpRq","../proj.js":"4Wdsb","../tilecoord.js":"2kkyx","../tilegrid.js":"1JyRQ","../util.js":"4k52K","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"4Uwcv":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var _TileJs = require('./Tile.js');
+var _TileJsDefault = _parcelHelpers.interopDefault(_TileJs);
+var _TileStateJs = require('./TileState.js');
+var _TileStateJsDefault = _parcelHelpers.interopDefault(_TileStateJs);
+var _domJs = require('./dom.js');
+var _ImageJs = require('./Image.js');
+var __extends = undefined && undefined.__extends || (function () {
+  var extendStatics = function (d, b) {
+    extendStatics = Object.setPrototypeOf || ({
+      __proto__: []
+    }) instanceof Array && (function (d, b) {
+      d.__proto__ = b;
+    }) || (function (d, b) {
+      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+    });
+    return extendStatics(d, b);
+  };
+  return function (d, b) {
+    extendStatics(d, b);
+    function __() {
+      this.constructor = d;
+    }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+})();
+var ImageTile = /** @class*/
+(function (_super) {
+  __extends(ImageTile, _super);
+  /**
+  * @param {import("./tilecoord.js").TileCoord} tileCoord Tile coordinate.
+  * @param {import("./TileState.js").default} state State.
+  * @param {string} src Image source URI.
+  * @param {?string} crossOrigin Cross origin.
+  * @param {import("./Tile.js").LoadFunction} tileLoadFunction Tile load function.
+  * @param {import("./Tile.js").Options=} opt_options Tile options.
+  */
+  function ImageTile(tileCoord, state, src, crossOrigin, tileLoadFunction, opt_options) {
+    var _this = _super.call(this, tileCoord, state, opt_options) || this;
+    /**
+    * @private
+    * @type {?string}
+    */
+    _this.crossOrigin_ = crossOrigin;
+    /**
+    * Image URI
+    *
+    * @private
+    * @type {string}
+    */
+    _this.src_ = src;
+    _this.key = src;
+    /**
+    * @private
+    * @type {HTMLImageElement|HTMLCanvasElement}
+    */
+    _this.image_ = new Image();
+    if (crossOrigin !== null) {
+      _this.image_.crossOrigin = crossOrigin;
+    }
+    /**
+    * @private
+    * @type {?function():void}
+    */
+    _this.unlisten_ = null;
+    /**
+    * @private
+    * @type {import("./Tile.js").LoadFunction}
+    */
+    _this.tileLoadFunction_ = tileLoadFunction;
+    return _this;
+  }
+  /**
+  * Get the HTML image element for this tile (may be a Canvas, Image, or Video).
+  * @return {HTMLCanvasElement|HTMLImageElement|HTMLVideoElement} Image.
+  * @api
+  */
+  ImageTile.prototype.getImage = function () {
+    return this.image_;
+  };
+  /**
+  * Tracks loading or read errors.
+  *
+  * @private
+  */
+  ImageTile.prototype.handleImageError_ = function () {
+    this.state = _TileStateJsDefault.default.ERROR;
+    this.unlistenImage_();
+    this.image_ = getBlankImage();
+    this.changed();
+  };
+  /**
+  * Tracks successful image load.
+  *
+  * @private
+  */
+  ImageTile.prototype.handleImageLoad_ = function () {
+    var image = /** @type {HTMLImageElement}*/
+    this.image_;
+    if (image.naturalWidth && image.naturalHeight) {
+      this.state = _TileStateJsDefault.default.LOADED;
+    } else {
+      this.state = _TileStateJsDefault.default.EMPTY;
+    }
+    this.unlistenImage_();
+    this.changed();
+  };
+  /**
+  * Load not yet loaded URI.
+  * @api
+  */
+  ImageTile.prototype.load = function () {
+    if (this.state == _TileStateJsDefault.default.ERROR) {
+      this.state = _TileStateJsDefault.default.IDLE;
+      this.image_ = new Image();
+      if (this.crossOrigin_ !== null) {
+        this.image_.crossOrigin = this.crossOrigin_;
+      }
+    }
+    if (this.state == _TileStateJsDefault.default.IDLE) {
+      this.state = _TileStateJsDefault.default.LOADING;
+      this.changed();
+      this.tileLoadFunction_(this, this.src_);
+      this.unlisten_ = _ImageJs.listenImage(this.image_, this.handleImageLoad_.bind(this), this.handleImageError_.bind(this));
+    }
+  };
+  /**
+  * Discards event handlers which listen for load completion or errors.
+  *
+  * @private
+  */
+  ImageTile.prototype.unlistenImage_ = function () {
+    if (this.unlisten_) {
+      this.unlisten_();
+      this.unlisten_ = null;
+    }
+  };
+  return ImageTile;
+})(_TileJsDefault.default);
+/**
+* Get a 1-pixel blank image.
+* @return {HTMLCanvasElement} Blank image.
+*/
+function getBlankImage() {
+  var ctx = _domJs.createCanvasContext2D(1, 1);
+  ctx.fillStyle = 'rgba(0,0,0,0)';
+  ctx.fillRect(0, 0, 1, 1);
+  return ctx.canvas;
+}
+exports.default = ImageTile;
+
+},{"./Tile.js":"72Vcf","./TileState.js":"4w04B","./dom.js":"5oBTC","./Image.js":"6Osx2","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"5lSdx":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var _commonJs = require('./common.js');
+var _eventsEventTypeJs = require('../events/EventType.js');
+var _eventsEventTypeJsDefault = _parcelHelpers.interopDefault(_eventsEventTypeJs);
+var _TileJs = require('../Tile.js');
+var _TileJsDefault = _parcelHelpers.interopDefault(_TileJs);
+var _TileStateJs = require('../TileState.js');
+var _TileStateJsDefault = _parcelHelpers.interopDefault(_TileStateJs);
+var _TriangulationJs = require('./Triangulation.js');
+var _TriangulationJsDefault = _parcelHelpers.interopDefault(_TriangulationJs);
+var _reprojJs = require('../reproj.js');
+var _mathJs = require('../math.js');
+var _extentJs = require('../extent.js');
+var _eventsJs = require('../events.js');
+var __extends = undefined && undefined.__extends || (function () {
+  var extendStatics = function (d, b) {
+    extendStatics = Object.setPrototypeOf || ({
+      __proto__: []
+    }) instanceof Array && (function (d, b) {
+      d.__proto__ = b;
+    }) || (function (d, b) {
+      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+    });
+    return extendStatics(d, b);
+  };
+  return function (d, b) {
+    extendStatics(d, b);
+    function __() {
+      this.constructor = d;
+    }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+})();
+/**
+* @typedef {function(number, number, number, number) : import("../Tile.js").default} FunctionType
+*/
+/**
+* @classdesc
+* Class encapsulating single reprojected tile.
+* See {@link module:ol/source/TileImage~TileImage}.
+*
+*/
+var ReprojTile = /** @class*/
+(function (_super) {
+  __extends(ReprojTile, _super);
+  /**
+  * @param {import("../proj/Projection.js").default} sourceProj Source projection.
+  * @param {import("../tilegrid/TileGrid.js").default} sourceTileGrid Source tile grid.
+  * @param {import("../proj/Projection.js").default} targetProj Target projection.
+  * @param {import("../tilegrid/TileGrid.js").default} targetTileGrid Target tile grid.
+  * @param {import("../tilecoord.js").TileCoord} tileCoord Coordinate of the tile.
+  * @param {import("../tilecoord.js").TileCoord} wrappedTileCoord Coordinate of the tile wrapped in X.
+  * @param {number} pixelRatio Pixel ratio.
+  * @param {number} gutter Gutter of the source tiles.
+  * @param {FunctionType} getTileFunction
+  *     Function returning source tiles (z, x, y, pixelRatio).
+  * @param {number=} opt_errorThreshold Acceptable reprojection error (in px).
+  * @param {boolean=} opt_renderEdges Render reprojection edges.
+  * @param {object=} opt_contextOptions Properties to set on the canvas context.
+  */
+  function ReprojTile(sourceProj, sourceTileGrid, targetProj, targetTileGrid, tileCoord, wrappedTileCoord, pixelRatio, gutter, getTileFunction, opt_errorThreshold, opt_renderEdges, opt_contextOptions) {
+    var _this = _super.call(this, tileCoord, _TileStateJsDefault.default.IDLE) || this;
+    /**
+    * @private
+    * @type {boolean}
+    */
+    _this.renderEdges_ = opt_renderEdges !== undefined ? opt_renderEdges : false;
+    /**
+    * @private
+    * @type {object}
+    */
+    _this.contextOptions_ = opt_contextOptions;
+    /**
+    * @private
+    * @type {number}
+    */
+    _this.pixelRatio_ = pixelRatio;
+    /**
+    * @private
+    * @type {number}
+    */
+    _this.gutter_ = gutter;
+    /**
+    * @private
+    * @type {HTMLCanvasElement}
+    */
+    _this.canvas_ = null;
+    /**
+    * @private
+    * @type {import("../tilegrid/TileGrid.js").default}
+    */
+    _this.sourceTileGrid_ = sourceTileGrid;
+    /**
+    * @private
+    * @type {import("../tilegrid/TileGrid.js").default}
+    */
+    _this.targetTileGrid_ = targetTileGrid;
+    /**
+    * @private
+    * @type {import("../tilecoord.js").TileCoord}
+    */
+    _this.wrappedTileCoord_ = wrappedTileCoord ? wrappedTileCoord : tileCoord;
+    /**
+    * @private
+    * @type {!Array<import("../Tile.js").default>}
+    */
+    _this.sourceTiles_ = [];
+    /**
+    * @private
+    * @type {?Array<import("../events.js").EventsKey>}
+    */
+    _this.sourcesListenerKeys_ = null;
+    /**
+    * @private
+    * @type {number}
+    */
+    _this.sourceZ_ = 0;
+    var targetExtent = targetTileGrid.getTileCoordExtent(_this.wrappedTileCoord_);
+    var maxTargetExtent = _this.targetTileGrid_.getExtent();
+    var maxSourceExtent = _this.sourceTileGrid_.getExtent();
+    var limitedTargetExtent = maxTargetExtent ? _extentJs.getIntersection(targetExtent, maxTargetExtent) : targetExtent;
+    if (_extentJs.getArea(limitedTargetExtent) === 0) {
+      // Tile is completely outside range -> EMPTY
+      // TODO: is it actually correct that the source even creates the tile ?
+      _this.state = _TileStateJsDefault.default.EMPTY;
+      return _this;
+    }
+    var sourceProjExtent = sourceProj.getExtent();
+    if (sourceProjExtent) {
+      if (!maxSourceExtent) {
+        maxSourceExtent = sourceProjExtent;
+      } else {
+        maxSourceExtent = _extentJs.getIntersection(maxSourceExtent, sourceProjExtent);
+      }
+    }
+    var targetResolution = targetTileGrid.getResolution(_this.wrappedTileCoord_[0]);
+    var sourceResolution = _reprojJs.calculateSourceExtentResolution(sourceProj, targetProj, limitedTargetExtent, targetResolution);
+    if (!isFinite(sourceResolution) || sourceResolution <= 0) {
+      // invalid sourceResolution -> EMPTY
+      // probably edges of the projections when no extent is defined
+      _this.state = _TileStateJsDefault.default.EMPTY;
+      return _this;
+    }
+    var errorThresholdInPixels = opt_errorThreshold !== undefined ? opt_errorThreshold : _commonJs.ERROR_THRESHOLD;
+    /**
+    * @private
+    * @type {!import("./Triangulation.js").default}
+    */
+    _this.triangulation_ = new _TriangulationJsDefault.default(sourceProj, targetProj, limitedTargetExtent, maxSourceExtent, sourceResolution * errorThresholdInPixels, targetResolution);
+    if (_this.triangulation_.getTriangles().length === 0) {
+      // no valid triangles -> EMPTY
+      _this.state = _TileStateJsDefault.default.EMPTY;
+      return _this;
+    }
+    _this.sourceZ_ = sourceTileGrid.getZForResolution(sourceResolution);
+    var sourceExtent = _this.triangulation_.calculateSourceExtent();
+    if (maxSourceExtent) {
+      if (sourceProj.canWrapX()) {
+        sourceExtent[1] = _mathJs.clamp(sourceExtent[1], maxSourceExtent[1], maxSourceExtent[3]);
+        sourceExtent[3] = _mathJs.clamp(sourceExtent[3], maxSourceExtent[1], maxSourceExtent[3]);
+      } else {
+        sourceExtent = _extentJs.getIntersection(sourceExtent, maxSourceExtent);
+      }
+    }
+    if (!_extentJs.getArea(sourceExtent)) {
+      _this.state = _TileStateJsDefault.default.EMPTY;
+    } else {
+      var sourceRange = sourceTileGrid.getTileRangeForExtentAndZ(sourceExtent, _this.sourceZ_);
+      for (var srcX = sourceRange.minX; srcX <= sourceRange.maxX; srcX++) {
+        for (var srcY = sourceRange.minY; srcY <= sourceRange.maxY; srcY++) {
+          var tile = getTileFunction(_this.sourceZ_, srcX, srcY, pixelRatio);
+          if (tile) {
+            _this.sourceTiles_.push(tile);
+          }
+        }
+      }
+      if (_this.sourceTiles_.length === 0) {
+        _this.state = _TileStateJsDefault.default.EMPTY;
+      }
+    }
+    return _this;
+  }
+  /**
+  * Get the HTML Canvas element for this tile.
+  * @return {HTMLCanvasElement} Canvas.
+  */
+  ReprojTile.prototype.getImage = function () {
+    return this.canvas_;
+  };
+  /**
+  * @private
+  */
+  ReprojTile.prototype.reproject_ = function () {
+    var sources = [];
+    this.sourceTiles_.forEach((function (tile, i, arr) {
+      if (tile && tile.getState() == _TileStateJsDefault.default.LOADED) {
+        sources.push({
+          extent: this.sourceTileGrid_.getTileCoordExtent(tile.tileCoord),
+          image: tile.getImage()
+        });
+      }
+    }).bind(this));
+    this.sourceTiles_.length = 0;
+    if (sources.length === 0) {
+      this.state = _TileStateJsDefault.default.ERROR;
+    } else {
+      var z = this.wrappedTileCoord_[0];
+      var size = this.targetTileGrid_.getTileSize(z);
+      var width = typeof size === 'number' ? size : size[0];
+      var height = typeof size === 'number' ? size : size[1];
+      var targetResolution = this.targetTileGrid_.getResolution(z);
+      var sourceResolution = this.sourceTileGrid_.getResolution(this.sourceZ_);
+      var targetExtent = this.targetTileGrid_.getTileCoordExtent(this.wrappedTileCoord_);
+      this.canvas_ = _reprojJs.render(width, height, this.pixelRatio_, sourceResolution, this.sourceTileGrid_.getExtent(), targetResolution, targetExtent, this.triangulation_, sources, this.gutter_, this.renderEdges_, this.contextOptions_);
+      this.state = _TileStateJsDefault.default.LOADED;
+    }
+    this.changed();
+  };
+  /**
+  * Load not yet loaded URI.
+  */
+  ReprojTile.prototype.load = function () {
+    if (this.state == _TileStateJsDefault.default.IDLE) {
+      this.state = _TileStateJsDefault.default.LOADING;
+      this.changed();
+      var leftToLoad_1 = 0;
+      this.sourcesListenerKeys_ = [];
+      this.sourceTiles_.forEach((function (tile, i, arr) {
+        var state = tile.getState();
+        if (state == _TileStateJsDefault.default.IDLE || state == _TileStateJsDefault.default.LOADING) {
+          leftToLoad_1++;
+          var sourceListenKey_1 = _eventsJs.listen(tile, _eventsEventTypeJsDefault.default.CHANGE, function (e) {
+            var state = tile.getState();
+            if (state == _TileStateJsDefault.default.LOADED || state == _TileStateJsDefault.default.ERROR || state == _TileStateJsDefault.default.EMPTY) {
+              _eventsJs.unlistenByKey(sourceListenKey_1);
+              leftToLoad_1--;
+              if (leftToLoad_1 === 0) {
+                this.unlistenSources_();
+                this.reproject_();
+              }
+            }
+          }, this);
+          this.sourcesListenerKeys_.push(sourceListenKey_1);
+        }
+      }).bind(this));
+      this.sourceTiles_.forEach(function (tile, i, arr) {
+        var state = tile.getState();
+        if (state == _TileStateJsDefault.default.IDLE) {
+          tile.load();
+        }
+      });
+      if (leftToLoad_1 === 0) {
+        setTimeout(this.reproject_.bind(this), 0);
+      }
+    }
+  };
+  /**
+  * @private
+  */
+  ReprojTile.prototype.unlistenSources_ = function () {
+    this.sourcesListenerKeys_.forEach(_eventsJs.unlistenByKey);
+    this.sourcesListenerKeys_ = null;
+  };
+  return ReprojTile;
+})(_TileJsDefault.default);
+exports.default = ReprojTile;
+
+},{"./common.js":"5AFC2","../events/EventType.js":"1VnyO","../Tile.js":"72Vcf","../TileState.js":"4w04B","./Triangulation.js":"4PEUW","../reproj.js":"6Jbh4","../math.js":"39Bdl","../extent.js":"5PMSh","../events.js":"16C0R","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"4XnCS":[function(require,module,exports) {
 var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
 _parcelHelpers.defineInteropFlag(exports);
 _parcelHelpers.export(exports, "jsonp", function () {
@@ -67853,879 +68478,6 @@ Operators['case'] = {
   }
 };
 
-},{"../color.js":"6kTVy","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"73Cns":[function(require,module,exports) {
-var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
-_parcelHelpers.defineInteropFlag(exports);
-var _commonJs = require('./common.js');
-var _eventsEventTypeJs = require('../events/EventType.js');
-var _eventsEventTypeJsDefault = _parcelHelpers.interopDefault(_eventsEventTypeJs);
-var _ImageJs = require('./Image.js');
-var _ImageJsDefault = _parcelHelpers.interopDefault(_ImageJs);
-var _ImageJs2 = require('../Image.js');
-var _ImageJs2Default = _parcelHelpers.interopDefault(_ImageJs2);
-var _WMSServerTypeJs = require('./WMSServerType.js');
-var _WMSServerTypeJsDefault = _parcelHelpers.interopDefault(_WMSServerTypeJs);
-var _uriJs = require('../uri.js');
-var _assertsJs = require('../asserts.js');
-var _objJs = require('../obj.js');
-var _reprojJs = require('../reproj.js');
-var _stringJs = require('../string.js');
-var _extentJs = require('../extent.js');
-var _projJs = require('../proj.js');
-/**
-* @module ol/source/ImageWMS
-*/
-var __extends = undefined && undefined.__extends || (function () {
-  var extendStatics = function (d, b) {
-    extendStatics = Object.setPrototypeOf || ({
-      __proto__: []
-    }) instanceof Array && (function (d, b) {
-      d.__proto__ = b;
-    }) || (function (d, b) {
-      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-    });
-    return extendStatics(d, b);
-  };
-  return function (d, b) {
-    extendStatics(d, b);
-    function __() {
-      this.constructor = d;
-    }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-})();
-/**
-* @const
-* @type {import("../size.js").Size}
-*/
-var GETFEATUREINFO_IMAGE_SIZE = [101, 101];
-/**
-* @typedef {Object} Options
-* @property {import("./Source.js").AttributionLike} [attributions] Attributions.
-* @property {null|string} [crossOrigin] The `crossOrigin` attribute for loaded images.  Note that
-* you must provide a `crossOrigin` value if you want to access pixel data with the Canvas renderer.
-* See https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image for more detail.
-* @property {boolean} [hidpi=true] Use the `ol/Map#pixelRatio` value when requesting
-* the image from the remote server.
-* @property {import("./WMSServerType.js").default|string} [serverType] The type of
-* the remote WMS server: `mapserver`, `geoserver` or `qgis`. Only needed if `hidpi` is `true`.
-* @property {import("../Image.js").LoadFunction} [imageLoadFunction] Optional function to load an image given a URL.
-* @property {boolean} [imageSmoothing=true] Enable image smoothing.
-* @property {Object<string,*>} params WMS request parameters.
-* At least a `LAYERS` param is required. `STYLES` is
-* `''` by default. `VERSION` is `1.3.0` by default. `WIDTH`, `HEIGHT`, `BBOX`
-* and `CRS` (`SRS` for WMS version < 1.3.0) will be set dynamically.
-* @property {import("../proj.js").ProjectionLike} [projection] Projection. Default is the view projection.
-* @property {number} [ratio=1.5] Ratio. `1` means image requests are the size of the map viewport, `2` means
-* twice the width and height of the map viewport, and so on. Must be `1` or
-* higher.
-* @property {Array<number>} [resolutions] Resolutions.
-* If specified, requests will be made for these resolutions only.
-* @property {string} url WMS service URL.
-*/
-/**
-* @classdesc
-* Source for WMS servers providing single, untiled images.
-*
-* @fires module:ol/source/Image.ImageSourceEvent
-* @api
-*/
-var ImageWMS = /** @class*/
-(function (_super) {
-  __extends(ImageWMS, _super);
-  /**
-  * @param {Options=} [opt_options] ImageWMS options.
-  */
-  function ImageWMS(opt_options) {
-    var _this = this;
-    var options = opt_options ? opt_options : {};
-    _this = _super.call(this, {
-      attributions: options.attributions,
-      imageSmoothing: options.imageSmoothing,
-      projection: options.projection,
-      resolutions: options.resolutions
-    }) || this;
-    /**
-    * @private
-    * @type {?string}
-    */
-    _this.crossOrigin_ = options.crossOrigin !== undefined ? options.crossOrigin : null;
-    /**
-    * @private
-    * @type {string|undefined}
-    */
-    _this.url_ = options.url;
-    /**
-    * @private
-    * @type {import("../Image.js").LoadFunction}
-    */
-    _this.imageLoadFunction_ = options.imageLoadFunction !== undefined ? options.imageLoadFunction : _ImageJs.defaultImageLoadFunction;
-    /**
-    * @private
-    * @type {!Object}
-    */
-    _this.params_ = options.params || ({});
-    /**
-    * @private
-    * @type {boolean}
-    */
-    _this.v13_ = true;
-    _this.updateV13_();
-    /**
-    * @private
-    * @type {import("./WMSServerType.js").default|undefined}
-    */
-    _this.serverType_ = /** @type {import("./WMSServerType.js").default|undefined}*/
-    options.serverType;
-    /**
-    * @private
-    * @type {boolean}
-    */
-    _this.hidpi_ = options.hidpi !== undefined ? options.hidpi : true;
-    /**
-    * @private
-    * @type {import("../Image.js").default}
-    */
-    _this.image_ = null;
-    /**
-    * @private
-    * @type {import("../size.js").Size}
-    */
-    _this.imageSize_ = [0, 0];
-    /**
-    * @private
-    * @type {number}
-    */
-    _this.renderedRevision_ = 0;
-    /**
-    * @private
-    * @type {number}
-    */
-    _this.ratio_ = options.ratio !== undefined ? options.ratio : 1.5;
-    return _this;
-  }
-  /**
-  * Return the GetFeatureInfo URL for the passed coordinate, resolution, and
-  * projection. Return `undefined` if the GetFeatureInfo URL cannot be
-  * constructed.
-  * @param {import("../coordinate.js").Coordinate} coordinate Coordinate.
-  * @param {number} resolution Resolution.
-  * @param {import("../proj.js").ProjectionLike} projection Projection.
-  * @param {!Object} params GetFeatureInfo params. `INFO_FORMAT` at least should
-  *     be provided. If `QUERY_LAYERS` is not provided then the layers specified
-  *     in the `LAYERS` parameter will be used. `VERSION` should not be
-  *     specified here.
-  * @return {string|undefined} GetFeatureInfo URL.
-  * @api
-  */
-  ImageWMS.prototype.getFeatureInfoUrl = function (coordinate, resolution, projection, params) {
-    if (this.url_ === undefined) {
-      return undefined;
-    }
-    var projectionObj = _projJs.get(projection);
-    var sourceProjectionObj = this.getProjection();
-    if (sourceProjectionObj && sourceProjectionObj !== projectionObj) {
-      resolution = _reprojJs.calculateSourceResolution(sourceProjectionObj, projectionObj, coordinate, resolution);
-      coordinate = _projJs.transform(coordinate, projectionObj, sourceProjectionObj);
-    }
-    var extent = _extentJs.getForViewAndSize(coordinate, resolution, 0, GETFEATUREINFO_IMAGE_SIZE);
-    var baseParams = {
-      'SERVICE': 'WMS',
-      'VERSION': _commonJs.DEFAULT_WMS_VERSION,
-      'REQUEST': 'GetFeatureInfo',
-      'FORMAT': 'image/png',
-      'TRANSPARENT': true,
-      'QUERY_LAYERS': this.params_['LAYERS']
-    };
-    _objJs.assign(baseParams, this.params_, params);
-    var x = Math.floor((coordinate[0] - extent[0]) / resolution);
-    var y = Math.floor((extent[3] - coordinate[1]) / resolution);
-    baseParams[this.v13_ ? 'I' : 'X'] = x;
-    baseParams[this.v13_ ? 'J' : 'Y'] = y;
-    return this.getRequestUrl_(extent, GETFEATUREINFO_IMAGE_SIZE, 1, sourceProjectionObj || projectionObj, baseParams);
-  };
-  /**
-  * Return the GetLegendGraphic URL, optionally optimized for the passed
-  * resolution and possibly including any passed specific parameters. Returns
-  * `undefined` if the GetLegendGraphic URL cannot be constructed.
-  *
-  * @param {number} [resolution] Resolution. If set to undefined, `SCALE`
-  *     will not be calculated and included in URL.
-  * @param {Object} [params] GetLegendGraphic params. If `LAYER` is set, the
-  *     request is generated for this wms layer, else it will try to use the
-  *     configured wms layer. Default `FORMAT` is `image/png`.
-  *     `VERSION` should not be specified here.
-  * @return {string|undefined} GetLegendGraphic URL.
-  * @api
-  */
-  ImageWMS.prototype.getLegendUrl = function (resolution, params) {
-    if (this.url_ === undefined) {
-      return undefined;
-    }
-    var baseParams = {
-      'SERVICE': 'WMS',
-      'VERSION': _commonJs.DEFAULT_WMS_VERSION,
-      'REQUEST': 'GetLegendGraphic',
-      'FORMAT': 'image/png'
-    };
-    if (params === undefined || params['LAYER'] === undefined) {
-      var layers = this.params_.LAYERS;
-      var isSingleLayer = !Array.isArray(layers) || layers.length === 1;
-      if (!isSingleLayer) {
-        return undefined;
-      }
-      baseParams['LAYER'] = layers;
-    }
-    if (resolution !== undefined) {
-      var mpu = this.getProjection() ? this.getProjection().getMetersPerUnit() : 1;
-      var pixelSize = 0.00028;
-      baseParams['SCALE'] = resolution * mpu / pixelSize;
-    }
-    _objJs.assign(baseParams, params);
-    return _uriJs.appendParams(/** @type {string}*/
-    this.url_, baseParams);
-  };
-  /**
-  * Get the user-provided params, i.e. those passed to the constructor through
-  * the "params" option, and possibly updated using the updateParams method.
-  * @return {Object} Params.
-  * @api
-  */
-  ImageWMS.prototype.getParams = function () {
-    return this.params_;
-  };
-  /**
-  * @param {import("../extent.js").Extent} extent Extent.
-  * @param {number} resolution Resolution.
-  * @param {number} pixelRatio Pixel ratio.
-  * @param {import("../proj/Projection.js").default} projection Projection.
-  * @return {import("../Image.js").default} Single image.
-  */
-  ImageWMS.prototype.getImageInternal = function (extent, resolution, pixelRatio, projection) {
-    if (this.url_ === undefined) {
-      return null;
-    }
-    resolution = this.findNearestResolution(resolution);
-    if (pixelRatio != 1 && (!this.hidpi_ || this.serverType_ === undefined)) {
-      pixelRatio = 1;
-    }
-    var imageResolution = resolution / pixelRatio;
-    var center = _extentJs.getCenter(extent);
-    var viewWidth = Math.ceil(_extentJs.getWidth(extent) / imageResolution);
-    var viewHeight = Math.ceil(_extentJs.getHeight(extent) / imageResolution);
-    var viewExtent = _extentJs.getForViewAndSize(center, imageResolution, 0, [viewWidth, viewHeight]);
-    var requestWidth = Math.ceil(this.ratio_ * _extentJs.getWidth(extent) / imageResolution);
-    var requestHeight = Math.ceil(this.ratio_ * _extentJs.getHeight(extent) / imageResolution);
-    var requestExtent = _extentJs.getForViewAndSize(center, imageResolution, 0, [requestWidth, requestHeight]);
-    var image = this.image_;
-    if (image && this.renderedRevision_ == this.getRevision() && image.getResolution() == resolution && image.getPixelRatio() == pixelRatio && _extentJs.containsExtent(image.getExtent(), viewExtent)) {
-      return image;
-    }
-    var params = {
-      'SERVICE': 'WMS',
-      'VERSION': _commonJs.DEFAULT_WMS_VERSION,
-      'REQUEST': 'GetMap',
-      'FORMAT': 'image/png',
-      'TRANSPARENT': true
-    };
-    _objJs.assign(params, this.params_);
-    this.imageSize_[0] = Math.round(_extentJs.getWidth(requestExtent) / imageResolution);
-    this.imageSize_[1] = Math.round(_extentJs.getHeight(requestExtent) / imageResolution);
-    var url = this.getRequestUrl_(requestExtent, this.imageSize_, pixelRatio, projection, params);
-    this.image_ = new _ImageJs2Default.default(requestExtent, resolution, pixelRatio, url, this.crossOrigin_, this.imageLoadFunction_);
-    this.renderedRevision_ = this.getRevision();
-    this.image_.addEventListener(_eventsEventTypeJsDefault.default.CHANGE, this.handleImageChange.bind(this));
-    return this.image_;
-  };
-  /**
-  * Return the image load function of the source.
-  * @return {import("../Image.js").LoadFunction} The image load function.
-  * @api
-  */
-  ImageWMS.prototype.getImageLoadFunction = function () {
-    return this.imageLoadFunction_;
-  };
-  /**
-  * @param {import("../extent.js").Extent} extent Extent.
-  * @param {import("../size.js").Size} size Size.
-  * @param {number} pixelRatio Pixel ratio.
-  * @param {import("../proj/Projection.js").default} projection Projection.
-  * @param {Object} params Params.
-  * @return {string} Request URL.
-  * @private
-  */
-  ImageWMS.prototype.getRequestUrl_ = function (extent, size, pixelRatio, projection, params) {
-    _assertsJs.assert(this.url_ !== undefined, 9);
-    // `url` must be configured or set using `#setUrl()`
-    params[this.v13_ ? 'CRS' : 'SRS'] = projection.getCode();
-    if (!(('STYLES' in this.params_))) {
-      params['STYLES'] = '';
-    }
-    if (pixelRatio != 1) {
-      switch (this.serverType_) {
-        case _WMSServerTypeJsDefault.default.GEOSERVER:
-          var dpi = 90 * pixelRatio + 0.5 | 0;
-          if (('FORMAT_OPTIONS' in params)) {
-            params['FORMAT_OPTIONS'] += ';dpi:' + dpi;
-          } else {
-            params['FORMAT_OPTIONS'] = 'dpi:' + dpi;
-          }
-          break;
-        case _WMSServerTypeJsDefault.default.MAPSERVER:
-          params['MAP_RESOLUTION'] = 90 * pixelRatio;
-          break;
-        case _WMSServerTypeJsDefault.default.CARMENTA_SERVER:
-        case _WMSServerTypeJsDefault.default.QGIS:
-          params['DPI'] = 90 * pixelRatio;
-          break;
-        default:
-          _assertsJs.assert(false, 8);
-          // Unknown `serverType` configured
-          break;
-      }
-    }
-    params['WIDTH'] = size[0];
-    params['HEIGHT'] = size[1];
-    var axisOrientation = projection.getAxisOrientation();
-    var bbox;
-    if (this.v13_ && axisOrientation.substr(0, 2) == 'ne') {
-      bbox = [extent[1], extent[0], extent[3], extent[2]];
-    } else {
-      bbox = extent;
-    }
-    params['BBOX'] = bbox.join(',');
-    return _uriJs.appendParams(/** @type {string}*/
-    this.url_, params);
-  };
-  /**
-  * Return the URL used for this WMS source.
-  * @return {string|undefined} URL.
-  * @api
-  */
-  ImageWMS.prototype.getUrl = function () {
-    return this.url_;
-  };
-  /**
-  * Set the image load function of the source.
-  * @param {import("../Image.js").LoadFunction} imageLoadFunction Image load function.
-  * @api
-  */
-  ImageWMS.prototype.setImageLoadFunction = function (imageLoadFunction) {
-    this.image_ = null;
-    this.imageLoadFunction_ = imageLoadFunction;
-    this.changed();
-  };
-  /**
-  * Set the URL to use for requests.
-  * @param {string|undefined} url URL.
-  * @api
-  */
-  ImageWMS.prototype.setUrl = function (url) {
-    if (url != this.url_) {
-      this.url_ = url;
-      this.image_ = null;
-      this.changed();
-    }
-  };
-  /**
-  * Update the user-provided params.
-  * @param {Object} params Params.
-  * @api
-  */
-  ImageWMS.prototype.updateParams = function (params) {
-    _objJs.assign(this.params_, params);
-    this.updateV13_();
-    this.image_ = null;
-    this.changed();
-  };
-  /**
-  * @private
-  */
-  ImageWMS.prototype.updateV13_ = function () {
-    var version = this.params_['VERSION'] || _commonJs.DEFAULT_WMS_VERSION;
-    this.v13_ = _stringJs.compareVersions(version, '1.3') >= 0;
-  };
-  return ImageWMS;
-})(_ImageJsDefault.default);
-exports.default = ImageWMS;
-
-},{"./common.js":"1xpRq","../events/EventType.js":"1VnyO","./Image.js":"7q0f9","../Image.js":"6Osx2","./WMSServerType.js":"4P7Eo","../uri.js":"2CPqV","../asserts.js":"1kfem","../obj.js":"fh3Rh","../reproj.js":"6Jbh4","../string.js":"18r6b","../extent.js":"5PMSh","../proj.js":"4Wdsb","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"7q0f9":[function(require,module,exports) {
-var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
-_parcelHelpers.defineInteropFlag(exports);
-_parcelHelpers.export(exports, "ImageSourceEventType", function () {
-  return ImageSourceEventType;
-});
-_parcelHelpers.export(exports, "defaultImageLoadFunction", function () {
-  return defaultImageLoadFunction;
-});
-_parcelHelpers.export(exports, "ImageSourceEvent", function () {
-  return ImageSourceEvent;
-});
-var _eventsEventJs = require('../events/Event.js');
-var _eventsEventJsDefault = _parcelHelpers.interopDefault(_eventsEventJs);
-var _ImageStateJs = require('../ImageState.js');
-var _ImageStateJsDefault = _parcelHelpers.interopDefault(_ImageStateJs);
-var _reprojImageJs = require('../reproj/Image.js');
-var _reprojImageJsDefault = _parcelHelpers.interopDefault(_reprojImageJs);
-var _SourceJs = require('./Source.js');
-var _SourceJsDefault = _parcelHelpers.interopDefault(_SourceJs);
-var _reprojCommonJs = require('../reproj/common.js');
-var _commonJs = require('./common.js');
-var _utilJs = require('../util.js');
-var _extentJs = require('../extent.js');
-var _projJs = require('../proj.js');
-var _arrayJs = require('../array.js');
-var __extends = undefined && undefined.__extends || (function () {
-  var extendStatics = function (d, b) {
-    extendStatics = Object.setPrototypeOf || ({
-      __proto__: []
-    }) instanceof Array && (function (d, b) {
-      d.__proto__ = b;
-    }) || (function (d, b) {
-      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-    });
-    return extendStatics(d, b);
-  };
-  return function (d, b) {
-    extendStatics(d, b);
-    function __() {
-      this.constructor = d;
-    }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-})();
-var ImageSourceEventType = {
-  /**
-  * Triggered when an image starts loading.
-  * @event module:ol/source/Image.ImageSourceEvent#imageloadstart
-  * @api
-  */
-  IMAGELOADSTART: 'imageloadstart',
-  /**
-  * Triggered when an image finishes loading.
-  * @event module:ol/source/Image.ImageSourceEvent#imageloadend
-  * @api
-  */
-  IMAGELOADEND: 'imageloadend',
-  /**
-  * Triggered if image loading results in an error.
-  * @event module:ol/source/Image.ImageSourceEvent#imageloaderror
-  * @api
-  */
-  IMAGELOADERROR: 'imageloaderror'
-};
-/**
-* @classdesc
-* Events emitted by {@link module:ol/source/Image~ImageSource} instances are instances of this
-* type.
-*/
-var ImageSourceEvent = /** @class*/
-(function (_super) {
-  __extends(ImageSourceEvent, _super);
-  /**
-  * @param {string} type Type.
-  * @param {import("../Image.js").default} image The image.
-  */
-  function ImageSourceEvent(type, image) {
-    var _this = _super.call(this, type) || this;
-    /**
-    * The image related to the event.
-    * @type {import("../Image.js").default}
-    * @api
-    */
-    _this.image = image;
-    return _this;
-  }
-  return ImageSourceEvent;
-})(_eventsEventJsDefault.default);
-/**
-* @typedef {Object} Options
-* @property {import("./Source.js").AttributionLike} [attributions]
-* @property {boolean} [imageSmoothing=true] Enable image smoothing.
-* @property {import("../proj.js").ProjectionLike} [projection]
-* @property {Array<number>} [resolutions]
-* @property {import("./State.js").default} [state]
-*/
-/**
-* @classdesc
-* Abstract base class; normally only used for creating subclasses and not
-* instantiated in apps.
-* Base class for sources providing a single image.
-* @abstract
-* @fires module:ol/source/Image.ImageSourceEvent
-* @api
-*/
-var ImageSource = /** @class*/
-(function (_super) {
-  __extends(ImageSource, _super);
-  /**
-  * @param {Options} options Single image source options.
-  */
-  function ImageSource(options) {
-    var _this = _super.call(this, {
-      attributions: options.attributions,
-      projection: options.projection,
-      state: options.state
-    }) || this;
-    /**
-    * @private
-    * @type {Array<number>}
-    */
-    _this.resolutions_ = options.resolutions !== undefined ? options.resolutions : null;
-    /**
-    * @private
-    * @type {import("../reproj/Image.js").default}
-    */
-    _this.reprojectedImage_ = null;
-    /**
-    * @private
-    * @type {number}
-    */
-    _this.reprojectedRevision_ = 0;
-    /**
-    * @private
-    * @type {object|undefined}
-    */
-    _this.contextOptions_ = options.imageSmoothing === false ? _commonJs.IMAGE_SMOOTHING_DISABLED : undefined;
-    return _this;
-  }
-  /**
-  * @return {Array<number>} Resolutions.
-  */
-  ImageSource.prototype.getResolutions = function () {
-    return this.resolutions_;
-  };
-  /**
-  * @return {Object|undefined} Context options.
-  */
-  ImageSource.prototype.getContextOptions = function () {
-    return this.contextOptions_;
-  };
-  /**
-  * @protected
-  * @param {number} resolution Resolution.
-  * @return {number} Resolution.
-  */
-  ImageSource.prototype.findNearestResolution = function (resolution) {
-    if (this.resolutions_) {
-      var idx = _arrayJs.linearFindNearest(this.resolutions_, resolution, 0);
-      resolution = this.resolutions_[idx];
-    }
-    return resolution;
-  };
-  /**
-  * @param {import("../extent.js").Extent} extent Extent.
-  * @param {number} resolution Resolution.
-  * @param {number} pixelRatio Pixel ratio.
-  * @param {import("../proj/Projection.js").default} projection Projection.
-  * @return {import("../ImageBase.js").default} Single image.
-  */
-  ImageSource.prototype.getImage = function (extent, resolution, pixelRatio, projection) {
-    var sourceProjection = this.getProjection();
-    if (!_reprojCommonJs.ENABLE_RASTER_REPROJECTION || !sourceProjection || !projection || _projJs.equivalent(sourceProjection, projection)) {
-      if (sourceProjection) {
-        projection = sourceProjection;
-      }
-      return this.getImageInternal(extent, resolution, pixelRatio, projection);
-    } else {
-      if (this.reprojectedImage_) {
-        if (this.reprojectedRevision_ == this.getRevision() && _projJs.equivalent(this.reprojectedImage_.getProjection(), projection) && this.reprojectedImage_.getResolution() == resolution && _extentJs.equals(this.reprojectedImage_.getExtent(), extent)) {
-          return this.reprojectedImage_;
-        }
-        this.reprojectedImage_.dispose();
-        this.reprojectedImage_ = null;
-      }
-      this.reprojectedImage_ = new _reprojImageJsDefault.default(sourceProjection, projection, extent, resolution, pixelRatio, (function (extent, resolution, pixelRatio) {
-        return this.getImageInternal(extent, resolution, pixelRatio, sourceProjection);
-      }).bind(this), this.contextOptions_);
-      this.reprojectedRevision_ = this.getRevision();
-      return this.reprojectedImage_;
-    }
-  };
-  /**
-  * @abstract
-  * @param {import("../extent.js").Extent} extent Extent.
-  * @param {number} resolution Resolution.
-  * @param {number} pixelRatio Pixel ratio.
-  * @param {import("../proj/Projection.js").default} projection Projection.
-  * @return {import("../ImageBase.js").default} Single image.
-  * @protected
-  */
-  ImageSource.prototype.getImageInternal = function (extent, resolution, pixelRatio, projection) {
-    return _utilJs.abstract();
-  };
-  /**
-  * Handle image change events.
-  * @param {import("../events/Event.js").default} event Event.
-  * @protected
-  */
-  ImageSource.prototype.handleImageChange = function (event) {
-    var image = /** @type {import("../Image.js").default}*/
-    event.target;
-    switch (image.getState()) {
-      case _ImageStateJsDefault.default.LOADING:
-        this.loading = true;
-        this.dispatchEvent(new ImageSourceEvent(ImageSourceEventType.IMAGELOADSTART, image));
-        break;
-      case _ImageStateJsDefault.default.LOADED:
-        this.loading = false;
-        this.dispatchEvent(new ImageSourceEvent(ImageSourceEventType.IMAGELOADEND, image));
-        break;
-      case _ImageStateJsDefault.default.ERROR:
-        this.loading = false;
-        this.dispatchEvent(new ImageSourceEvent(ImageSourceEventType.IMAGELOADERROR, image));
-        break;
-      default:
-    }
-  };
-  return ImageSource;
-})(_SourceJsDefault.default);
-function defaultImageLoadFunction(image, src) {
-  /** @type {HTMLImageElement|HTMLVideoElement}*/
-  image.getImage().src = src;
-}
-exports.default = ImageSource;
-
-},{"../events/Event.js":"eICPf","../ImageState.js":"2ZVds","../reproj/Image.js":"1gLWm","./Source.js":"6n6aD","../reproj/common.js":"5AFC2","./common.js":"1xpRq","../util.js":"4k52K","../extent.js":"5PMSh","../proj.js":"4Wdsb","../array.js":"Og3xJ","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"1gLWm":[function(require,module,exports) {
-var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
-_parcelHelpers.defineInteropFlag(exports);
-var _commonJs = require('./common.js');
-var _eventsEventTypeJs = require('../events/EventType.js');
-var _eventsEventTypeJsDefault = _parcelHelpers.interopDefault(_eventsEventTypeJs);
-var _ImageBaseJs = require('../ImageBase.js');
-var _ImageBaseJsDefault = _parcelHelpers.interopDefault(_ImageBaseJs);
-var _ImageStateJs = require('../ImageState.js');
-var _ImageStateJsDefault = _parcelHelpers.interopDefault(_ImageStateJs);
-var _TriangulationJs = require('./Triangulation.js');
-var _TriangulationJsDefault = _parcelHelpers.interopDefault(_TriangulationJs);
-var _reprojJs = require('../reproj.js');
-var _extentJs = require('../extent.js');
-var _eventsJs = require('../events.js');
-var __extends = undefined && undefined.__extends || (function () {
-  var extendStatics = function (d, b) {
-    extendStatics = Object.setPrototypeOf || ({
-      __proto__: []
-    }) instanceof Array && (function (d, b) {
-      d.__proto__ = b;
-    }) || (function (d, b) {
-      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-    });
-    return extendStatics(d, b);
-  };
-  return function (d, b) {
-    extendStatics(d, b);
-    function __() {
-      this.constructor = d;
-    }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-})();
-/**
-* @typedef {function(import("../extent.js").Extent, number, number) : import("../ImageBase.js").default} FunctionType
-*/
-/**
-* @classdesc
-* Class encapsulating single reprojected image.
-* See {@link module:ol/source/Image~ImageSource}.
-*/
-var ReprojImage = /** @class*/
-(function (_super) {
-  __extends(ReprojImage, _super);
-  /**
-  * @param {import("../proj/Projection.js").default} sourceProj Source projection (of the data).
-  * @param {import("../proj/Projection.js").default} targetProj Target projection.
-  * @param {import("../extent.js").Extent} targetExtent Target extent.
-  * @param {number} targetResolution Target resolution.
-  * @param {number} pixelRatio Pixel ratio.
-  * @param {FunctionType} getImageFunction
-  *     Function returning source images (extent, resolution, pixelRatio).
-  * @param {object=} opt_contextOptions Properties to set on the canvas context.
-  */
-  function ReprojImage(sourceProj, targetProj, targetExtent, targetResolution, pixelRatio, getImageFunction, opt_contextOptions) {
-    var _this = this;
-    var maxSourceExtent = sourceProj.getExtent();
-    var maxTargetExtent = targetProj.getExtent();
-    var limitedTargetExtent = maxTargetExtent ? _extentJs.getIntersection(targetExtent, maxTargetExtent) : targetExtent;
-    var targetCenter = _extentJs.getCenter(limitedTargetExtent);
-    var sourceResolution = _reprojJs.calculateSourceResolution(sourceProj, targetProj, targetCenter, targetResolution);
-    var errorThresholdInPixels = _commonJs.ERROR_THRESHOLD;
-    var triangulation = new _TriangulationJsDefault.default(sourceProj, targetProj, limitedTargetExtent, maxSourceExtent, sourceResolution * errorThresholdInPixels, targetResolution);
-    var sourceExtent = triangulation.calculateSourceExtent();
-    var sourceImage = getImageFunction(sourceExtent, sourceResolution, pixelRatio);
-    var state = sourceImage ? _ImageStateJsDefault.default.IDLE : _ImageStateJsDefault.default.EMPTY;
-    var sourcePixelRatio = sourceImage ? sourceImage.getPixelRatio() : 1;
-    _this = _super.call(this, targetExtent, targetResolution, sourcePixelRatio, state) || this;
-    /**
-    * @private
-    * @type {import("../proj/Projection.js").default}
-    */
-    _this.targetProj_ = targetProj;
-    /**
-    * @private
-    * @type {import("../extent.js").Extent}
-    */
-    _this.maxSourceExtent_ = maxSourceExtent;
-    /**
-    * @private
-    * @type {!import("./Triangulation.js").default}
-    */
-    _this.triangulation_ = triangulation;
-    /**
-    * @private
-    * @type {number}
-    */
-    _this.targetResolution_ = targetResolution;
-    /**
-    * @private
-    * @type {import("../extent.js").Extent}
-    */
-    _this.targetExtent_ = targetExtent;
-    /**
-    * @private
-    * @type {import("../ImageBase.js").default}
-    */
-    _this.sourceImage_ = sourceImage;
-    /**
-    * @private
-    * @type {number}
-    */
-    _this.sourcePixelRatio_ = sourcePixelRatio;
-    /**
-    * @private
-    * @type {object}
-    */
-    _this.contextOptions_ = opt_contextOptions;
-    /**
-    * @private
-    * @type {HTMLCanvasElement}
-    */
-    _this.canvas_ = null;
-    /**
-    * @private
-    * @type {?import("../events.js").EventsKey}
-    */
-    _this.sourceListenerKey_ = null;
-    return _this;
-  }
-  /**
-  * Clean up.
-  */
-  ReprojImage.prototype.disposeInternal = function () {
-    if (this.state == _ImageStateJsDefault.default.LOADING) {
-      this.unlistenSource_();
-    }
-    _super.prototype.disposeInternal.call(this);
-  };
-  /**
-  * @return {HTMLCanvasElement} Image.
-  */
-  ReprojImage.prototype.getImage = function () {
-    return this.canvas_;
-  };
-  /**
-  * @return {import("../proj/Projection.js").default} Projection.
-  */
-  ReprojImage.prototype.getProjection = function () {
-    return this.targetProj_;
-  };
-  /**
-  * @private
-  */
-  ReprojImage.prototype.reproject_ = function () {
-    var sourceState = this.sourceImage_.getState();
-    if (sourceState == _ImageStateJsDefault.default.LOADED) {
-      var width = _extentJs.getWidth(this.targetExtent_) / this.targetResolution_;
-      var height = _extentJs.getHeight(this.targetExtent_) / this.targetResolution_;
-      this.canvas_ = _reprojJs.render(width, height, this.sourcePixelRatio_, this.sourceImage_.getResolution(), this.maxSourceExtent_, this.targetResolution_, this.targetExtent_, this.triangulation_, [{
-        extent: this.sourceImage_.getExtent(),
-        image: this.sourceImage_.getImage()
-      }], 0, undefined, this.contextOptions_);
-    }
-    this.state = sourceState;
-    this.changed();
-  };
-  /**
-  * Load not yet loaded URI.
-  */
-  ReprojImage.prototype.load = function () {
-    if (this.state == _ImageStateJsDefault.default.IDLE) {
-      this.state = _ImageStateJsDefault.default.LOADING;
-      this.changed();
-      var sourceState = this.sourceImage_.getState();
-      if (sourceState == _ImageStateJsDefault.default.LOADED || sourceState == _ImageStateJsDefault.default.ERROR) {
-        this.reproject_();
-      } else {
-        this.sourceListenerKey_ = _eventsJs.listen(this.sourceImage_, _eventsEventTypeJsDefault.default.CHANGE, function (e) {
-          var sourceState = this.sourceImage_.getState();
-          if (sourceState == _ImageStateJsDefault.default.LOADED || sourceState == _ImageStateJsDefault.default.ERROR) {
-            this.unlistenSource_();
-            this.reproject_();
-          }
-        }, this);
-        this.sourceImage_.load();
-      }
-    }
-  };
-  /**
-  * @private
-  */
-  ReprojImage.prototype.unlistenSource_ = function () {
-    _eventsJs.unlistenByKey(/** @type {!import("../events.js").EventsKey}*/
-    this.sourceListenerKey_);
-    this.sourceListenerKey_ = null;
-  };
-  return ReprojImage;
-})(_ImageBaseJsDefault.default);
-exports.default = ReprojImage;
-
-},{"./common.js":"5AFC2","../events/EventType.js":"1VnyO","../ImageBase.js":"4jbDo","../ImageState.js":"2ZVds","./Triangulation.js":"4PEUW","../reproj.js":"6Jbh4","../extent.js":"5PMSh","../events.js":"16C0R","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"4P7Eo":[function(require,module,exports) {
-var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
-_parcelHelpers.defineInteropFlag(exports);
-exports.default = {
-  /**
-  * HiDPI support for [Carmenta Server](https://www.carmenta.com/en/products/carmenta-server)
-  * @api
-  */
-  CARMENTA_SERVER: 'carmentaserver',
-  /**
-  * HiDPI support for [GeoServer](https://geoserver.org/)
-  * @api
-  */
-  GEOSERVER: 'geoserver',
-  /**
-  * HiDPI support for [MapServer](https://mapserver.org/)
-  * @api
-  */
-  MAPSERVER: 'mapserver',
-  /**
-  * HiDPI support for [QGIS](https://qgis.org/)
-  * @api
-  */
-  QGIS: 'qgis'
-};
-
-},{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"2CPqV":[function(require,module,exports) {
-var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
-_parcelHelpers.defineInteropFlag(exports);
-_parcelHelpers.export(exports, "appendParams", function () {
-  return appendParams;
-});
-function appendParams(uri, params) {
-  var keyParams = [];
-  // Skip any null or undefined parameter values
-  Object.keys(params).forEach(function (k) {
-    if (params[k] !== null && params[k] !== undefined) {
-      keyParams.push(k + '=' + encodeURIComponent(params[k]));
-    }
-  });
-  var qs = keyParams.join('&');
-  // remove any trailing ? or &
-  uri = uri.replace(/[?&]$/, '');
-  // append ? or & depending on whether uri has existing parameters
-  uri = uri.indexOf('?') === -1 ? uri + '?' : uri + '&';
-  return uri + qs;
-}
-
-},{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}]},["1sDb8","2X3X1"], "2X3X1", "parcelRequirefdfe")
+},{"../color.js":"6kTVy","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}]},["1sDb8","2X3X1"], "2X3X1", "parcelRequirefdfe")
 
 //# sourceMappingURL=index.23420cfa.js.map
