@@ -28,6 +28,11 @@ FOSSGIS 2021 - Der Weg zur Modernen Basiskarte. Herausforderungen und Potentiale
 ---
 #### Anforderungen an Basiskarten
 
+- maßstabsübergreifendes Kartenwerk als Referenz und Orientierungshilfe
+- unaufdringliches, modernes und frisches Kartenbild
+- Farbwahl und Kontrast lässt Raum für thematische Inhalte
+- für Bürger und auch Fachanwender
+- zur Verwendung im städtischen Geoportal und anderen GIS-Systemen
 
 <footer>
   <div class="footer">
@@ -90,6 +95,16 @@ FOSSGIS 2021 - Der Weg zur Modernen Basiskarte. Herausforderungen und Potentiale
 </footer>
 
 ---
+<section data-background-iframe="ol1.html" data-background-interactive>
+</section>
+
+<footer>
+  <div class="footer">
+FOSSGIS 2021 - Der Weg zur Modernen Basiskarte. Herausforderungen und Potentiale
+  </div>
+</footer>
+
+---
 #### Technische Umsetzung
 - Datenformat
 - Vektortiles vs. Rastertiles  
@@ -114,8 +129,25 @@ FOSSGIS 2021 - Der Weg zur Modernen Basiskarte. Herausforderungen und Potentiale
 </footer>
 
 ---
-<section data-background-iframe="ol1.html" data-background-interactive>
-</section>
+#### Anforderungen an die Ausgangsdaten
+- in den kleinen Maßstäben die topografischen Zusammenhänge darstellen und den Eindruck der Bebauungsstruktur vermitteln  
+- in den großen Maßstäben lagetreue Darstellung der Einzelgebäude aus dem Liegenschaftskataster  
+- Suche nach einem Straßennetz, dass beide Enden dieser Skala bedienen kann --> _OSM:highway_  
+
+<footer>
+  <div class="footer">
+FOSSGIS 2021 - Der Weg zur Modernen Basiskarte. Herausforderungen und Potentiale
+  </div>
+</footer>
+
+---
+#### Anforderungen an die Ausgangsdaten
+- OSM im kleinen Maßstab: Hauptverkehrsstraßen auswählen
+OSM im großen Maßstab: viele Details, Einbahnstraßen  
+- amtliche Inhalte die in der Karte auftauchen müssen: z.B. Hausnummern  
+- Datenaktualität  Aktualisierungszyklus der Karte  
+- Topologie: Ebenenreihenfolge Straßennetz  
+- Priorisierung bei Labeling-Konflikten  
 
 <footer>
   <div class="footer">
@@ -137,8 +169,9 @@ FOSSGIS 2021 - Der Weg zur Modernen Basiskarte. Herausforderungen und Potentiale
 
 ---
 #### Potentiale
--- Vectortiles  
--- Geostyler
+-- Vectortiles (kurz: Wichtigsten Vorteile nennen)  
+-- Geostyler (Konvertieren der Stilregeln, Bsp: Orka-MV (carto -> QGIS qml))  
+-- GeoSynchronizer  
 
 <footer>
   <div class="footer">
@@ -149,12 +182,16 @@ FOSSGIS 2021 - Der Weg zur Modernen Basiskarte. Herausforderungen und Potentiale
 ---
 #### Fazit
 - Zusammenspiel aus OSM und amtlichen Daten ist möglich und funktioniert gut  
-- Zusammenspiel der OpenSource-Tools funktioniert gut  
+- Zusammenspiel der etablierten OpenSource-Tools funktioniert gut  
+(GeoServer, SLD, Geopackage, Rastertiles)  
 
 <footer>
   <div class="footer">
 FOSSGIS 2021 - Der Weg zur Modernen Basiskarte. Herausforderungen und Potentiale
   </div>
 </footer>
+
+---
+Vielen Dank für das Interesse!
 
 
