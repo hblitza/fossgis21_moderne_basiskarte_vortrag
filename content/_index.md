@@ -3,14 +3,14 @@ outputs = ["Reveal"]
 title = "Basiskarte"
 
 +++
-{{< slide class="title-slide" background="#e6f598" transition-speed="slow" >}}
+{{< slide class="title-slide" background="#fee08b" >}}
 ### Der Weg zur modernen Basiskarte
 #### Potenziale und Herausforderungen von Kartographie und Datengrundlage  
 
  <font size="4"> Christian Fremd (Stadtmessungsamt Stuttgart), Hannes Blitza (terrestris) </font>
 
 ---
-{{< slide background="#66c2a5" transition-speed="slow" >}}
+{{< slide transition-speed="slow" >}}
 #### Gliederung
 - Anforderung an eine Basemap
 - Technische Umsetzung
@@ -18,12 +18,6 @@ title = "Basiskarte"
 - Kartenbeispiele
 - Potenziale
 - Fazit und Ausblick
-
-<footer>
-  <div class="footer">
-FOSSGIS 2021 - Der Weg zur Modernen Basiskarte. Herausforderungen und Potentiale
-  </div>
-</footer>
 
 ---
 #### Anforderungen an Basiskarten
@@ -33,12 +27,6 @@ FOSSGIS 2021 - Der Weg zur Modernen Basiskarte. Herausforderungen und Potentiale
 - Farbwahl und Kontrast lässt Raum für thematische Inhalte
 - für Bürger und auch Fachanwender
 - zur Verwendung im städtischen Geoportal und anderen GIS-Systemen
-
-<footer>
-  <div class="footer">
-FOSSGIS 2021 - Der Weg zur Modernen Basiskarte. Herausforderungen und Potentiale
-  </div>
-</footer>
 
 ---
 #### Basemaps auf der FOSSGIS
@@ -88,57 +76,34 @@ FOSSGIS 2021 - Der Weg zur Modernen Basiskarte. Herausforderungen und Potentiale
 </tbody>
 </table>
 
-<footer>
-  <div class="footer">
-FOSSGIS 2021 - Der Weg zur Modernen Basiskarte. Herausforderungen und Potentiale
-  </div>
-</footer>
-
 ---
 <section data-background-iframe="ol1.html" data-background-interactive>
 </section>
 
-<footer>
-  <div class="footer">
-FOSSGIS 2021 - Der Weg zur Modernen Basiskarte. Herausforderungen und Potentiale
-  </div>
-</footer>
+---
+<section data-background-iframe="ol1-1.html" data-background-interactive>
+</section>
 
 ---
 #### Technische Umsetzung
-- Datenformat
+<img src="img/gpkg.png" width="116px" class="plain" />  
+{{% fragment %}} <img src="img/gs.svg" width="400px" class="plain" /> {{% /fragment %}}  
+{{% fragment %}} <img src="img/geostyler-logo-full.svg" width="400px" class="plain" /> {{% /fragment %}}
+<!-- - Datenformat
 - Vektortiles vs. Rastertiles  
 - Kartenrenderer  
 - Stilformat
-- Ausgabeformat
-
-<footer>
-  <div class="footer">
-FOSSGIS 2021 - Der Weg zur Modernen Basiskarte. Herausforderungen und Potentiale
-  </div>
-</footer>
+- Ausgabeformat -->
 
 ---
 #### Workflow
-<img src="img/technische_umsetzung.png" width="60%" class="img" />
-
-<footer>
-  <div class="footer">
-FOSSGIS 2021 - Der Weg zur Modernen Basiskarte. Herausforderungen und Potentiale
-  </div>
-</footer>
+<img src="img/technische_umsetzung.svg" width="50%" class="plain" />
 
 ---
 #### Anforderungen an die Ausgangsdaten
 - in den kleinen Maßstäben die topografischen Zusammenhänge darstellen und den Eindruck der Bebauungsstruktur vermitteln  
 - in den großen Maßstäben lagetreue Darstellung der Einzelgebäude aus dem Liegenschaftskataster  
 - Suche nach einem Straßennetz, dass beide Enden dieser Skala bedienen kann --> _OSM:highway_  
-
-<footer>
-  <div class="footer">
-FOSSGIS 2021 - Der Weg zur Modernen Basiskarte. Herausforderungen und Potentiale
-  </div>
-</footer>
 
 ---
 #### Anforderungen an die Ausgangsdaten
@@ -149,49 +114,24 @@ OSM im großen Maßstab: viele Details, Einbahnstraßen
 - Topologie: Ebenenreihenfolge Straßennetz  
 - Priorisierung bei Labeling-Konflikten  
 
-<footer>
-  <div class="footer">
-FOSSGIS 2021 - Der Weg zur Modernen Basiskarte. Herausforderungen und Potentiale
-  </div>
-</footer>
-
 ---
 
 <section data-background-iframe="ol2.html" data-background-interactive>
 </section>
 
-<footer>
-  <div class="footer">
-FOSSGIS 2021 - Der Weg zur Modernen Basiskarte. Herausforderungen und Potentiale
-  </div>
-</footer>
-
-
 ---
-#### Potentiale
+#### Potenziale
 -- Vectortiles (kurz: Wichtigsten Vorteile nennen)  
 -- Geostyler (Konvertieren der Stilregeln, Bsp: Orka-MV (carto -> QGIS qml))  
--- GeoSynchronizer  
-
-<footer>
-  <div class="footer">
-FOSSGIS 2021 - Der Weg zur Modernen Basiskarte. Herausforderungen und Potentiale
-  </div>
-</footer>
+-- GeoSynchronicer  
 
 ---
 #### Fazit
-- Zusammenspiel aus OSM und amtlichen Daten ist möglich und funktioniert gut  
-- Zusammenspiel der etablierten OpenSource-Tools funktioniert gut  
-(GeoServer, SLD, Geopackage, Rastertiles)  
+- Reibungsloses Zusammenspiel der etablierten FOSS-Tools und OGC-Standards
 
-<footer>
-  <div class="footer">
-FOSSGIS 2021 - Der Weg zur Modernen Basiskarte. Herausforderungen und Potentiale
-  </div>
-</footer>
+- Sowohl unter rechtlichen Aspekten (ODbL ermöglicht viele Freiheiten) als auch unter technischen Aspekten funktioniert das Zusammenspiel gut (hohe Flexibilität der OSM-Datenstruktur)
+
+- Herausforderungen liegen in der maßsstabsübergreifenden Darstellung, jedoch durch hohe Flexibilität der Datengrundlage kompensierbar
 
 ---
 Vielen Dank für das Interesse!
-
-

@@ -1,7 +1,3 @@
-.img {
-    border: 0 !important;
-}
-
 .slides {
     transform: unset !important;
     width: 100% !important;
@@ -18,11 +14,42 @@ h4 {
 }
 
 .footer {
-    font-size: small;
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
+    position: fixed;
+    left: 0;
+    top: auto;
+    bottom: 0;
+    width: 100%;
+    height: 35px;
+    background-color: #3288bd;
+    display: flex;
 }
+.first {
+    background-color: #f46d43;
+    flex: 1;
+}
+.footer-text {
+    flex: 40;
+    font-size: small;
+    text-align: left;
+    padding-left: 10px;
+    margin: auto;
+    color: white;
+}
+
+#footer > div:nth-of-type(1) { 
+    background-color: #d53e4f;
+    flex: 1;
+ }
+
+ #footer > div:nth-of-type(2) { 
+    background-color: #fc8d59;
+    flex: 1.5;
+ }
+
+ #footer > div:nth-of-type(3) { 
+    background-color: #fee08b;
+    flex: 2;
+ }
 
 .title-slide h3 {
     padding-top: 25vh;

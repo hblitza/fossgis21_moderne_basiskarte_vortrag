@@ -15,5 +15,6 @@ isHTML = true
 [params.reveal_hugo]
 theme = "white"
 slide_number = true
-transition = "slide"
+transition = "none"
+transition-speed = "slow"
 custom_css = "css/custom.css"
