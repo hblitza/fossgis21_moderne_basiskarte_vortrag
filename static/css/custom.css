@@ -1,6 +1,6 @@
 .slides {
     transform: unset !important;
-    width: 100% !important;
+    /* width: 100% !important; */
     height: 100% !important;
 }
 
@@ -53,4 +53,33 @@ h4 {
 
 .title-slide h3 {
     padding-top: 25vh;
+}
+
+.twoSides {
+    display:flex;
+    margin: 10vh auto auto auto;
+    text-align: left;
+}
+
+.twoSides > div:first-of-type {
+    padding-right: 50px;
+    font-size: smaller;
+    flex-wrap: nowrap;
+    flex: 1;
+}
+
+.twoSides div:nth-child(2) {
+    flex: 2;
+}
+
+.iconLine {
+    display: flex;
+}
+
+.iconLine i {
+    padding-right: 10px;
+}
+
+.terrestris h4 {
+    text-transform: none;
 }

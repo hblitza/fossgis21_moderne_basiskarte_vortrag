@@ -20,6 +20,48 @@ title = "Basiskarte"
 - Fazit und Ausblick
 
 ---
+{{< slide class="terrestris" >}}
+#### terrestris
+<div class="twoSides">
+  <div>
+    <img src="img/terrestris-logo-normal.svg" width="250px" class="plain" /><br/>
+    <div class="iconLine">
+      <i class="fa fa-envelope fa-sm"></i>info@terrestris.de
+    </div>
+    <div class="iconLine">
+      <i class="fa fa-github fa-sm"></i><a href="https://www.github.com/terrestris">@terrestris</a>
+    </div>
+    <div class="iconLine">
+      <i class="fa fa-twitter fa-sm"></i><a href="https://twitter.com/terrestrisde">@terrestrisde</a>
+    </div>
+  </div>
+  <div>
+    - OpenSource GIS aus Bonn  <br/>
+    - Entwicklung, Projekte & Support/Schulung  <br/>
+    - Beratung, Planung, Implementierung & Wartung  <br/>
+    - u.a. GeoServer, OL, MapProxy, react-geo, QGIS
+
+</div>
+
+---
+#### Hannes Blitza
+<div class="twoSides">
+  <div>
+    <img src="img/hbl_2019.jpg" width="270px" class="plain" /><br/>
+    <div class="iconLine">
+      <i class="fa fa-envelope fa-sm"></i>blitza@terrestris.de
+    </div>
+    <div class="iconLine">
+      <i class="fa fa-github fa-sm"></i><a href="https://www.github.com/hblitza">@hblitza</a>
+    </div>
+  </div>
+  <div>
+    - MSc. Geographie<br/>
+    - Mitarbeiter bei terrestris <br/>
+    - Front-End Development & Training
+</div>
+
+---
 #### Anforderungen an Basiskarten
 
 - maßstabsübergreifendes Kartenwerk als Referenz und Orientierungshilfe
