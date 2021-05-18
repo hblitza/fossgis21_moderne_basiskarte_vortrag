@@ -7,7 +7,10 @@ title = "Basiskarte"
 ### Der Weg zur modernen Basiskarte
 #### Potenziale und Herausforderungen von Kartographie und Datengrundlage  
 
- <font size="4"> Christian Fremd (Stadtmessungsamt Stuttgart), Hannes Blitza (terrestris) </font>
+ <font size="4">Hannes Blitza (terrestris), Christian Fremd (Stadtmessungsamt Stuttgart)</font>
+<div>
+  <img src="img/fossgis_logo.png" width="20%" class="plain" />
+</div>
 
 ---
 {{< slide transition-speed="slow" >}}
@@ -47,7 +50,7 @@ title = "Basiskarte"
 #### Hannes Blitza
 <div class="twoSides">
   <div>
-    <img src="img/hbl_2019.jpg" width="270px" class="plain" /><br/>
+    <img src="img/hbl.jpg" class="plain" /><br/>
     <div class="iconLine">
       <i class="fa fa-envelope fa-sm"></i>blitza@terrestris.de
     </div>
@@ -58,8 +61,26 @@ title = "Basiskarte"
   <div>
     - MSc. Geographie<br/>
     - Mitarbeiter bei terrestris <br/>
-    - Front-End Development & Training
+    - Front-End Development & Training <br/>
+    - MA-Thesis: <em>Agentenbasierte Modellierung von Radverkehr (Open Data gestützter Ansatz)</em>
 </div>
+
+---
+#### Christian Fremd
+<div class="twoSides">
+  <div>
+    <img src="img/cfremd.jpg" height="200px" class="plain" /><br/>
+    <div class="iconLine">
+      <i class="fa fa-envelope fa-sm"></i>christian.fremd@gmail.com
+    </div>
+  </div>
+  <div>
+    - Dipl.-Ing. (FH) Kartographie und Medientechnik<br/>
+    - Mitarbeiter beim Stadtmessungsamt Stuttgart <br/>
+    - Kartographie und GIS-Analysen
+  </div>
+</div>
+    <img src="img/LGL-StadtS-OSM-Logos.png" width="80%" class="plain" />
 
 ---
 #### Anforderungen an Basiskarten
@@ -145,16 +166,18 @@ title = "Basiskarte"
 #### Anforderungen an die Ausgangsdaten
 - in den kleinen Maßstäben die topografischen Zusammenhänge darstellen und den Eindruck der Bebauungsstruktur vermitteln  
 - in den großen Maßstäben lagetreue Darstellung der Einzelgebäude aus dem Liegenschaftskataster  
-- Suche nach einem Straßennetz, dass beide Enden dieser Skala bedienen kann --> _OSM:highway_  
+- Datenaktualität Aktualisierungszyklus der Karte
 
 ---
 #### Anforderungen an die Ausgangsdaten
-- OSM im kleinen Maßstab: Hauptverkehrsstraßen auswählen
-OSM im großen Maßstab: viele Details, Einbahnstraßen  
-- amtliche Inhalte die in der Karte auftauchen müssen: z.B. Hausnummern  
-- Datenaktualität  Aktualisierungszyklus der Karte  
-- Topologie: Ebenenreihenfolge Straßennetz  
-- Priorisierung bei Labeling-Konflikten  
+- Als Datenquellen stehen uns zur Verfügung:<br />
+  - ATKIS
+  - ALKIS
+  - OSM
+- amtliche Inhalte
+- OSM-Straßennetz
+- Topologie
+- Labeling
 
 ---
 
@@ -169,7 +192,7 @@ OSM im großen Maßstab: viele Details, Einbahnstraßen
 
 ---
 #### Fazit
-- Reibungsloses Zusammenspiel der etablierten FOSS-Tools und OGC-Standards
+- Reibungslose Kombination der etablierten FOSS-Tools und OGC-Standards
 
 - Sowohl unter rechtlichen Aspekten (ODbL ermöglicht viele Freiheiten) als auch unter technischen Aspekten funktioniert das Zusammenspiel gut (hohe Flexibilität der OSM-Datenstruktur)
 
