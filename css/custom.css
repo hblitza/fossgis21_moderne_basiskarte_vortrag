@@ -1,7 +1,12 @@
 .slides {
+    font-size: smaller !important;
     transform: unset !important;
     /* width: 100% !important; */
     height: 100% !important;
+}
+
+img {
+    background-color: unset !important;
 }
 
 .present {
@@ -52,7 +57,7 @@ h4 {
  }
 
 .title-slide h3 {
-    padding-top: 25vh;
+    padding-top: 15vh;
 }
 
 .twoSides {
