@@ -3,6 +3,11 @@
     transform: unset !important;
     /* width: 100% !important; */
     height: 100% !important;
+    line-height: 200%;
+}
+
+.slides li {
+    line-height: 200%;
 }
 
 img {
@@ -64,6 +69,7 @@ h4 {
     display:flex;
     margin: 10vh auto auto auto;
     text-align: left;
+    line-height: 150%;
 }
 
 .twoSides > div:first-of-type {
@@ -87,4 +93,16 @@ h4 {
 
 .terrestris h4 {
     text-transform: none;
+}
+
+.data_logo {
+    display: flex;
+}
+
+.data_logo > div {
+    flex: 1;
+}
+
+.normal-lineheight {
+    line-height: normal !important;
 }
