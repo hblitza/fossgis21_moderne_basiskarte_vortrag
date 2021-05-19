@@ -140,9 +140,9 @@
       this[globalName] = mainExports;
     }
   }
-})({"1sDb8":[function(require,module,exports) {
+})({"4DDL1":[function(require,module,exports) {
 var HMR_HOST = null;
-var HMR_PORT = 1234;
+var HMR_PORT = 36853;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "d751713988987e9331980363e24189ce";
 module.bundle.HMR_BUNDLE_ID = "ba76236dc15f498c73ded0e523420cfa";
@@ -450,63 +450,53 @@ var _olControl = require('ol/control');
 var _olSourceImageWMS = require('ol/source/ImageWMS');
 var _olSourceImageWMSDefault = _parcelHelpers.interopDefault(_olSourceImageWMS);
 var _olLayer = require('ol/layer');
+var _olLayerTile = require('ol/layer/Tile');
+var _olLayerTileDefault = _parcelHelpers.interopDefault(_olLayerTile);
+var _olSourceOSM = require('ol/source/OSM');
+var _olSourceOSMDefault = _parcelHelpers.interopDefault(_olSourceOSM);
 var _olView = require('ol/View');
 var _olViewDefault = _parcelHelpers.interopDefault(_olView);
-var munich = new _olLayer.Image({
+var stuttgart = new _olLayer.Image({
   source: new _olSourceImageWMSDefault.default({
-    url: 'https://geoportal.muenchen.de/geoserver/gsm/wms',
+    url: 'https://geoserver.stuttgart.de/geoserver/Base_Test_Kontraste/wms',
     params: {
-      'LAYERS': 'g_stadtkarte_gesamt'
+      'LAYERS': 'Base_Test_Kontraste:Basemap_LIGHT_EPSG25832'
     },
-    ratio: 1,
-    attributions: '© <a href="https://www.muenchen.de/rathaus/Stadtverwaltung/Kommunalreferat/geodatenservice/geobasisdaten.html" >GeodatenService München</a> und <a href="http://www.openstreetmap.org/#map=15/52.0189/8.5338" target="_blank">OpenStreetMap</a> (<a href="http://opendatacommons.org/licenses/odbl/" target="_blank">ODbL)</a>'
+    ratio: 1
   })
 });
-var bielefeld = new _olLayer.Image({
-  source: new _olSourceImageWMSDefault.default({
-    url: 'http://www.bielefeld01.de/md/WMS/bielefeld_karte_farbe/02',
-    params: {
-      'LAYERS': 'map',
-      'DPI': 300
-    },
-    ratio: 1,
-    attributions: 'bielefeldKARTE Kartenbild © Stadt Bielefeld <a href="https://creativecommons.org/licenses/by/4.0/deed.de" target="_blank">CC BY 4.0</a>), bielefeldKARTE Kartendaten © Stadt Bielefeld und <a href="http://www.openstreetmap.org/#map=15/52.0189/8.5338" target="_blank">OpenStreetMap</a> (<a href="http://opendatacommons.org/licenses/odbl/" target="_blank">ODbL)</a>'
-  })
+var osm = new _olLayerTileDefault.default({
+  source: new _olSourceOSMDefault.default()
 });
-var attributionBielefeld = new _olControl.Attribution({
+var attributionOrka = new _olControl.Attribution({
   collapsed: false,
   collapsible: false,
   className: "ol-attribution"
 });
-var attributionMunich = new _olControl.Attribution({
+var attributionTopPlus = new _olControl.Attribution({
   collapsed: false,
   collapsible: false,
   className: "ol-attribution"
+});
+var view = new _olViewDefault.default({
+  projection: 'EPSG:3857',
+  center: [1022034.727887, 6238240.857495],
+  zoom: 16,
+  constrainResolution: true
 });
 var map1 = new _olMapDefault.default({
-  layers: [munich],
+  layers: [stuttgart],
   target: 'map1',
-  controls: [attributionMunich],
-  view: new _olViewDefault.default({
-    projection: 'EPSG:3857',
-    center: [1290314.365225, 6129638.172245],
-    zoom: 16,
-    constrainResolution: true
-  })
+  view: view
 });
 var map2 = new _olMapDefault.default({
-  layers: [bielefeld],
+  layers: [osm],
   target: 'map2',
-  controls: [attributionBielefeld],
-  view: new _olViewDefault.default({
-    projection: 'EPSG:3857',
-    center: [949710.967186, 6803855.757549],
-    zoom: 16,
-    constrainResolution: true
-  })
+  controls: [attributionTopPlus],
+  view: view
 });
 
-},{"ol/ol.css":"6KKsq","ol/Map":"3a3gj","ol/source/ImageWMS":"73Cns","ol/layer":"4ym9Z","ol/View":"14fkO","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y","ol/control":"37v7M"}],"6KKsq":[function() {},{}],"3a3gj":[function(require,module,exports) {
+},{"ol/ol.css":"6KKsq","ol/Map":"3a3gj","ol/control":"37v7M","ol/source/ImageWMS":"73Cns","ol/layer":"4ym9Z","ol/View":"14fkO","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y","ol/source/OSM":"3hR8N","ol/layer/Tile":"f0iTT"}],"6KKsq":[function() {},{}],"3a3gj":[function(require,module,exports) {
 var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
 _parcelHelpers.defineInteropFlag(exports);
 var _rendererCompositeJs = require('./renderer/Composite.js');
@@ -68514,6 +68504,234 @@ Operators['case'] = {
   }
 };
 
-},{"../color.js":"6kTVy","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}]},["1sDb8","2X3X1"], "2X3X1", "parcelRequirefdfe")
+},{"../color.js":"6kTVy","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"3hR8N":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "ATTRIBUTION", function () {
+  return ATTRIBUTION;
+});
+var _XYZJs = require('./XYZ.js');
+var _XYZJsDefault = _parcelHelpers.interopDefault(_XYZJs);
+/**
+* @module ol/source/OSM
+*/
+var __extends = undefined && undefined.__extends || (function () {
+  var extendStatics = function (d, b) {
+    extendStatics = Object.setPrototypeOf || ({
+      __proto__: []
+    }) instanceof Array && (function (d, b) {
+      d.__proto__ = b;
+    }) || (function (d, b) {
+      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+    });
+    return extendStatics(d, b);
+  };
+  return function (d, b) {
+    extendStatics(d, b);
+    function __() {
+      this.constructor = d;
+    }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+})();
+var ATTRIBUTION = '&#169; ' + '<a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> ' + 'contributors.';
+/**
+* @typedef {Object} Options
+* @property {import("./Source.js").AttributionLike} [attributions] Attributions.
+* @property {number} [cacheSize] Initial tile cache size. Will auto-grow to hold at least the number of tiles in the viewport.
+* @property {null|string} [crossOrigin='anonymous'] The `crossOrigin` attribute for loaded images.  Note that
+* you must provide a `crossOrigin` value if you want to access pixel data with the Canvas renderer.
+* See https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image for more detail.
+* @property {boolean} [imageSmoothing=true] Enable image smoothing.
+* @property {number} [maxZoom=19] Max zoom.
+* @property {boolean} [opaque=true] Whether the layer is opaque.
+* @property {number} [reprojectionErrorThreshold=0.5] Maximum allowed reprojection error (in pixels).
+* Higher values can increase reprojection performance, but decrease precision.
+* @property {import("../Tile.js").LoadFunction} [tileLoadFunction] Optional function to load a tile given a URL. The default is
+* ```js
+* function(imageTile, src) {
+*   imageTile.getImage().src = src;
+* };
+* ```
+* @property {number} [transition=250] Duration of the opacity transition for rendering.
+* To disable the opacity transition, pass `transition: 0`.
+* @property {string} [url='https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png'] URL template.
+* Must include `{x}`, `{y}` or `{-y}`, and `{z}` placeholders.
+* @property {boolean} [wrapX=true] Whether to wrap the world horizontally.
+*/
+/**
+* @classdesc
+* Layer source for the OpenStreetMap tile server.
+* @api
+*/
+var OSM = /** @class*/
+(function (_super) {
+  __extends(OSM, _super);
+  /**
+  * @param {Options=} [opt_options] Open Street Map options.
+  */
+  function OSM(opt_options) {
+    var _this = this;
+    var options = opt_options || ({});
+    var attributions;
+    if (options.attributions !== undefined) {
+      attributions = options.attributions;
+    } else {
+      attributions = [ATTRIBUTION];
+    }
+    var crossOrigin = options.crossOrigin !== undefined ? options.crossOrigin : 'anonymous';
+    var url = options.url !== undefined ? options.url : 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    _this = _super.call(this, {
+      attributions: attributions,
+      attributionsCollapsible: false,
+      cacheSize: options.cacheSize,
+      crossOrigin: crossOrigin,
+      imageSmoothing: options.imageSmoothing,
+      maxZoom: options.maxZoom !== undefined ? options.maxZoom : 19,
+      opaque: options.opaque !== undefined ? options.opaque : true,
+      reprojectionErrorThreshold: options.reprojectionErrorThreshold,
+      tileLoadFunction: options.tileLoadFunction,
+      transition: options.transition,
+      url: url,
+      wrapX: options.wrapX
+    }) || this;
+    return _this;
+  }
+  return OSM;
+})(_XYZJsDefault.default);
+exports.default = OSM;
+
+},{"./XYZ.js":"6NW9w","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"6NW9w":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var _TileImageJs = require('./TileImage.js');
+var _TileImageJsDefault = _parcelHelpers.interopDefault(_TileImageJs);
+var _tilegridJs = require('../tilegrid.js');
+/**
+* @module ol/source/XYZ
+*/
+var __extends = undefined && undefined.__extends || (function () {
+  var extendStatics = function (d, b) {
+    extendStatics = Object.setPrototypeOf || ({
+      __proto__: []
+    }) instanceof Array && (function (d, b) {
+      d.__proto__ = b;
+    }) || (function (d, b) {
+      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+    });
+    return extendStatics(d, b);
+  };
+  return function (d, b) {
+    extendStatics(d, b);
+    function __() {
+      this.constructor = d;
+    }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+})();
+/**
+* @typedef {Object} Options
+* @property {import("./Source.js").AttributionLike} [attributions] Attributions.
+* @property {boolean} [attributionsCollapsible=true] Attributions are collapsible.
+* @property {number} [cacheSize] Initial tile cache size. Will auto-grow to hold at least the number of tiles in the viewport.
+* @property {null|string} [crossOrigin] The `crossOrigin` attribute for loaded images.  Note that
+* you must provide a `crossOrigin` value if you want to access pixel data with the Canvas renderer.
+* See https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_enabled_image for more detail.
+* @property {boolean} [imageSmoothing=true] Enable image smoothing.
+* @property {boolean} [opaque=false] Whether the layer is opaque.
+* @property {import("../proj.js").ProjectionLike} [projection='EPSG:3857'] Projection.
+* @property {number} [reprojectionErrorThreshold=0.5] Maximum allowed reprojection error (in pixels).
+* Higher values can increase reprojection performance, but decrease precision.
+* @property {number} [maxZoom=42] Optional max zoom level. Not used if `tileGrid` is provided.
+* @property {number} [minZoom=0] Optional min zoom level. Not used if `tileGrid` is provided.
+* @property {number} [maxResolution] Optional tile grid resolution at level zero. Not used if `tileGrid` is provided.
+* @property {import("../tilegrid/TileGrid.js").default} [tileGrid] Tile grid.
+* @property {import("../Tile.js").LoadFunction} [tileLoadFunction] Optional function to load a tile given a URL. The default is
+* ```js
+* function(imageTile, src) {
+*   imageTile.getImage().src = src;
+* };
+* ```
+* @property {number} [tilePixelRatio=1] The pixel ratio used by the tile service.
+* For example, if the tile service advertizes 256px by 256px tiles but actually sends 512px
+* by 512px images (for retina/hidpi devices) then `tilePixelRatio`
+* should be set to `2`.
+* @property {number|import("../size.js").Size} [tileSize=[256, 256]] The tile size used by the tile service.
+* Not used if `tileGrid` is provided.
+* @property {import("../Tile.js").UrlFunction} [tileUrlFunction] Optional function to get
+* tile URL given a tile coordinate and the projection.
+* Required if `url` or `urls` are not provided.
+* @property {string} [url] URL template. Must include `{x}`, `{y}` or `{-y}`,
+* and `{z}` placeholders. A `{?-?}` template pattern, for example `subdomain{a-f}.domain.com`,
+* may be used instead of defining each one separately in the `urls` option.
+* @property {Array<string>} [urls] An array of URL templates.
+* @property {boolean} [wrapX=true] Whether to wrap the world horizontally.
+* @property {number} [transition=250] Duration of the opacity transition for rendering.
+* To disable the opacity transition, pass `transition: 0`.
+* @property {number} [zDirection=0] Indicate which resolution should be used
+* by a renderer if the view resolution does not match any resolution of the tile source.
+* If 0, the nearest resolution will be used. If 1, the nearest lower resolution
+* will be used. If -1, the nearest higher resolution will be used.
+*/
+/**
+* @classdesc
+* Layer source for tile data with URLs in a set XYZ format that are
+* defined in a URL template. By default, this follows the widely-used
+* Google grid where `x` 0 and `y` 0 are in the top left. Grids like
+* TMS where `x` 0 and `y` 0 are in the bottom left can be used by
+* using the `{-y}` placeholder in the URL template, so long as the
+* source does not have a custom tile grid. In this case
+* a `tileUrlFunction` can be used, such as:
+* ```js
+*  tileUrlFunction: function(coordinate) {
+*    return 'http://mapserver.com/' + coordinate[0] + '/' +
+*      coordinate[1] + '/' + (-coordinate[2] - 1) + '.png';
+*  }
+* ```
+* @api
+*/
+var XYZ = /** @class*/
+(function (_super) {
+  __extends(XYZ, _super);
+  /**
+  * @param {Options=} opt_options XYZ options.
+  */
+  function XYZ(opt_options) {
+    var _this = this;
+    var options = opt_options || ({});
+    var projection = options.projection !== undefined ? options.projection : 'EPSG:3857';
+    var tileGrid = options.tileGrid !== undefined ? options.tileGrid : _tilegridJs.createXYZ({
+      extent: _tilegridJs.extentFromProjection(projection),
+      maxResolution: options.maxResolution,
+      maxZoom: options.maxZoom,
+      minZoom: options.minZoom,
+      tileSize: options.tileSize
+    });
+    _this = _super.call(this, {
+      attributions: options.attributions,
+      cacheSize: options.cacheSize,
+      crossOrigin: options.crossOrigin,
+      imageSmoothing: options.imageSmoothing,
+      opaque: options.opaque,
+      projection: projection,
+      reprojectionErrorThreshold: options.reprojectionErrorThreshold,
+      tileGrid: tileGrid,
+      tileLoadFunction: options.tileLoadFunction,
+      tilePixelRatio: options.tilePixelRatio,
+      tileUrlFunction: options.tileUrlFunction,
+      url: options.url,
+      urls: options.urls,
+      wrapX: options.wrapX !== undefined ? options.wrapX : true,
+      transition: options.transition,
+      attributionsCollapsible: options.attributionsCollapsible,
+      zDirection: options.zDirection
+    }) || this;
+    return _this;
+  }
+  return XYZ;
+})(_TileImageJsDefault.default);
+exports.default = XYZ;
+
+},{"./TileImage.js":"sKtx9","../tilegrid.js":"1JyRQ","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}]},["4DDL1","2X3X1"], "2X3X1", "parcelRequirefdfe")
 
 //# sourceMappingURL=index.23420cfa.js.map

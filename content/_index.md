@@ -15,12 +15,12 @@ title = "Basiskarte"
 ---
 {{< slide transition-speed="slow" >}}
 #### Gliederung
-- Anforderung an eine Basemap
-- Technische Umsetzung
-- Anforderungen an die Ausgangsdaten
-- Kartenbeispiele
-- Potenziale
-- Fazit und Ausblick
+1. Anforderung an eine Basemap
+2. Technische Umsetzung
+3. Anforderungen an die Ausgangsdaten
+4. Kartenbeispiele
+5. Potenziale
+6. Fazit, Ausblick und Übertragbarkeit
 
 ---
 {{< slide class="terrestris" >}}
@@ -39,11 +39,12 @@ title = "Basiskarte"
     </div>
   </div>
   <div>
-    - OpenSource GIS aus Bonn  <br/>
-    - Entwicklung, Projekte & Support/Schulung  <br/>
+    - OpenSource GIS aus Bonn<br/>
+    - Entwicklung, Projekte<br/>
+    - Support/Schulung<br/>
     - Beratung, Planung, Implementierung & Wartung  <br/>
     - u.a. GeoServer, OL, MapProxy, react-geo, QGIS
-
+  </div>
 </div>
 
 ---
@@ -80,7 +81,6 @@ title = "Basiskarte"
     - Kartographie und GIS-Analysen
   </div>
 </div>
-    <img src="img/LGL-StadtS-OSM-Logos.png" width="80%" class="plain" />
 
 ---
 #### Anforderungen an Basiskarten
@@ -92,7 +92,7 @@ title = "Basiskarte"
 - zur Verwendung im städtischen Geoportal und anderen GIS-Systemen
 
 ---
-#### Basemaps auf der FOSSGIS
+#### Basemaps auf der FOSSGIS/FOSS4G
 
 <style type="text/css">
 .tg  {border:none;border-collapse:collapse;border-spacing:0;}
@@ -170,10 +170,22 @@ title = "Basiskarte"
 
 ---
 #### Anforderungen an die Ausgangsdaten
-- Als Datenquellen stehen uns zur Verfügung:<br />
-  - ATKIS
-  - ALKIS
-  - OSM
+- Als Datenquellen stehen uns zur Verfügung:
+  <div class="normal-lineheight">
+    <img src="img/LGL-StadtS-OSM-Logos.png" width="80%" class="plain" />
+  </div>
+  <div class="data_logo normal-lineheight">
+    <div>
+      ATKIS
+    </div>
+    <div>
+      ALKIS
+    </div>
+    <div>
+      OSM
+    </div>
+  </div>
+
 - amtliche Inhalte
 - OSM-Straßennetz
 - Topologie
@@ -199,4 +211,5 @@ title = "Basiskarte"
 - Herausforderungen liegen in der maßsstabsübergreifenden Darstellung, jedoch durch hohe Flexibilität der Datengrundlage kompensierbar
 
 ---
-Vielen Dank für das Interesse!
+{{< slide class="title-slide" background="#fee08b" >}}
+### Vielen Dank für das Interesse!
