@@ -154,7 +154,7 @@ title = "Basiskarte"
   <tr>
     <td class="tg-0lax"><a href="https://media.ccc.de/v/fossgis2020-3082-osm-daten-mit-vektortiles-erfolgreich-nutzen#t=340">OSM-Daten mit Vektortiles erfolgreich nutzen</a></td>
     <td class="tg-tf2e">Robert Klemm</td>
-    <td class="tg-tf2e">OpenMapTile, VectorTiles</td>
+    <td class="tg-tf2e">VectorTiles, OpenMapTiles</td>
   </tr>
   <tr>
     <td class="tg-0lax"><a href="https://media.ccc.de/v/fossgis2020-3126-weniger-ist-mehr-zur-auswahl-darzustellender-elemente-in-der-digitalen-kartographie">Weniger ist mehr - zur Auswahl darzustellender Elemente in der digitalen Kartographie</a></td>
