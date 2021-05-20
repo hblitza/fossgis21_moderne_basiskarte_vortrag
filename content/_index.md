@@ -15,12 +15,14 @@ title = "Basiskarte"
 ---
 {{< slide transition-speed="slow" >}}
 #### Gliederung
+
 1. Anforderung an eine Basemap
 2. Technische Umsetzung
 3. Anforderungen an die Ausgangsdaten
 4. Kartenbeispiele
 5. Potenziale
 6. Fazit, Ausblick und Übertragbarkeit
+
 
 ---
 {{< slide class="terrestris" >}}
@@ -43,7 +45,7 @@ title = "Basiskarte"
     - Entwicklung, Projekte<br/>
     - Support/Schulung<br/>
     - Beratung, Planung, Implementierung & Wartung  <br/>
-    - u.a. GeoServer, OL, MapProxy, react-geo, QGIS
+    - u.a. GeoServer, OL, MapProxy, react-geo, QGIS, SHOGun, GDAL
   </div>
 </div>
 
@@ -85,18 +87,39 @@ title = "Basiskarte"
 ---
 #### Anforderungen an Basiskarten
 
-- maßstabsübergreifendes Kartenwerk als Referenz und Orientierungshilfe
+- <p class="shadow">maßstabsübergreifendes Kartenwerk<p/> als Referenz und Orientierungshilfe
 - unaufdringliches, modernes und frisches Kartenbild
 - Farbwahl und Kontrast lässt Raum für thematische Inhalte
-- für Bürger und auch Fachanwender
-- zur Verwendung im städtischen Geoportal und anderen GIS-Systemen
 
 ---
-#### Basemaps auf der FOSSGIS/FOSS4G
+#### Anforderungen an Basiskarten
 
+<img src="img/6.1.jpg" class="plain" width="80%"/>
+
+---
+#### Anforderungen an Basiskarten
+
+<img src="img/6.2.jpg" class="plain" width="80%"/>
+
+---
+#### Anforderungen an Basiskarten
+
+<img src="img/6.3.jpg" class="plain" width="80%"/>
+
+---
+#### Anforderungen an Basiskarten
+- <p class="shadow">maßstabsübergreifendes Kartenwerk</p> als Referenz und Orientierungshilfe
+- unaufdringliches, modernes und frisches Kartenbild
+- Farbwahl und Kontrast lässt Raum für thematische Inhalte
+- für <p class="shadow">Bürger</p> und auch <p class="shadow">Fachanwender</p>
+- zur Verwendung im <p class="shadow">städtischen Geoportal</p> und anderen GIS-Systemen
+
+---
+
+#### Basemaps auf der FOSSGIS/FOSS4G
 <style type="text/css">
-.tg  {border:none;border-collapse:collapse;border-spacing:0;}
-.tg td{border-style:solid;border-width:0px;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;
+.tg  {border:none;border-collapse:collapse;border-spacing:0; width:100% !important}
+.tg td{font-size: 20px !important;border-style:solid;border-width:0px;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;
   padding:10px 5px;word-break:normal;}
 .tg th{border-style:solid;border-width:0px;font-family:Arial, sans-serif;font-size:14px;font-weight:normal;
   overflow:hidden;padding:10px 5px;word-break:normal;}
@@ -108,32 +131,39 @@ title = "Basiskarte"
 <thead>
   <tr>
     <th class="tg-1wig">Title</th>
+    <th class="tg-1wig">Autor(en)</th>
     <th class="tg-1wig">Fokus</th>
   </tr>
 </thead>
 <tbody>
   <tr>
     <td class="tg-0lax"><a href="https://media.ccc.de/v/fossgis2020-2988-map-editor-fr-individuelle-amtliche-vektorkarten">Map Editor für individuelle amtliche Vektordaten</a></td>
+    <td class="tg-tf2e">Sebastian Ratjens</td>
     <td class="tg-tf2e">VectorTiles, AdV MapEditor</td>
   </tr>
   <tr>
     <td class="tg-0lax"><a href="https://media.ccc.de/v/fossgis2019-567-osm-und-ffentliche-verwaltung-wie-geht-das-">OSM und öffentliche Verwaltung – Wie geht das?</a></td>
+    <td class="tg-tf2e">Johannes Terwyen</td>
     <td class="tg-tf2e">ALKIS und OSM Daten</td>
   </tr>
   <tr>
     <td class="tg-0lax"><a href="https://media.ccc.de/v/fossgis2019-558-vektortiles-hinter-den-kulissen#t=12">Vektortiles hinter den Kulissen</a></td>
+    <td class="tg-tf2e">Thomas Skowron</td>
     <td class="tg-tf2e">VectorTiles</td>
   </tr>
   <tr>
     <td class="tg-0lax"><a href="https://media.ccc.de/v/fossgis2020-3082-osm-daten-mit-vektortiles-erfolgreich-nutzen#t=340">OSM-Daten mit Vektortiles erfolgreich nutzen</a></td>
+    <td class="tg-tf2e">Robert Klemm</td>
     <td class="tg-tf2e">OpenMapTile, VectorTiles</td>
   </tr>
   <tr>
     <td class="tg-0lax"><a href="https://media.ccc.de/v/fossgis2020-3126-weniger-ist-mehr-zur-auswahl-darzustellender-elemente-in-der-digitalen-kartographie">Weniger ist mehr - zur Auswahl darzustellender Elemente in der digitalen Kartographie</a></td>
+    <td class="tg-tf2e">Christoph Hormann</td>
     <td class="tg-tf2e">OSM-Carto, Kartographie</td>
   </tr>
   <tr>
-    <td class="tg-0lax"><a href="https://media.ccc.de/v/fossgis2020-3126-weniger-ist-mehr-zur-auswahl-darzustellender-elemente-in-der-digitalen-kartographie">Standing up a OSM clone with GeoServer and CSS</a></td>
+    <td class="tg-0lax"><a href="https://media.ccc.de/v/bucharest-245-standing-up-a-osm-clone-with-geoserver-and-css">Standing up a OSM clone with GeoServer and CSS</a></td>
+    <td class="tg-tf2e">Andrea Aime</td>
     <td class="tg-tf2e">OSM-Clone, GeoServer, CSS, OpenMapTiles</td>
   </tr>
 </tbody>
@@ -152,11 +182,6 @@ title = "Basiskarte"
 <img src="img/gpkg.png" width="116px" class="plain" />  
 {{% fragment %}} <img src="img/gs.svg" width="400px" class="plain" /> {{% /fragment %}}  
 {{% fragment %}} <img src="img/geostyler-logo-full.svg" width="400px" class="plain" /> {{% /fragment %}}
-<!-- - Datenformat
-- Vektortiles vs. Rastertiles  
-- Kartenrenderer  
-- Stilformat
-- Ausgabeformat -->
 
 ---
 #### Workflow
@@ -164,28 +189,14 @@ title = "Basiskarte"
 
 ---
 #### Anforderungen an die Ausgangsdaten
-- in den kleinen Maßstäben die topografischen Zusammenhänge darstellen und den Eindruck der Bebauungsstruktur vermitteln  
-- in den großen Maßstäben lagetreue Darstellung der Einzelgebäude aus dem Liegenschaftskataster  
-- Datenaktualität Aktualisierungszyklus der Karte
+- in den kleinen Maßstäben die <p class="shadow">topografischen Zusammenhänge</p> darstellen und den Eindruck der Bebauungsstruktur vermitteln  
+- in den großen Maßstäben <p class="shadow">lagetreue Darstellung</p> der Einzelgebäude aus dem Liegenschaftskataster  
+- <p class="shadow">Aktualisierungszyklus</p> der Karte
 
 ---
 #### Anforderungen an die Ausgangsdaten
 - Als Datenquellen stehen uns zur Verfügung:
-  <div class="normal-lineheight">
     <img src="img/LGL-StadtS-OSM-Logos.png" width="80%" class="plain" />
-  </div>
-  <div class="data_logo normal-lineheight">
-    <div>
-      ATKIS
-    </div>
-    <div>
-      ALKIS
-    </div>
-    <div>
-      OSM
-    </div>
-  </div>
-
 - amtliche Inhalte
 - OSM-Straßennetz
 - Topologie
@@ -195,21 +206,71 @@ title = "Basiskarte"
 
 <section data-background-iframe="ol2.html" data-background-interactive>
 </section>
+<section>
+<h4>Labeling</h4>
+
+<pre><code data-trim data-line-numbers>
+                <ogc:Function name="Categorize">
+                  <!-- Categorize label size according to scale -->
+                  <ogc:Function name="env">
+                    <ogc:Literal>wms_scale_denominator</ogc:Literal>
+                  </ogc:Function>
+                  <ogc:Literal>22</ogc:Literal>
+                  <ogc:Literal>780</ogc:Literal>
+                  ...
+                </ogc:Function>
+	</code></pre>
+<pre><code data-trim data-line-numbers>
+   <VendorOption name="followLine">true</VendorOption>
+   <VendorOption name="maxDisplacement">50</VendorOption>
+   <VendorOption name="repeat">300</VendorOption>
+   <VendorOption name="group">yes</VendorOption>
+</code></pre>
+<pre><code data-trim data-line-numbers>
+            <Geometry>
+              <ogc:Function name="centroid">
+                <ogc:PropertyName>geom</ogc:PropertyName>
+              </ogc:Function>
+            </Geometry>
+</code></pre>
+</section>
+<section>
+<h4>Straßennetz</h4>
+<pre><code data-trim data-line-numbers>
+        <sld:VendorOption name="sortBy">layer</sld:VendorOption>
+        <sld:VendorOption name="ruleEvaluation">first</sld:VendorOption>
+        <sld:VendorOption name="sortByGroup">roads</sld:VendorOption>
+</code></pre>
+<img src="img/roads-no-group.png" class="plain" height="60%" />
+</section>
 
 ---
 #### Potenziale
--- Vectortiles (kurz: Wichtigsten Vorteile nennen)  
--- Geostyler (Konvertieren der Stilregeln, Bsp: Orka-MV (carto -> QGIS qml))  
--- GeoSynchronicer  
+- <b>VectorTiles</b>
+  - geringere Datenmengen
+  - höhere  <p class="shadow">Flexibilität</p> beim Stylen (Symbologie, Labeling)
+  -  <p class="shadow">Interaktivität</p> mit den Daten  
+- <b>GeoStyler</b>
+  - Eine UI für alle Style
+  - Massenkonvertierung mit der GeoStyler-CLI
+- <b>GeoSynchronicer</b>
 
 ---
 #### Fazit
-- Reibungslose Kombination der etablierten FOSS-Tools und OGC-Standards
+- Reibungsloses Zusammenspiel der etablierten <p class="shadow">FOSS-Tools</p> und OGC-Standards
 
-- Sowohl unter rechtlichen Aspekten (ODbL ermöglicht viele Freiheiten) als auch unter technischen Aspekten funktioniert das Zusammenspiel gut (hohe Flexibilität der OSM-Datenstruktur)
+- <p class="shadow">ODbL</p> ermöglicht viele Freiheiten
 
-- Herausforderungen liegen in der maßsstabsübergreifenden Darstellung, jedoch durch hohe Flexibilität der Datengrundlage kompensierbar
+- zahlreiche Attribute bieten <p class="shadow">viel Flexibilität</p> bei Auswahl/Filtern
+
+- Herausforderungen liegen in der maßsstabsübergreifenden Darstellung
+
+- Workflow übertragbar auf andere Städte/Kommunen
 
 ---
 {{< slide class="title-slide" background="#fee08b" >}}
 ### Vielen Dank für das Interesse!
+<br/>
+<br/>
+Fragen?<br/>
+blitza@terrestris.de | christian.fremd@gmail.com
