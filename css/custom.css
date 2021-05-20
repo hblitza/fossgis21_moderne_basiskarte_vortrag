@@ -7,11 +7,12 @@
 }
 
 .slides li {
-    line-height: 200%;
+    line-height: 2;
 }
 
 img {
     background-color: unset !important;
+    margin: 0 !important;
 }
 
 .present {
@@ -89,6 +90,8 @@ h4 {
 
 .iconLine i {
     padding-right: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .terrestris h4 {
@@ -103,6 +106,15 @@ h4 {
     flex: 1;
 }
 
-.normal-lineheight {
-    line-height: normal !important;
+.increased-lineheight {
+    line-height: normal 200%;
+}
+
+.shadow {
+    text-shadow: 0 0 16px #d53e4f;
+}
+
+.reveal p {
+    margin: 0;
+    display: inline !important;
 }
